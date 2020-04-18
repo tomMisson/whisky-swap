@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
 
 const uri = process.env.DB_URI
@@ -9,6 +10,7 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cors());
 
 app.post('/profiles', function (req, res) {
     const data = req.body

@@ -19,7 +19,7 @@ export default class profile extends Component {
 
         this.handleForm = this.handleForm.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleSignUp = this.handleSignUp.bind(this);
+        this.toggleSignUp = this.toggleSignUp.bind(this);
     }
 
     handleForm(event){
@@ -46,14 +46,32 @@ export default class profile extends Component {
                 this.setState({deliveryOption: event.target.value});
                 break;
             default:
-                throw "Not an ID"
         }
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
         if(this.state.signingUp){
-            //POST user data
+            const requestOptions = {
+                crossDomain:true,
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(
+                    {
+                        "name":this.state.name,
+                        "email": this.state.email,
+                        "pswd": this.state.pswd,
+                        "phone": this.state.phone,
+                        "address line 1": this.state.line1Address,
+                        "postcode" : this.state.postcode,
+                        "delivery": this.state.deliveryOption
+                    }
+                )
+            };
+            await fetch('http://localhost:3001/profiles', requestOptions)
+                .then(response => {if(response.status===200){alert("Signed up!")}})
+                .catch(err => alert("Something went wrong"))
+        
         }
         else{
             //Sigining in 
@@ -63,7 +81,7 @@ export default class profile extends Component {
         }
     }
 
-    handleSignUp(event){
+    toggleSignUp(event){
         this.state.signingUp = this.setState({signingUp:!this.state.signingUp});
         this.forceUpdate();
     }
@@ -107,7 +125,7 @@ export default class profile extends Component {
                         <label htmlFor="preferedDelivery">
                             Prefered delivery option:
                             <select name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
-                                <option value="Collection">Collection</option>
+                                <option selected="selected" value="Collection">Collection</option>
                                 <option value="Delivery">Delivery</option>
                                 <option value="Post">Post</option>
                             </select>
@@ -115,7 +133,7 @@ export default class profile extends Component {
                         <br/>
                         <input type="submit" value="Submit"/>
                     </form>
-                    <button onClick={this.handleSignUp}>Back</button>
+                    <button onClick={this.toggleSignUp}>Back</button>
                 </main>
             )
         }
@@ -137,15 +155,15 @@ export default class profile extends Component {
                         <br/>
                         <input type="submit" value="Submit"/>
                     </form>
-                    <button onClick={this.handleSignUp}>Sign Up</button>
+                    <button onClick={this.toggleSignUp}>Sign Up</button>
                 </main>
             )
         }
         else{
             return (
                 <main>
-                    <h2>Welcome back, {this.state.profileDetails.name.split(" ")[0]}</h2>
-                    <p>{JSON.stringify(this.state.profileDetails)}</p>
+                    <h2>Welcome back, {this.state.name.split(" ")[0]}</h2>
+                    <p>{JSON.stringify(this.state)}</p>
                 </main>
             )
         }
