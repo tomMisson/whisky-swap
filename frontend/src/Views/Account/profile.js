@@ -36,7 +36,7 @@ export default class profile extends Component {
     }
 
     handleSignUp(event){
-        this.state.signingUp = !this.state.signingUp;
+        this.state.signingUp = this.setState({signingUp:!this.state.signingUp});
         this.forceUpdate();
     }
 
@@ -45,6 +45,19 @@ export default class profile extends Component {
             return (
                 <main>
                     <h2>Sign up</h2>
+                    <form onSubmit={this.handleSubmit}>
+                        <label for="email">
+                            Email:
+                            <input type="text" name="email" value={this.state.email} onChange={this.handleEmailChange}/>
+                        </label>
+                        <br/>
+                        <label for="pswd">
+                            Password:
+                            <input type="password" name="pswd" value={this.state.pswd} onChange={this.handlePswdChange}/>
+                        </label>
+                        <br/>
+                        <input type="submit" value="Submit"/>
+                    </form>
                     <button onClick={this.handleSignUp}>Back</button>
                 </main>
             )
