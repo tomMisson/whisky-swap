@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/tommisson/whisky-swap/issues"
   },
-  "homepage": "https://github.com/tommisson/whisky-swap#readme"
+  "homepage": "https://github.com/tommisson/whisky-swap#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
