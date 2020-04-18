@@ -7,7 +7,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Profile/>
+    <Header/>
+      <Profile/>
+    <Footer/>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -7,6 +7,7 @@ export default class profile extends Component {
     
         this.state={
             loggedIn:false,
+            signingUp: false,
             profileDetails:{
                 name:"Tom Misson",
                 email:"11tmisson@gmail.com"
@@ -14,9 +15,11 @@ export default class profile extends Component {
             email:"",
             pswd:""
         }
+
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePswdChange = this.handlePswdChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
     }
 
     handleEmailChange(event){
@@ -32,7 +35,20 @@ export default class profile extends Component {
         
     }
 
+    handleSignUp(event){
+        this.state.signingUp = !this.state.signingUp;
+        this.forceUpdate();
+    }
+
     render() {
+        if(this.state.signingUp){
+            return (
+                <main>
+                    <h2>Sign up</h2>
+                    <button onClick={this.handleSignUp}>Back</button>
+                </main>
+            )
+        }
         if(!this.state.loggedIn)
         {
             return (
@@ -49,8 +65,9 @@ export default class profile extends Component {
                             <input type="password" name="pswd" value={this.state.pswd} onChange={this.handlePswdChange}/>
                         </label>
                         <br/>
-                        <input type="submit" value="Submit" />
+                        <input type="submit" value="Submit"/>
                     </form>
+                    <button onClick={this.handleSignUp}>Sign Up</button>
                 </main>
             )
         }
