@@ -16,7 +16,6 @@ export default class avalibleTrades extends Component {
     async componentWillMount()
     {
         await fetch("http://localhost:3001/offers")
-            .then(res => console.log(res))
             .then(res => res.json())
             .then(res => this.setState({offers: res}))
             .catch(err => alert("Error getting trades" + err))
@@ -25,7 +24,11 @@ export default class avalibleTrades extends Component {
     render() {
         return (
             <div>
-                <p>{JSON.stringify(this.state)}</p>
+                {
+                    this.state.offers.map((offer) => {
+                        <Offer/>
+                    })
+                }
             </div>
         )
     }
