@@ -92,7 +92,7 @@ export default class profile extends Component {
                 
                 window.location.reload()
             }
-            catch
+            catch(err)
             {
                 alert("Incorrect email or password")
             }
@@ -170,12 +170,12 @@ export default class profile extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="email">
                             Email:
-                            <input type="text" id="email" value={this.state.email} onChange={this.handleForm}/>
+                            <input required type="text" id="email" value={this.state.email} onChange={this.handleForm}/>
                         </label>
                         <br/>
                         <label htmlFor="pswd">
                             Password:
-                            <input type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
+                            <input required type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
                         </label>
                         <br/>
                         <input type="submit" value="Submit"/>
