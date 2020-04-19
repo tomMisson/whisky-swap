@@ -17,20 +17,49 @@ app.get('/', (req,res) => {
 })
 
 app.post('/profiles', function (req, res) {
-    const data = req.body
+    const data = req.body;
 
     client.connect(function(err, db) {
         try{
             if (err) throw err;
             var dbo = db.db("whisky-swap");
 
-            dbo.collection("users").insertOne(data, function(err, res) {
-            if (err) throw err;
-            db.close();
-            });
-            res.sendStatus(200);
+            dbo.collection("users").insertOne(data)
+                .then(result => res.json({UID: result.insertedId}));            
         }
-        catch{
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
+app.post('/offers', function (req, res) {
+    const data = req.body;
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("offers").insertOne(data)
+                .then(res.sendStatus(200));            
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
+app.get('/offers', function (req, res) {
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            dbo.collection("offers").find({}).toArray()
+                    .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
             res.sendStatus(500);
         }
     });

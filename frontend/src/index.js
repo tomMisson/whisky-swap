@@ -4,6 +4,7 @@ import Header from "./Views/Partials/header"
 import Footer from "./Views/Partials/footer"
 import Profile from "./Views/Account/profile"
 import * as serviceWorker from './serviceWorker';
+//import AvalibleTrades from './Views/avalibleTrades';
 
 ReactDOM.render(
   <React.StrictMode>

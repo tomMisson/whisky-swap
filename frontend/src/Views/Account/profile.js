@@ -6,15 +6,9 @@ export default class profile extends Component {
         super(props);
     
         this.state={
-            loggedIn:false,
+            loggedIn:sessionStorage.getItem("loggedIn"),
             signingUp: false,
             name:"",
-            email:"",
-            pswd: "",
-            phone:"",
-            line1Address:"",
-            postcode:"",
-            deliveryOption:""
         }
 
         this.handleForm = this.handleForm.bind(this);
@@ -69,20 +63,24 @@ export default class profile extends Component {
                 )
             };
             await fetch('http://localhost:3001/profiles', requestOptions)
-                .then(response => {if(response.status===200){alert("Signed up!")}})
+                .then(res => {return res.json()})
+                .then(response => sessionStorage.setItem("UID", response.UID))
+                .then(sessionStorage.setItem("loggedIn", true))
+                .then(alert("Signed up!"))
+                .then(window.location.reload())
                 .catch(err => alert("Something went wrong"))
-        
         }
         else{
             //Sigining in 
             //if() returns one document then 
-            this.setState({loggedIn:false});
+            sessionStorage.setItem("loggedIn", true);
             this.forceUpdate();
         }
     }
 
     toggleSignUp(event){
-        this.state.signingUp = this.setState({signingUp:!this.state.signingUp});
+        var currentVal = this.state.signingUp
+        this.setState({signingUp:!currentVal});
         this.forceUpdate();
     }
 
@@ -125,7 +123,7 @@ export default class profile extends Component {
                         <label htmlFor="preferedDelivery">
                             Prefered delivery option:
                             <select name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
-                                <option selected="selected" value="Collection">Collection</option>
+                                <option defaultValue="Collection">Collection</option>
                                 <option value="Delivery">Delivery</option>
                                 <option value="Post">Post</option>
                             </select>
@@ -162,8 +160,11 @@ export default class profile extends Component {
         else{
             return (
                 <main>
-                    <h2>Welcome back, {this.state.name.split(" ")[0]}</h2>
-                    <p>{JSON.stringify(this.state)}</p>
+                    <h2>Welcome back</h2>
+                    <p>{window.sessionStorage.getItem("UID")}</p>
+
+                    <h3>Offers:</h3>
+                    
                 </main>
             )
         }
