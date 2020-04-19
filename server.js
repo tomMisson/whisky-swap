@@ -16,6 +16,29 @@ app.get('/', (req,res) => {
     res.sendStatus(200);
 })
 
+app.post('/login', (req,res) => {
+    const usrname = req.body.email;
+    const password = req.body.pswd;
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("users").findOne({email: usrname, pswd:password})
+                .then(result => {
+                    if(result!=null)
+                        res.json({UID: result._id});
+                    else
+                        res.sendStatus(404);
+                });            
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
 app.post('/profiles', function (req, res) {
     const data = req.body;
 

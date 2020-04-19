@@ -63,7 +63,7 @@ export default class profile extends Component {
                     }
                 )
             };
-            await fetch(process.env.API_URL+"/profiles", requestOptions)
+            await fetch(process.env.REACT_APP_API_URL.concat("/profiles"), requestOptions)
                 .then(res => {return res.json()})
                 .then(response => sessionStorage.setItem("UID", response.UID))
                 .then(sessionStorage.setItem("loggedIn", true))
@@ -72,10 +72,23 @@ export default class profile extends Component {
                 .catch(err => alert("Something went wrong"))
         }
         else{
-            //Sigining in 
-            //if() returns one document then 
-            sessionStorage.setItem("loggedIn", true);
-            this.forceUpdate();
+            const requestOptions = {
+                crossDomain:true,
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(
+                    {
+                        "email": this.state.email,
+                        "pswd": this.state.pswd,
+                    }
+                )
+            };
+            await fetch(process.env.REACT_APP_API_URL.concat("/login"), requestOptions)
+                .then(res => res.json())
+                .then(response => sessionStorage.setItem("UID", response.UID))
+                .then(sessionStorage.setItem("loggedIn", true))
+                .then(window.location.reload())
+                .catch(err => alert("Incorrect username or password"))
         }
     }
 

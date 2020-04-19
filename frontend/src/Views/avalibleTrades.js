@@ -6,7 +6,7 @@ export default class avalibleTrades extends Component {
     constructor(props)
     {
         super(props)
-        //this.setState({offers:props.offers})
+        this.setState({offers:props.offers})
     }
 
     state = {
@@ -15,7 +15,7 @@ export default class avalibleTrades extends Component {
 
     async componentWillMount()
     {
-        await fetch(process.env.API_URL+"/offers")
+        await fetch(process.env.REACT_APP_API_URL.concat("/offers"))
             .then(res => res.json())
             .then(res => this.setState({offers: res}))
             .then(console.log(this.state))
