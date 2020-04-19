@@ -3,9 +3,8 @@ A web app designed for whisky enthusiats to come together to share a dram (or tw
 
 ## Architecture 
 
-API / Backend - Express JS / Node JS
-Database - MongoDB Atlas
-Frontend UI - React (JavaScript)
-
-CI/CD - Azure devops pipelines
+API / Backend - Express JS / Node JS  
+Database - MongoDB Atlas  
+Frontend UI - React (JavaScript)  
+CI/CD - Azure devops pipelines  
 
