@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AvalibleTrades from '../avalibleTrades';
 
 export default class profile extends Component {
 
@@ -163,8 +164,8 @@ export default class profile extends Component {
                     <h2>Welcome back</h2>
                     <p>{window.sessionStorage.getItem("UID")}</p>
 
-                    <h3>Offers:</h3>
-                    
+                    <h3>Your offerings:</h3>
+                    <AvalibleTrades/>
                 </main>
             )
         }
