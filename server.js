@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors());
 
-app.get('/', () => {
+app.get('/', (req,res) => {
     res.sendStatus(200);
 })
 
@@ -36,4 +36,4 @@ app.post('/profiles', function (req, res) {
     });
 })
   
-app.listen(3000)
+app.listen(3001)
