@@ -12,6 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors());
 
+app.get('/', () => {
+    res.sendStatus(200);
+})
+
 app.post('/profiles', function (req, res) {
     const data = req.body
 
@@ -32,4 +36,4 @@ app.post('/profiles', function (req, res) {
     });
 })
   
-app.listen(3001)
+app.listen(3000)
