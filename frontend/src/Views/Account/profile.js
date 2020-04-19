@@ -63,7 +63,7 @@ export default class profile extends Component {
                     }
                 )
             };
-            await fetch('http://localhost:3001/profiles', requestOptions)
+            await fetch(process.env.API_URL+"/profiles", requestOptions)
                 .then(res => {return res.json()})
                 .then(response => sessionStorage.setItem("UID", response.UID))
                 .then(sessionStorage.setItem("loggedIn", true))

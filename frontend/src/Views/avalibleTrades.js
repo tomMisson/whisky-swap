@@ -15,7 +15,7 @@ export default class avalibleTrades extends Component {
 
     async componentWillMount()
     {
-        await fetch("http://localhost:3001/offers")
+        await fetch(process.env.API_URL+"/offers")
             .then(res => res.json())
             .then(res => this.setState({offers: res}))
             .then(console.log(this.state))
