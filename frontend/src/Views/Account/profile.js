@@ -7,7 +7,7 @@ export default class profile extends Component {
         super(props);
     
         this.state={
-            loggedIn:sessionStorage.getItem("loggedIn"),
+            loggedIn: sessionStorage.getItem("loggedIn"),
             signingUp: false,
             name:"",
         }
@@ -46,11 +46,12 @@ export default class profile extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
+
         if(this.state.signingUp){
             const requestOptions = {
                 crossDomain:true,
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin':true},
                 body: JSON.stringify(
                     {
                         "name":this.state.name,
@@ -71,11 +72,11 @@ export default class profile extends Component {
                 .then(window.location.reload())
                 .catch(err => alert("Something went wrong"))
         }
-        else{
+        if(!this.state.signingUp){
             const requestOptions = {
                 crossDomain:true,
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json',  'Access-Control-Allow-Origin':true},
                 body: JSON.stringify(
                     {
                         "email": this.state.email,
@@ -83,13 +84,25 @@ export default class profile extends Component {
                     }
                 )
             };
-            await fetch(process.env.REACT_APP_API_URL.concat("/login"), requestOptions)
-                .then(res => res.json())
-                .then(response => sessionStorage.setItem("UID", response.UID))
-                .then(sessionStorage.setItem("loggedIn", true))
-                .then(window.location.reload())
-                .catch(err => alert("Incorrect username or password"))
+            try{
+                var response = await fetch("http://localhost:3001/login", requestOptions);
+                response = await response.json();
+                sessionStorage.setItem("UID", response.UID)
+                sessionStorage.setItem("loggedIn", true);
+                
+                window.location.reload()
+            }
+            catch
+            {
+                alert("Incorrect email or password")
+            }
         }
+    }
+
+    handleSignOut()
+    {
+        sessionStorage.clear()
+        window.location.reload()
     }
 
     toggleSignUp(event){
@@ -175,10 +188,11 @@ export default class profile extends Component {
             return (
                 <main>
                     <h2>Welcome back</h2>
-                    <p>{window.sessionStorage.getItem("UID")}</p>
+                    <p>{sessionStorage.getItem("UID")}</p>
 
                     <h3>Your offerings:</h3>
                     <AvalibleTrades/>
+                    <button onClick={this.handleSignOut}>Sign out</button>
                 </main>
             )
         }

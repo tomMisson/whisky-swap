@@ -1,8 +1,9 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
-const cors = require('cors');
-const MongoClient = require('mongodb').MongoClient;
+const cors = require('cors')
+const mongo = require("mongodb")
+const MongoClient = mongo.MongoClient;
 
 const uri = process.env.DB_URI
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -16,6 +17,8 @@ app.get('/', (req,res) => {
     res.sendStatus(200);
 })
 
+/// AUTHENTICATE
+
 app.post('/login', (req,res) => {
     const usrname = req.body.email;
     const password = req.body.pswd;
@@ -26,18 +29,20 @@ app.post('/login', (req,res) => {
             var dbo = db.db("whisky-swap");
 
             dbo.collection("users").findOne({email: usrname, pswd:password})
-                .then(result => {
-                    if(result!=null)
-                        res.json({UID: result._id});
-                    else
-                        res.sendStatus(404);
-                });            
+            .then(result => {
+                if(result!=null)
+                    res.json({UID: result._id});
+                else
+                    res.sendStatus(404);
+            });                   
         }
         catch(err){
             res.sendStatus(500);
         }
     });
 })
+
+/// PROFILES
 
 app.post('/profiles', function (req, res) {
     const data = req.body;
@@ -55,6 +60,26 @@ app.post('/profiles', function (req, res) {
         }
     });
 })
+
+app.get('/profiles', function (req, res) {
+    const data = req.body.UID;
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(data);
+
+            dbo.collection("users").findOne({_id: o_id})
+                .then(result => res.json(result));          
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
+/// OFFERS
 
 app.post('/offers', function (req, res) {
     const data = req.body;

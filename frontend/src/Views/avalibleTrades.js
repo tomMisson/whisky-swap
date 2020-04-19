@@ -18,7 +18,6 @@ export default class avalibleTrades extends Component {
         await fetch(process.env.REACT_APP_API_URL.concat("/offers"))
             .then(res => res.json())
             .then(res => this.setState({offers: res}))
-            .then(console.log(this.state))
             .catch(err => alert("Error getting trades" + err))
     }
 
