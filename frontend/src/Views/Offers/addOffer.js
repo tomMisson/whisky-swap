@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 export default class addOffer extends Component {
 
@@ -11,10 +12,6 @@ export default class addOffer extends Component {
 
     state = {
         UID: sessionStorage.getItem("UID")
-    }
-
-    back(event){
-        alert("CODE to go back");
     }
 
     async handleSubmit(event){
@@ -106,7 +103,7 @@ export default class addOffer extends Component {
                     <br/>
                     <button type="submit" id="Add">Add</button>
                 </form>
-                <button onClick={this.back} id="Cancel">Cancel</button>
+                <Link to="/profile" >Cancel</Link>
             </main>
         )
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Offer from './offer'
+import {Link} from 'react-router-dom'
 
 export default class avalibleTrades extends Component {
 
@@ -31,14 +32,15 @@ export default class avalibleTrades extends Component {
         if(this.props.filter !== undefined)
         {
             return(
-            <>
-                    <button type="button" >
+                <>
+                    <Link to="offer">
                         Add offer +
-                    </button>
+                    </Link>
 
                     <div>
                         {
                             this.state.offers.map((offer) => {
+                                console.log(offer);
                                 if(offer.UID === sessionStorage.getItem("UID"))
                                 {
                                     return (<Offer key={offer._id} name={offer.name} dist={offer.distillery} desc={offer.details}/>)
@@ -56,10 +58,6 @@ export default class avalibleTrades extends Component {
         else{
             return (
                 <>
-                    <button type="button" >
-                        Add offer +
-                    </button>
-
                     <div>
                         {
                             this.state.offers.map((offer) => (

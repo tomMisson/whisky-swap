@@ -84,16 +84,6 @@ export default class profile extends Component {
                     }
                 )
             };
-            const request2Options = {
-                crossDomain:true,
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json',  'Access-Control-Allow-Origin':true},
-                body: JSON.stringify(
-                    {
-                        UID: sessionStorage.getItem("UID")
-                    }
-                )
-            };
             try{
                 var response = await fetch("http://localhost:3001/login", requestOptions);
                 response = await response.json();
@@ -197,7 +187,7 @@ export default class profile extends Component {
         else{
             return (
                 <main>
-                    <h2>Welcome back, {sessionStorage.getItem("name")}</h2>
+                    <h2>Welcome back, {this.state.name}</h2>
                     <p>{sessionStorage.getItem("UID")}</p>
 
                     <h3>Your offerings:</h3>
