@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import {Redirect} from 'react-router'
 
 export default class addOffer extends Component {
 
     constructor(params){
         super(params)
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormFields = this.handleFormFields.bind(this);
     }
@@ -26,7 +26,9 @@ export default class addOffer extends Component {
         try{
             var response = await fetch("http://localhost:3001/offers", requestOptions);
             if(response.status===200)
-                alert("New offer added!")
+            {
+                alert("New offer added!");
+            }
         }
         catch(err){ 
             alert("Something went wrong" + err)
@@ -76,7 +78,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="ABV">
                         ABV: 
-                        <input required type="number" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
+                        <input type="number" step="0.1" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
                         %
                     </label>
                     <br/>
@@ -95,11 +97,11 @@ export default class addOffer extends Component {
                         Tasting notes / other details: 
                         <textarea name="details" id="details" placeholder="Makes a great highball" value={this.state.details} onChange={this.handleFormFields}/>
                     </label>
-                    {/* <br/>
+                    <br/>
                     <label htmlFor="image">
                         Image: 
-                        <input type="file" accept="image/*" name="image" onChange= {this.handleFormFields} />
-                    </label> */}
+                        <input type="url" name="image" onChange= {this.handleFormFields} />
+                    </label>
                     <br/>
                     <button type="submit" id="Add">Add</button>
                 </form>

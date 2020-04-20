@@ -40,6 +40,9 @@ export default class profile extends Component {
             case "deliveryOption":
                 this.setState({deliveryOption: event.target.value});
                 break;
+            case "url":
+                this.setState({url: event.target.value});
+                break;
             default:
         }
     }
@@ -156,6 +159,11 @@ export default class profile extends Component {
                             </select>
                         </label>
                         <br/>
+                        <label htmlFor="url">
+                            URL to profile pic:
+                            <input required type="url" name="url" id="url" value={this.state.url} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
                         <input type="submit" value="Submit"/>
                     </form>
                     <button onClick={this.toggleSignUp}>Back</button>
@@ -187,8 +195,7 @@ export default class profile extends Component {
         else{
             return (
                 <main>
-                    <h2>Welcome back, {this.state.name}</h2>
-                    <p>{sessionStorage.getItem("UID")}</p>
+                    <h2>Welcome back, {sessionStorage.getItem("name")}</h2>
 
                     <h3>Your offerings:</h3>
                     <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
