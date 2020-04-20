@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AvalibleTrades from '../avalibleTrades';
+import AvalibleTrades from '../Offers/avalibleTrades';
 
 export default class profile extends Component {
 
@@ -84,12 +84,22 @@ export default class profile extends Component {
                     }
                 )
             };
+            const request2Options = {
+                crossDomain:true,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json',  'Access-Control-Allow-Origin':true},
+                body: JSON.stringify(
+                    {
+                        UID: sessionStorage.getItem("UID")
+                    }
+                )
+            };
             try{
                 var response = await fetch("http://localhost:3001/login", requestOptions);
                 response = await response.json();
+                console.log(response)
                 sessionStorage.setItem("UID", response.UID)
                 sessionStorage.setItem("loggedIn", true);
-                
                 window.location.reload()
             }
             catch(err)
@@ -149,7 +159,7 @@ export default class profile extends Component {
                         <br/>
                         <label htmlFor="preferedDelivery">
                             Prefered delivery option:
-                            <select name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
+                            <select required name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
                                 <option defaultValue="Collection">Collection</option>
                                 <option value="Delivery">Delivery</option>
                                 <option value="Post">Post</option>
@@ -187,11 +197,11 @@ export default class profile extends Component {
         else{
             return (
                 <main>
-                    <h2>Welcome back</h2>
+                    <h2>Welcome back, {sessionStorage.getItem("name")}</h2>
                     <p>{sessionStorage.getItem("UID")}</p>
 
                     <h3>Your offerings:</h3>
-                    <AvalibleTrades/>
+                    <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
                     <button onClick={this.handleSignOut}>Sign out</button>
                 </main>
             )

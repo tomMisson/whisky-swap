@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import Header from "./Views/Partials/header"
 import Footer from "./Views/Partials/footer"
-import Profile from "./Views/Account/profile"
+import Profile from "./Views/Account/signIn-Up"
+//import AddOffer from "./Views/Offers/addOffer"
 import * as serviceWorker from './serviceWorker';
-//import AvalibleTrades from './Views/avalibleTrades';
+//import AvalibleTrades from './Views/Offers/avalibleTrades';
 
 ReactDOM.render(
   <React.StrictMode>
