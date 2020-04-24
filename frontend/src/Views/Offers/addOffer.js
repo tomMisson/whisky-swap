@@ -104,7 +104,7 @@ export default class addOffer extends Component {
                     <br/>
                     <button type="submit" id="Add">Add</button>
                 </form>
-                <Link to="/profile" >Back</Link>
+                <Link to="/" >Back</Link>
             </main>
         )
     }

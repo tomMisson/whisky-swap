@@ -112,5 +112,23 @@ app.get('/offers', function (req, res) {
         }
     });
 })
+
+app.get('/offers/:id', function (req, res) {
+    const id = req.params.id;
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(data);
+-
+            dbo.collection("users").findOne({_id: o_id})
+                    .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
   
 app.listen(3001)

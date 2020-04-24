@@ -9,9 +9,12 @@ export default class header extends Component {
                 <nav>
                     <ul>
                         {
+                            sessionStorage.getItem("UID") !== undefined ? 
                             this.props.links.map((link) => 
                                 <li key={link.id}><Link to={link.uri}>{link.text}</Link></li>
                             )
+                            :
+                            <></>
                         }
                     </ul>
                 </nav>
