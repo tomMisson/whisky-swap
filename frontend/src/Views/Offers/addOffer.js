@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import {Redirect} from 'react-router'
 
 export default class addOffer extends Component {
 
@@ -53,7 +52,7 @@ export default class addOffer extends Component {
                 this.setState({details: event.target.value});
                 break;
             case "image":
-                this.setState({image: event.target.files[0]});
+                this.setState({image: event.target.value});
                 break;
             default:
         }
@@ -100,12 +99,12 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="image">
                         Image: 
-                        <input type="url" name="image" onChange= {this.handleFormFields} />
+                        <input type="url" name="image" id="image" onChange= {this.handleFormFields} />
                     </label>
                     <br/>
                     <button type="submit" id="Add">Add</button>
                 </form>
-                <Link to="/profile" >Cancel</Link>
+                <Link to="/profile" >Back</Link>
             </main>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Offer from './offer'
+import Offer from './offerTile'
 import {Link} from 'react-router-dom'
 
 export default class avalibleTrades extends Component {
@@ -43,7 +43,7 @@ export default class avalibleTrades extends Component {
                                 console.log(offer);
                                 if(offer.UID === sessionStorage.getItem("UID"))
                                 {
-                                    return (<Offer key={offer._id} name={offer.name} dist={offer.distillery} desc={offer.details}/>)
+                                    return (<Offer key={offer._id} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv}/>)
                                 }   
                                 else
                                 {
@@ -61,7 +61,7 @@ export default class avalibleTrades extends Component {
                     <div>
                         {
                             this.state.offers.map((offer) => (
-                                <Offer key={offer._id} name={offer.name} dist={offer.distillery} desc={offer.details}/>
+                                <Offer key={offer._id} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv}/>
                             ))
                         }
                     </div>
