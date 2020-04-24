@@ -130,5 +130,23 @@ app.get('/offers/:id', function (req, res) {
         }
     });
 })
+
+app.delete('/offers/:id', function (req, res) {
+    const id = req.params.id;
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+-
+            dbo.collection("offers").deleteOne({_id:o_id})
+                .then(cb => cb.deletedCount === 1 ? res.sendStatus(200) : res.sendStatus(404))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
   
 app.listen(3001)

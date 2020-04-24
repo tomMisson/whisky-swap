@@ -27,6 +27,7 @@ export default class addOffer extends Component {
             if(response.status===200)
             {
                 alert("New offer added!");
+                window.location.replace(process.env.REACT_APP_APP_URL)
             }
         }
         catch(err){ 
@@ -77,7 +78,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="ABV">
                         ABV: 
-                        <input type="number" step="0.1" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
+                        <input required type="number" step="0.1" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
                         %
                     </label>
                     <br/>

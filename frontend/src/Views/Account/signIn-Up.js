@@ -88,7 +88,7 @@ export default class profile extends Component {
                 )
             };
             try{
-                var response = await fetch("http://localhost:3001/login", requestOptions);
+                var response = await fetch(process.env.REACT_APP_API_URL.concat("/login"), requestOptions);
                 response = await response.json();
                 console.log(response)
                 sessionStorage.setItem("UID", response.UID)
