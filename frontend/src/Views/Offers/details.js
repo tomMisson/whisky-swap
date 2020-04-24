@@ -3,23 +3,21 @@ import React, { Component } from 'react'
 export default class details extends Component {
 
     componentDidMount(){
-        console.log(window.location.href)
         this.getDetails();
     }
 
     async getDetails(){
-        console.log(window.location.href)
-        await fetch(process.env.REACT_APP_API_URL.concat("/offers/"))
+        await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]))
             .then(res => res.json())
-            .then(res => this.setState({offers: res}))
-            .catch(err => alert("Error getting trades" + err))
+            .then(res => this.setState({details:res}))
+            .catch()
     } 
 
 
     render() {
         return (
             <main>
-                <h1></h1>
+                <h1>Details</h1>
             </main>
         )
     }

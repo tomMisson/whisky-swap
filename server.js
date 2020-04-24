@@ -119,9 +119,9 @@ app.get('/offers/:id', function (req, res) {
         try{
             if (err) throw err;
             var dbo = db.db("whisky-swap");
-            var o_id = new mongo.ObjectID(data);
+            var o_id = new mongo.ObjectID(id);
 -
-            dbo.collection("users").findOne({_id: o_id})
+            dbo.collection("offers").findOne({_id: o_id})
                     .then(docs => res.json(docs))
                   
         }
