@@ -19,7 +19,7 @@ export default class details extends Component {
     render() {
         return (
             <main>
-                <h1>Details</h1>
+                <h1></h1>
             </main>
         )
     }

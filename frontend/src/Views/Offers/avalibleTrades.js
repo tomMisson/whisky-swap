@@ -40,7 +40,6 @@ export default class avalibleTrades extends Component {
                     <div>
                         {
                             this.state.offers.map((offer) => {
-                                console.log(offer);
                                 if(offer.UID === sessionStorage.getItem("UID"))
                                 {
                                     return (<Offer key={offer._id} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
