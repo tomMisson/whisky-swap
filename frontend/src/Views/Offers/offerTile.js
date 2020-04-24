@@ -6,10 +6,12 @@ export default class offerTile extends Component {
 
     render() {
         return (
-            <Link to={"/offer/"+this.props.id} className="offer">
-                {this.props.img === undefined ? <></> : <img alt="offer" width="130" height="250" src={this.props.img}/>}
-                <span><h3>{this.props.name}</h3> - <em>{this.props.dist}</em> </span>
-                <p>{this.props.desc}</p>
+            <Link to={"/offer/"+this.props.id}>
+                <div className="offer">
+                    {this.props.img === undefined ? <></> : <img alt="offer" width="130" height="250" src={this.props.img}/>}
+                    <span><h3>{this.props.name}</h3> - <em>{this.props.dist}</em> </span>
+                    <p>{this.props.desc}</p>
+                </div>
             </Link>
         )
     }
