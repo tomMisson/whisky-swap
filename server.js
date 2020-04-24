@@ -104,7 +104,7 @@ app.get('/offers', function (req, res) {
             if (err) throw err;
             var dbo = db.db("whisky-swap");
             dbo.collection("offers").find({}).toArray()
-                    .then(docs => res.json(docs))
+                .then(docs => res.json(docs))
                   
         }
         catch(err){
@@ -122,7 +122,7 @@ app.get('/offers/:id', function (req, res) {
             var o_id = new mongo.ObjectID(id);
 -
             dbo.collection("offers").findOne({_id: o_id})
-                    .then(docs => res.json(docs))
+                .then(docs => res.json(docs))
                   
         }
         catch(err){
