@@ -196,10 +196,9 @@ export default class profile extends Component {
             return (
                 <main>
                     <h2>Welcome back, {sessionStorage.getItem("name")}</h2>
-
                     <h3>Your offerings:</h3>
-                    <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
                     <button onClick={this.handleSignOut}>Sign out</button>
+                    <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
                 </main>
             )
         }
