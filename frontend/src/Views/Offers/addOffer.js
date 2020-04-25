@@ -78,7 +78,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="ABV">
                         ABV: 
-                        <input required type="number" step="0.1" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
+                        <input type="number" step="0.1" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
                         %
                     </label>
                     <br/>
