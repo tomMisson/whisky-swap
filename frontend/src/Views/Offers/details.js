@@ -25,6 +25,7 @@ export default class details extends Component {
         try{
             var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
             console.log(response.status)
+            alert("Successfully withdrew offer")
             window.location.replace(process.env.REACT_APP_APP_URL.concat("/browse"))
         }
         catch(err)
