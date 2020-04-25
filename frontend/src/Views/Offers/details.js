@@ -48,7 +48,7 @@ export default class details extends Component {
                     <img src={this.state.details.image} alt="offered drink"/> 
                     : <></>
                 }   
-                <h1>{this.state.details.name} - {this.state.details.abv}%</h1>
+                <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : <></>}</h1>
                 <h2>{this.state.details.distillery}</h2>
                 <p>{this.state.details.details}</p>
 
