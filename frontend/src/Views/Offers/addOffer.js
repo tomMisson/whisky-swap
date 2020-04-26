@@ -95,7 +95,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="details">
                         Tasting notes / other details: 
-                        <textarea name="details" id="details" placeholder="Makes a great highball" value={this.state.details} onChange={this.handleFormFields}/>
+                        <textarea name="details" id="details" placeholder="" value={this.state.details} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
                     <label htmlFor="image">

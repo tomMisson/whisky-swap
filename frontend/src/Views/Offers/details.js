@@ -26,12 +26,16 @@ export default class details extends Component {
             var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
             console.log(response.status)
             alert("Successfully withdrew offer")
-            window.location.replace(process.env.REACT_APP_APP_URL.concat("/browse"))
+            window.location.replace(process.env.REACT_APP_APP_URL.concat("/"))
         }
         catch(err)
         {
             alert("Unable to withdraw trade" +err)
         }
+    }
+
+    async editTrade(){
+        window.location.replace(process.env.REACT_APP_APP_URL.concat("/"))
     }
 
     async getDetails(){
@@ -55,8 +59,13 @@ export default class details extends Component {
 
                 {
                     this.state.details.UID === sessionStorage.getItem("UID") ?
-                    <button onClick={this.withdrawTrade}>Withdraw trade</button>
+                    <>
+                        <button onClick={this.withdrawTrade}>Withdraw trade</button>
+                        <button onClick={this.editTrade}>Edit trade</button>
+                    </>
                     :<></>
+
+
                 }
             </main>
         )
