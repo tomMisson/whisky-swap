@@ -142,12 +142,12 @@ export default class profile extends Component {
                         <br/>
                         <label htmlFor="addrLn1">
                             Address Line 1:
-                            <input required type="text" name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
+                            <input type="text" name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
                         </label>
                         <br/>
                         <label htmlFor="postcode">
                             Postcode:
-                            <input required type="text" name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
+                            <input type="text" name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
                         </label>
                         <br/>
                         <label htmlFor="preferedDelivery">
@@ -161,7 +161,7 @@ export default class profile extends Component {
                         <br/>
                         <label htmlFor="url">
                             URL to profile pic:
-                            <input required type="url" name="url" id="url" value={this.state.url} onChange={this.handleForm}/>
+                            <input type="url" name="url" id="url" value={this.state.url} onChange={this.handleForm}/>
                         </label>
                         <br/>
                         <input type="submit" value="Submit"/>
