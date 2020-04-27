@@ -35,7 +35,7 @@ export default class details extends Component {
     }
 
     async editTrade(){
-        window.location.replace(process.env.REACT_APP_APP_URL.concat("/"))
+        window.location.replace(process.env.REACT_APP_APP_URL.concat("/edit/offer/"))
     }
 
     async getDetails(){
@@ -64,8 +64,6 @@ export default class details extends Component {
                         <button onClick={this.editTrade}>Edit trade</button>
                     </>
                     :null
-
-
                 }
             </main>
         )

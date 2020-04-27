@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from "./Views/Partials/header"
 import Footer from "./Views/Partials/footer"
 import Profile from "./Views/Account/signIn-Up"
@@ -16,7 +16,7 @@ ReactDOM.render(
       {id:0,text:"Your offers", uri:'/'},
       {id:1,text:"Browse offers", uri:'/browse'}
     ]}/>
-      
+        <Switch>
         <Route exact={true} path='/browse' render={() => (
               <div className="App">
                 <h2>Avalible for trading</h2>
@@ -38,6 +38,7 @@ ReactDOM.render(
             <Details />
           </div>
         )}/>
+        </Switch>
     <Footer/>
   </React.StrictMode>
   </BrowserRouter>,
