@@ -5,16 +5,16 @@ export default class header extends Component {
     render() {
         return (
             <header>
-                <h1>Whisky swap</h1>
+                <h1>Doorstep drams</h1>
                 <nav>
                     <ul>
                         {
-                            sessionStorage.getItem("UID") !== undefined ? 
+                            sessionStorage.getItem("loggedIn") ? 
                             this.props.links.map((link) => 
                                 <li key={link.id}><Link to={link.uri}>{link.text}</Link></li>
                             )
                             :
-                            <></>
+                            null
                         }
                     </ul>
                 </nav>

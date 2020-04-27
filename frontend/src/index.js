@@ -20,7 +20,7 @@ ReactDOM.render(
         <Route exact={true} path='/browse' render={() => (
               <div className="App">
                 <h2>Avalible for trading</h2>
-                <AvalibleTrades />
+                <AvalibleTrades filter=""/>
               </div>
             )}/>
         <Route exact={true} path='/' render={() => (

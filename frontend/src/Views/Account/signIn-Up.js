@@ -90,9 +90,9 @@ export default class profile extends Component {
             try{
                 var response = await fetch(process.env.REACT_APP_API_URL.concat("/login"), requestOptions);
                 response = await response.json();
-                console.log(response)
-                sessionStorage.setItem("UID", response.UID)
+                sessionStorage.setItem("UID", response.UID);
                 sessionStorage.setItem("loggedIn", true);
+
                 window.location.reload()
             }
             catch(err)
@@ -112,6 +112,12 @@ export default class profile extends Component {
         var currentVal = this.state.signingUp
         this.setState({signingUp:!currentVal});
         this.forceUpdate();
+    }
+
+    async returnName(){
+        var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")));
+        response = await response.json();
+        this.setState({name:response.name.split(" ")[0]});
     }
 
     render() {
@@ -195,7 +201,7 @@ export default class profile extends Component {
         else{
             return (
                 <main>
-                    <h2>Welcome back, {sessionStorage.getItem("name")}</h2>
+                    <h2>Welcome back, {this.state.name}</h2>
                     <h3>Your offerings:</h3>
                     <button onClick={this.handleSignOut}>Sign out</button>
                     <AvalibleTrades filter={sessionStorage.getItem("UID")}/>

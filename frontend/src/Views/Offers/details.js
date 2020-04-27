@@ -51,9 +51,9 @@ export default class details extends Component {
                 {
                     this.state.details.image !== undefined ?  
                     <img src={this.state.details.image} alt="offered drink"/> 
-                    : <></>
+                    : null
                 }   
-                <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : <></>}</h1>
+                <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
                 <h2>{this.state.details.distillery}</h2>
                 <p>{this.state.details.details}</p>
 
@@ -63,7 +63,7 @@ export default class details extends Component {
                         <button onClick={this.withdrawTrade}>Withdraw trade</button>
                         <button onClick={this.editTrade}>Edit trade</button>
                     </>
-                    :<></>
+                    :null
 
 
                 }
