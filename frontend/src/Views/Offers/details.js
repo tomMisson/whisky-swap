@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import $ from "jquery"
 
 export default class details extends Component {
 
@@ -56,15 +55,15 @@ export default class details extends Component {
     handleSubmit = async (event) =>{
         event.preventDefault();
 
-        if(this.state.name !== this.state.details.name)
+        if(this.state.name === "")
             this.setState({name:this.state.details.name})
-        else if(this.state.distillery !== this.state.details.distillery)
+        else if(this.state.distillery === "")
             this.setState({distillery:this.state.details.distillery})
-        else if(this.state.abv !== this.state.details.abv)
+        else if(this.state.abv === 0)
             this.setState({abv:this.state.details.abv})
-        else if(this.state.type !== this.state.details.type)
+        else if(this.state.type === "")
             this.setState({type:this.state.details.type})
-        else if(this.state.detailsTxt !== this.state.details.details)
+        else if(this.state.details === "")
             this.setState({detailsTxt:this.state.details.detailsTxt})
 
         const requestOptions = {
