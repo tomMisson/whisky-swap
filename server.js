@@ -161,7 +161,7 @@ app.put('/offers/:id', function (req, res) {
             dbo.collection("offers").updateOne({_id:o_id}, 
                 { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details} }
                 )
-                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(404))
+                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
                   
         }
         catch(err){
