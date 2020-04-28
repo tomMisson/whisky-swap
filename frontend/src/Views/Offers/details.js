@@ -9,7 +9,7 @@ export default class details extends Component {
         name: "",
         type: "",
         abv: 0,
-        detailsTxt: "",
+        deets: "",
         distillery: "",
     }
 
@@ -63,8 +63,8 @@ export default class details extends Component {
             this.setState({abv:this.state.details.abv})
         else if(this.state.type === "")
             this.setState({type:this.state.details.type})
-        else if(this.state.details === "")
-            this.setState({detailsTxt:this.state.details.detailsTxt})
+        else if(this.state.deets === "")
+            this.setState({deets:this.state.details.details})
 
         const requestOptions = {
             crossDomain: true,
@@ -74,7 +74,7 @@ export default class details extends Component {
                 name:this.state.name,
                 distillery:this.state.distillery,
                 type:this.state.type,
-                details:this.state.details,
+                details:this.state.deets,
                 abv:this.state.abv
             })
         };
@@ -115,8 +115,8 @@ export default class details extends Component {
             case "type":
                 this.setState({type: event.target.value});
                 break;
-            case "detailsTxt":
-                this.setState({detailsTxt: event.target.value});
+            case "deets":
+                this.setState({deets: event.target.value});
                 break;
             default:
         }
@@ -156,7 +156,7 @@ export default class details extends Component {
                     <br/>
                     <label htmlFor="details">
                         Tasting notes / other details: 
-                        <textarea name="details" id="detailsTxt" placeholder={this.state.details.details} value={this.state.detailsTxt} onChange={this.handleFormFields}/>
+                        <textarea name="details" id="deets" placeholder={this.state.details.details} value={this.state.deets} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
                     <button type="submit" id="Add">Update</button>
@@ -174,7 +174,7 @@ export default class details extends Component {
                 }   
                 <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
                 <h2>{this.state.details.distillery}</h2>
-                <p>{this.state.details.details !== null ? null: this.state.details.details  }</p>
+                <p>{this.state.details.details !== null ? this.state.details.details: null }</p>
 
                 {
                     this.state.details.UID === sessionStorage.getItem("UID") ?
