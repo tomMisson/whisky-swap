@@ -148,5 +148,28 @@ app.delete('/offers/:id', function (req, res) {
         }
     });
 })
+
+app.put('/offers/:id', function (req, res) {
+    const id = req.params.id;
+    const document = req.body
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+-
+            dbo.collection("offers").updateOne({_id:o_id}, 
+                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details} }
+                )
+                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(404))
+                  
+        }
+        catch(err){
+            console.log(JSON.stringify(document))
+            console.log(err)
+            res.sendStatus(500);
+        }
+    });
+})
   
 app.listen(process.env.PORT)
