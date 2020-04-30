@@ -105,7 +105,6 @@ app.get('/offers', function (req, res) {
             var dbo = db.db("whisky-swap");
             dbo.collection("offers").find({}).toArray()
                 .then(docs => res.json(docs))
-                  
         }
         catch(err){
             res.sendStatus(500);
