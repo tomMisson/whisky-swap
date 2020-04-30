@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(cors());
 
 app.get('/', (req,res) => {
-    res.sendStatus(200);
+    res.json({DBURI:uri});
 })
 
 /// AUTHENTICATE
