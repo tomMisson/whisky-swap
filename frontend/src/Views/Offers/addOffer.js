@@ -23,7 +23,7 @@ export default class addOffer extends Component {
             body: JSON.stringify(this.state)
         };
         try{
-            var response = await fetch("http://localhost:3001/offers", requestOptions);
+            var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers"), requestOptions);
             if(response.status===200)
             {
                 alert("New offer added!");
