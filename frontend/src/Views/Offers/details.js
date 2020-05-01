@@ -127,66 +127,73 @@ export default class details extends Component {
 
     render() {
         return(
-            this.state.editMode ?
-            <main>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="name">
-                        Name of bottle: 
-                        <input type="text" name="name" id="name" placeholder={this.state.details.name} value={this.state.name} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="distillery">
-                        Distillery: 
-                        <input type="text" name="distillery" id="distillery" placeholder={this.state.details.distillery} value={this.state.distillery} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="ABV">
-                        ABV: 
-                        <input type="number" step="0.1" name="AVB" id="abv" placeholder={this.state.details.abv} value={this.state.abv} onChange={this.handleFormFields}/>
-                        %
-                    </label>
-                    <br/>
-                    <label htmlFor="type">
-                        Type: 
-                        <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
-                            <option defaultValue={this.state.details.type}></option>
-                            <option value="Single Malt">Single Malt</option>
-                            <option value="Blended Malt">Blended Malt</option>
-                            <option value="Single Grain">Single Grain</option>
-                            <option value="Blended Grain">Blended Grain</option>
-                        </select>
-                    </label>
-                    <br/>
-                    <label htmlFor="details">
-                        Tasting notes / other details: 
-                        <textarea name="details" id="deets" placeholder={this.state.details.details} value={this.state.deets} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <button type="submit" id="Add">Update</button>
-                </form>
-                {this.state.editMode ?
-                <button onClick={this.toggleEdit}>Back</button>:null
-                }
-            </main>
+            sessionStorage.getItem("loggedIn") ?
+                this.state.editMode ?
+                <main>
+                    <form onSubmit={this.handleSubmit}>
+                        <label htmlFor="name">
+                            Name of bottle: 
+                            <input type="text" name="name" id="name" placeholder={this.state.details.name} value={this.state.name} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="distillery">
+                            Distillery: 
+                            <input type="text" name="distillery" id="distillery" placeholder={this.state.details.distillery} value={this.state.distillery} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="ABV">
+                            ABV: 
+                            <input type="number" step="0.1" name="AVB" id="abv" placeholder={this.state.details.abv} value={this.state.abv} onChange={this.handleFormFields}/>
+                            %
+                        </label>
+                        <br/>
+                        <label htmlFor="type">
+                            Type: 
+                            <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
+                                <option defaultValue={this.state.details.type}></option>
+                                <option value="Single Malt">Single Malt</option>
+                                <option value="Blended Malt">Blended Malt</option>
+                                <option value="Single Grain">Single Grain</option>
+                                <option value="Blended Grain">Blended Grain</option>
+                            </select>
+                        </label>
+                        <br/>
+                        <label htmlFor="details">
+                            Tasting notes / other details: 
+                            <textarea name="details" id="deets" placeholder={this.state.details.details} value={this.state.deets} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <button type="submit" id="Add">Update</button>
+                    </form>
+                    {this.state.editMode ?
+                    <button onClick={this.toggleEdit}>Back</button>:null
+                    }
+                </main>
+                :
+                <main>
+                    {
+                        this.state.details.image !== undefined ?  
+                        <img src={this.state.details.image} alt="offered drink"/> 
+                        : null
+                    }   
+                    <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
+                    <h2>{this.state.details.distillery}</h2>
+                    <p>{this.state.details.details !== null ? this.state.details.details: null }</p>
+
+                    {
+                        this.state.details.UID === sessionStorage.getItem("UID") ?
+                        <>
+                            <button onClick={this.withdrawTrade}>Withdraw trade</button>
+                            <button onClick={this.toggleEdit}>Edit trade</button>
+                        </>
+                        :null
+                    }
+                </main>
             :
             <main>
-                {
-                    this.state.details.image !== undefined ?  
-                    <img src={this.state.details.image} alt="offered drink"/> 
-                    : null
-                }   
-                <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
-                <h2>{this.state.details.distillery}</h2>
-                <p>{this.state.details.details !== null ? this.state.details.details: null }</p>
-
-                {
-                    this.state.details.UID === sessionStorage.getItem("UID") ?
-                    <>
-                        <button onClick={this.withdrawTrade}>Withdraw trade</button>
-                        <button onClick={this.toggleEdit}>Edit trade</button>
-                    </>
-                    :null
-                }
+                <h1> Oh no! you don't have an account!</h1>
+                <p>To see the full details of what people have to offer and to place a trade, you have to have an account... </p>
+                <p>You can <a href="/sign-up">sign up here</a> to see details and find out more! Alternativly, if you have an account, <a href="/sign-in">sign in</a> here or sign up with Facebook</p>
             </main>
         )
     }
