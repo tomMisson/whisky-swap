@@ -107,7 +107,7 @@ app.get('/offers', function (req, res) {
                 .then(docs => res.json(docs))
         }
         catch(err){
-            res.json({debug:err});
+            res.sendStatus(500);
         }
     });
 })
