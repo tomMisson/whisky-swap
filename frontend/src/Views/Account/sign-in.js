@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 export default class profile extends Component {
 
@@ -90,7 +91,8 @@ export default class profile extends Component {
                         <br/>
                         <input type="submit" value="Submit"/>
                     </form>
-                    <button onClick={this.toggleSignUp}>Sign Up</button>
+                    <Link to="/sign-up">Don't have an account?</Link><br/>
+                    <Link to="/forgot">Forgotten something?</Link>
                 </main>
             )
         }
