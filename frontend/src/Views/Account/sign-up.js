@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AvalibleTrades from '../Offers/avalibleTrades';
 
 export default class profile extends Component {
 
@@ -7,9 +6,6 @@ export default class profile extends Component {
         super(props);
     
         this.state={
-            loggedIn: sessionStorage.getItem("loggedIn"),
-            signingUp: false,
-            name:"",
         }
 
         this.handleForm = this.handleForm.bind(this);
@@ -102,22 +98,10 @@ export default class profile extends Component {
         }
     }
 
-    handleSignOut()
-    {
-        sessionStorage.clear()
-        window.location.reload()
-    }
-
     toggleSignUp(event){
         var currentVal = this.state.signingUp
         this.setState({signingUp:!currentVal});
         this.forceUpdate();
-    }
-
-    async returnName(){
-        var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")));
-        response = await response.json();
-        this.setState({name:response.name.split(" ")[0]});
     }
 
     render() {
@@ -173,38 +157,6 @@ export default class profile extends Component {
                         <input type="submit" value="Submit"/>
                     </form>
                     <button onClick={this.toggleSignUp}>Back</button>
-                </main>
-            )
-        }
-        if(!this.state.loggedIn)
-        {
-            return (
-                <main>
-                    <h2>Login</h2>
-                    <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="email">
-                            Email:
-                            <input required type="text" id="email" value={this.state.email} onChange={this.handleForm}/>
-                        </label>
-                        <br/>
-                        <label htmlFor="pswd">
-                            Password:
-                            <input required type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
-                        </label>
-                        <br/>
-                        <input type="submit" value="Submit"/>
-                    </form>
-                    <button onClick={this.toggleSignUp}>Sign Up</button>
-                </main>
-            )
-        }
-        else{
-            return (
-                <main>
-                    <h2>Welcome back, {this.state.name}</h2>
-                    <h3>Your offerings:</h3>
-                    <button onClick={this.handleSignOut}>Sign out</button>
-                    <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
                 </main>
             )
         }

@@ -52,19 +52,22 @@ export default class details extends Component {
         this.render()
     }
 
-    handleSubmit = async (event) =>{
-        event.preventDefault();
-
+    agrigateData(){
         if(this.state.name === "")
             this.setState({name:this.state.details.name})
-        else if(this.state.distillery === "")
+        if(this.state.distillery === "")
             this.setState({distillery:this.state.details.distillery})
-        else if(this.state.abv === 0)
+        if(this.state.abv === 0)
             this.setState({abv:this.state.details.abv})
-        else if(this.state.type === "")
+        if(this.state.type === "")
             this.setState({type:this.state.details.type})
-        else if(this.state.deets === "")
+        if(this.state.deets === "")
             this.setState({deets:this.state.details.details})
+    }
+
+    handleSubmit = async (event) =>{
+        event.preventDefault();
+        await this.agrigateData()
 
         const requestOptions = {
             crossDomain: true,
