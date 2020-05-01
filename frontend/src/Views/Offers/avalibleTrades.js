@@ -27,7 +27,7 @@ export default class avalibleTrades extends Component {
                 {this.props.filter !== "" ? 
                 <>
                     <Link to="add-offer">
-                        Add offer +
+                        Share a dram!
                     </Link>
                     <br/>
                     {
