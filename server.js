@@ -119,8 +119,7 @@ app.get('/offers/:id', function (req, res) {
             if (err) throw err;
             var dbo = db.db("whisky-swap");
             var o_id = new mongo.ObjectID(id);
--
-            dbo.collection("offers").find({_id: o_id}).toArray()
+            dbo.collection("offers").find({_id: o_id})
                 .then(docs => res.json(docs))
                   
         }

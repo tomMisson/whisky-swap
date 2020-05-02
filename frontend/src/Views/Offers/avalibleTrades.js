@@ -27,11 +27,11 @@ export default class avalibleTrades extends Component {
                 {this.props.filter !== "" ? 
                 <>
                     <Link to="add-offer">
-                        Share a dram!
+                        Add a dram!
                     </Link>
                     <br/>
                     {
-                        this.state.offers === [] || this.state.offers === null? 
+                        this.state.offers.length === 0 ? 
                         <p>It looks like you have <strong>no offers!</strong> <Link to="add-offer">Share a dram</Link> to be able to trade!</p>
                         :
                         this.state.offers.map((offer) => 

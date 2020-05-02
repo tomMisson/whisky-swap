@@ -46,9 +46,25 @@ export default class details extends Component {
         }
     }
 
+    async proposeTrade(){
+        var res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+sessionStorage.getItem("UID")))
+        res = res.json();
+        if (res.body.length === 0)
+        {
+            alert("Can't trade yet!")
+        }
+    }
+
     async getDetails(){
-        var details = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]))
+        const requestOptions = {
+            crossDomain:true,
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json',  'Access-Control-Allow-Origin':true}
+        };
+        const api_URL= process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4])
+        var details = await fetch(api_URL, requestOptions)
         details = await details.json()
+        console.log(details)
         this.setState({details: details})
         this.render()
     }
@@ -187,7 +203,10 @@ export default class details extends Component {
                             <button onClick={this.withdrawTrade}>Withdraw trade</button>
                             <button onClick={this.toggleEdit}>Edit trade</button>
                         </>
-                        :null
+                        :
+                        <>
+                            <button onClick={this.proposeTrade}>Edit trade</button>
+                        </>
                     }
                 </main>
             :
