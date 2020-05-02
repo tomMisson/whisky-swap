@@ -112,14 +112,14 @@ app.get('/offers', function (req, res) {
     });
 })
 
-app.get('/offers/:id', function (req, res) {
-    const id = req.params.id;
+app.get('/offers/:offerId', function (req, res) {
     client.connect(function(err, db) {
         try{
             if (err) throw err;
+            const id = req.params.offerId;
             var dbo = db.db("whisky-swap");
-            var o_id = new mongo.ObjectID(id);
-            dbo.collection("offers").find({_id: o_id})
+
+            dbo.collection("offers").find({_id: id}).toArray()
                 .then(docs => res.json(docs))
                   
         }

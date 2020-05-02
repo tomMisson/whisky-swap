@@ -64,8 +64,7 @@ export default class details extends Component {
         const api_URL= process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4])
         var details = await fetch(api_URL, requestOptions)
         details = await details.json()
-        console.log(details)
-        this.setState({details: details})
+        this.setState({details: details[0]})
         this.render()
     }
 
