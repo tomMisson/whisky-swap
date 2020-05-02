@@ -16,16 +16,23 @@ ReactDOM.render(
   <BrowserRouter>
   <React.StrictMode>
     <Header links={[
-      {id:0,text:"Your drams", uri:'/account', signInNeeded:true},
+      {id:0,text:"Your drams", uri:'/your-drams', signInNeeded:true},
       {id:1,text:"Avalible drams", uri:'/browse', signInNeeded:false},
       {id:2,text:"Sign in", uri:'/sign-in', signInNeeded:false},
       {id:3,text:"Avalible drams", uri:'/browse', signInNeeded:true},
+      {id:4,text:"Account", uri:'/account', signInNeeded:true},
     ]}/>
     <Switch>
         <Route exact={true} path='/browse' render={() => (
               <div className="App">
                 <h2>Avalible for trading</h2>
                 <AvalibleTrades filter=""/>
+              </div>
+            )}/>
+        <Route exact={true} path='/your-drams' render={() => (
+              <div className="App">
+                <h2>Your drams</h2>
+                <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
               </div>
             )}/>
         <Route exact={true} path='/account' render={() => (
