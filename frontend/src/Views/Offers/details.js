@@ -48,10 +48,10 @@ export default class details extends Component {
 
     async proposeTrade(){
         var res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+sessionStorage.getItem("UID")))
-        res = res.json();
-        if (res.body.length === 0)
+        res = await res.json();
+        if(res.length === 0)
         {
-            alert("Can't trade yet!")
+            alert("You aren't currently sharing any drams so you can't propose a trade. Add a dram to start trading with others")
         }
     }
 
@@ -204,7 +204,7 @@ export default class details extends Component {
                         </>
                         :
                         <>
-                            <button onClick={this.proposeTrade}>Edit trade</button>
+                            <button onClick={this.proposeTrade}>Propose trade</button>
                         </>
                     }
                 </main>
