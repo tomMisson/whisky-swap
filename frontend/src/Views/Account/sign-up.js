@@ -63,18 +63,20 @@ export default class profile extends Component {
             )
         };
         var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles"), requestOptions)
-        if(res.status === 200)
+        res = await res.json()
+        console.log(res)
+        if(res === 409)
+        {
+            alert("There is already an account registered with that email address. If you belive this isn't the case, please contact support")
+            window.location.replace(process.env.REACT_APP_APP_URL+"/sign-in")
+        }
+        else if(res !== 409)
         { 
-            res = await res.json()
+            console.log(res)
             sessionStorage.setItem("UID", res.UID)
             sessionStorage.setItem("loggedIn", true)
             alert("Signed up!")
             window.location.replace(process.env.REACT_APP_APP_URL+"/account")
-        }
-        else if(res.status === 409)
-        {
-            alert("There is already an account registered with that email address. If you belive this isn't the case, please contact support")
-            window.location.replace(process.env.REACT_APP_APP_URL+"/sign-in")
         }
         else
         {
