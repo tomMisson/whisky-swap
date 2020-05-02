@@ -55,6 +55,9 @@ export default class addOffer extends Component {
             case "image":
                 this.setState({image: event.target.value});
                 break;
+            case "bottler":
+                this.setState({bottler: event.target.value});
+                break;
             default:
         }
     }
@@ -76,6 +79,11 @@ export default class addOffer extends Component {
                         <input required type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
+                    <label htmlFor="bottler">
+                        Bottler: 
+                        <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
+                    </label>
+                    <br/>
                     <label htmlFor="ABV">
                         ABV: 
                         <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
@@ -94,7 +102,7 @@ export default class addOffer extends Component {
                     </label>
                     <br/>
                     <label htmlFor="details">
-                        Tasting notes / other details: 
+                        Other details: 
                         <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
