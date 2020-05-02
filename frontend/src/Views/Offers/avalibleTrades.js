@@ -10,7 +10,7 @@ export default class avalibleTrades extends Component {
 
     async fetchOffers(){
         var res;
-        res = this.props.filter === "" ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+sessionStorage.getItem("UID")))
+        res = this.props.filter === "" ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+sessionStorage.getItem("UID")))
         res = await res.json()
         this.setState({offers: res})
     } 

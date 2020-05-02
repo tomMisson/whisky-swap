@@ -130,6 +130,23 @@ app.get('/offers/:id', function (req, res) {
     });
 })
 
+app.get('/user-offers/:uid', function (req, res) {
+    const id = req.params.uid;
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("offers").find({UID: id}).toArray()
+                .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
 app.delete('/offers/:id', function (req, res) {
     const id = req.params.id;
     client.connect(function(err, db) {
