@@ -194,6 +194,11 @@ export default class details extends Component {
                     }   
                     <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
                     <h2>{this.state.details.distillery}</h2>
+                    {
+                        this.state.details.bottler !== undefined ?  
+                        <h2>{this.state.details.bottler}</h2> 
+                        : null
+                    }   
                     <p>{this.state.details.details !== null ? this.state.details.details: null }</p>
 
                     {
