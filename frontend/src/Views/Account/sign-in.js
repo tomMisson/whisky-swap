@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import hash from 'hash.js'
 
 export default class profile extends Component {
 
@@ -54,7 +55,7 @@ export default class profile extends Component {
             body: JSON.stringify(
                 {
                     "email": this.state.email,
-                    "pswd": this.state.pswd,
+                    "pswd": hash.sha256().update(this.state.pswd).digest('hex'),
                 }
             )
         };

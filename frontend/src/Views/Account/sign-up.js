@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import hash from 'hash.js'
 
 export default class profile extends Component {
 
@@ -53,7 +54,7 @@ export default class profile extends Component {
                 {
                     "name":this.state.name,
                     "email": this.state.email,
-                    "pswd": this.state.pswd,
+                    "pswd": hash.sha256().update(this.state.pswd).digest('hex'),
                     "phone": this.state.phone,
                     "address line 1": this.state.line1Address,
                     "postcode" : this.state.postcode,
@@ -61,13 +62,24 @@ export default class profile extends Component {
                 }
             )
         };
-        await fetch(process.env.REACT_APP_API_URL.concat("/profiles"), requestOptions)
-            .then(res => {return res.json()})
-            .then(response => sessionStorage.setItem("UID", response.UID))
-            .then(sessionStorage.setItem("loggedIn", true))
-            .then(alert("Signed up!"))
-            .then(window.location.replace(process.env.REACT_APP_APP_URL+"/account"))
-            .catch(err => alert("Something went wrong"))
+        var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles"), requestOptions)
+        if(res.status === 200)
+        { 
+            res = await res.json()
+            sessionStorage.setItem("UID", res.UID)
+            sessionStorage.setItem("loggedIn", true)
+            alert("Signed up!")
+            window.location.replace(process.env.REACT_APP_APP_URL+"/account")
+        }
+        else if(res.status === 409)
+        {
+            alert("There is already an account registered with that email address. If you belive this isn't the case, please contact support")
+            window.location.replace(process.env.REACT_APP_APP_URL+"/sign-in")
+        }
+        else
+        {
+            alert("Encountered an unexpected error");
+        }
     
     }
 

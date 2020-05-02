@@ -52,9 +52,17 @@ app.post('/profiles', function (req, res) {
             if (err) throw err;
             var dbo = db.db("whisky-swap");
 
-            dbo.collection("users").insertOne(data)
-                .then(result => res.json({UID: result.insertedId}));            
-        }
+            dbo.collection("users").findOne({email: data.email})
+            .then(result => {
+                if(result!=null)
+                    res.json(409);
+                else
+                {
+                    dbo.collection("users").insertOne(data)
+                    .then(result => res.json({UID: result.insertedId}));
+                }
+            });    
+        } 
         catch(err){
             res.sendStatus(500);
         }
