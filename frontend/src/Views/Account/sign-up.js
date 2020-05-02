@@ -10,7 +10,6 @@ export default class profile extends Component {
 
         this.handleForm = this.handleForm.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.toggleSignUp = this.toggleSignUp.bind(this);
     }
 
     handleForm(event){
@@ -129,7 +128,7 @@ export default class profile extends Component {
                     <br/>
                     <input type="submit" value="Submit"/>
                 </form>
-                <button onClick={this.toggleSignUp}>Back</button>
+                <a href="/">Back</a>
             </main>
         )
     }
