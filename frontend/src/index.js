@@ -58,6 +58,11 @@ ReactDOM.render(
             <Details />
           </div>
         )}/>
+        <Route path='/forgot' render={() => (
+          <div className="App">
+            <h1>Forgot your password?</h1>
+          </div>
+        )}/>
         </Switch>
     <Footer/>
   </React.StrictMode>

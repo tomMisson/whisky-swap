@@ -97,7 +97,7 @@ export default class profile extends Component {
             )
         }
         else{
-            window.location.replace(process.env.REACT_APP_APP_URL+"/browse")
+            window.location.replace(process.env.REACT_APP_APP_URL+"/account")
         }
     }
 }
