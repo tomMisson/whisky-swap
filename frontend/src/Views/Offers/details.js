@@ -193,7 +193,7 @@ export default class details extends Component {
             <main>
                 <h1> Oh no! you don't have an account!</h1>
                 <p>To see the full details of what people have to offer and to place a trade, you have to have an account... </p>
-                <p>You can <a href="/sign-up">sign up here</a> to see details and find out more! Alternativly, if you have an account, <a href="/sign-in">sign in</a> here or sign up with Facebook</p>
+                <p>You can <Link to="/sign-up">sign up here</Link> to see details and find out more! Alternativly, if you have an account, <Link to="/sign-in">sign in</Link> here or sign up with Facebook</p>
             </main>
         )
     }
