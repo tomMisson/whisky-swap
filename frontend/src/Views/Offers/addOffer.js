@@ -68,17 +68,17 @@ export default class addOffer extends Component {
 
                     <label htmlFor="name">
                         Name of bottle: 
-                        <input required type="text" name="name" id="name" placeholder="105" value={this.state.name} onChange={this.handleFormFields}/>
+                        <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
                     <label htmlFor="distillery">
                         Distillery: 
-                        <input required type="text" name="distillery" id="distillery" placeholder="Glenfarclas" value={this.state.distillery} onChange={this.handleFormFields}/>
+                        <input required type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
                     <label htmlFor="ABV">
                         ABV: 
-                        <input type="number" step="0.1" name="AVB" id="abv" placeholder="60" value={this.state.abv} onChange={this.handleFormFields}/>
+                        <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
                         %
                     </label>
                     <br/>
@@ -95,7 +95,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="details">
                         Tasting notes / other details: 
-                        <textarea name="details" id="details" placeholder="" value={this.state.details} onChange={this.handleFormFields}/>
+                        <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
                     <label htmlFor="image">
