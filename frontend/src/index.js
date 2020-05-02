@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from "./Views/Partials/header"
 import Footer from "./Views/Partials/footer"
 import SignIn from "./Views/Account/sign-in"
@@ -21,6 +21,7 @@ ReactDOM.render(
       {id:2,text:"Sign in", uri:'/sign-in', signInNeeded:false},
       {id:3,text:"Avalible drams", uri:'/browse', signInNeeded:true},
     ]}/>
+    <Switch>
         <Route exact={true} path='/browse' render={() => (
               <div className="App">
                 <h2>Avalible for trading</h2>
@@ -62,6 +63,7 @@ ReactDOM.render(
             <h1>Forgot your password?</h1>
           </div>
         )}/>
+      </Switch>
     <Footer/>
   </React.StrictMode>
   </BrowserRouter>,
