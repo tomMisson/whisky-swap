@@ -34,7 +34,7 @@ export default class details extends Component {
             if(response.status === 200)
             {
                 alert("Successfully withdrew offer")
-                window.location.replace(process.env.REACT_APP_APP_URL.concat("/"))
+                window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
             }
             else{
                 alert("Something went wrong, please try again")
@@ -83,7 +83,7 @@ export default class details extends Component {
 
     handleSubmit = async (event) =>{
         event.preventDefault();
-        await this.agrigateData()
+        this.agrigateData()
 
         const requestOptions = {
             crossDomain: true,
@@ -98,7 +98,7 @@ export default class details extends Component {
             })
         };
         try{
-            var response = await fetch("http://localhost:3001".concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
+            var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
             if(response.status===200)
             {
                 alert("Updated listing")
@@ -166,11 +166,20 @@ export default class details extends Component {
                         <label htmlFor="type">
                             Type: 
                             <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
-                                <option defaultValue={this.state.details.type}></option>
+                                <option defaultValue=""></option>
+                                <option value="Scotch Whisky">Scotch Whisky</option>
+                                <option value="Bourbon Whiskey">Bourbon Whiskey</option>
+                                <option value="Irish Whiskey">Irish Whiskey</option>
                                 <option value="Single Malt">Single Malt</option>
-                                <option value="Blended Malt">Blended Malt</option>
-                                <option value="Single Grain">Single Grain</option>
-                                <option value="Blended Grain">Blended Grain</option>
+                                <option value="Blended Whisey">Blended Whiskey</option>
+                                <option value="Japanese Whiskey">Japansese Whiskey</option>
+                                <option value="Rye Whiskey">Rye Whiskey</option>
+                                <option value="Malt Whiskey">Malt Whiskey</option>
+                                <option value="Canadian Whiskey">Canadian Whiskey</option>
+                                <option value="Tennessee Whiskey">Tennessee Whiskey</option>
+                                <option value="Grain Whiskey">Grain Whiskey</option>
+                                <option value="Blended malt Whiskey">Blended malt Whiskey</option>
+                                <option value="Single pot still Whiskey">Single pot still Whiskey</option>
                             </select>
                         </label>
                         <br/>
@@ -188,9 +197,9 @@ export default class details extends Component {
                 :
                 <main>
                     {
-                        this.state.details.image !== undefined ?  
-                        <img src={this.state.details.image} alt="offered drink"/> 
-                        : null
+                        this.state.details.image === undefined ?  
+                        null
+                        : <img width="200" src={this.state.details.image} alt="offered drink"/> 
                     }   
                     <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
                     <h2>{this.state.details.distillery}</h2>
