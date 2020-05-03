@@ -19,31 +19,35 @@ export default class details extends Component {
     }
 
     async withdrawTrade(){
-        const requestOptions = {
-            crossDomain:true,
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json',  'Access-Control-Allow-Origin':true},
-            body: JSON.stringify(
+
+        if (window.confirm("Are you sure you want to withdraw your trade?") == true) { 
+            const requestOptions = {
+                crossDomain:true,
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json',  'Access-Control-Allow-Origin':true},
+                body: JSON.stringify(
+                    {
+                        _id: window.location.href.split('/')[4]
+                    }
+                )
+            };
+            try{
+                var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
+                if(response.status === 200)
                 {
-                    _id: window.location.href.split('/')[4]
+                    alert("Successfully withdrew offer")
+                    window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
                 }
-            )
-        };
-        try{
-            var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
-            if(response.status === 200)
+                else{
+                    alert("Something went wrong, please try again")
+                }
+            }
+            catch(err)
             {
-                alert("Successfully withdrew offer")
-                window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
+                alert("Unable to withdraw trade" +err)
             }
-            else{
-                alert("Something went wrong, please try again")
-            }
-        }
-        catch(err)
-        {
-            alert("Unable to withdraw trade" +err)
-        }
+        } 
+        else { } 
     }
 
     async proposeTrade(){
