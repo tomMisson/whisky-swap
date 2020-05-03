@@ -35,6 +35,10 @@ export default class addOffer extends Component {
         }
     }
 
+    reset(){
+        this.setState({region:""})
+    }
+
     handleFormFields(event){
         switch (event.target.id){
             case "name":
@@ -53,10 +57,13 @@ export default class addOffer extends Component {
                 this.setState({details: event.target.value});
                 break;
             case "image":
-                this.setState({image: event.target.value});
+                this.setState({file: event.target.files[0]});
                 break;
             case "bottler":
                 this.setState({bottler: event.target.value});
+                break;
+            case "region":
+                this.setState({region: event.target.value});
                 break;
             default:
         }
@@ -68,15 +75,14 @@ export default class addOffer extends Component {
                 <h2>What have you got to offer?</h2>
 
                 <form onSubmit={this.handleSubmit}>
-
+                    <label htmlFor="distillery">
+                        Distillery: 
+                        <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
+                    </label>
+                    <br/>
                     <label htmlFor="name">
                         Name of bottle: 
                         <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="distillery">
-                        Distillery: 
-                        <input required type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
                     </label>
                     <br/>
                     <label htmlFor="bottler">
@@ -94,13 +100,31 @@ export default class addOffer extends Component {
                         Type: 
                         <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
                             <option defaultValue=""></option>
+                            <option value="Scotch Whisky">Scotch Whisky</option>
+                            <option value="Bourbon Whiskey">Bourbon Whiskey</option>
+                            <option value="Irish Whiskey">Irish Whiskey</option>
                             <option value="Single Malt">Single Malt</option>
-                            <option value="Blended Malt">Blended Malt</option>
-                            <option value="Single Grain">Single Grain</option>
-                            <option value="Blended Grain">Blended Grain</option>
+                            <option value="Blended Whisey">Blended Whiskey</option>
+                            <option value="Japanese Whiskey">Japansese Whiskey</option>
+                            <option value="Rye Whiskey">Rye Whiskey</option>
+                            <option value="Malt Whiskey">Malt Whiskey</option>
+                            <option value="Canadian Whiskey">Canadian Whiskey</option>
+                            <option value="Tennessee Whiskey">Tennessee Whiskey</option>
+                            <option value="Grain Whiskey">Grain Whiskey</option>
+                            <option value="Blended malt Whiskey">Blended malt Whiskey</option>
+                            <option value="Single pot still Whiskey">Single pot still Whiskey</option>
                         </select>
                     </label>
                     <br/>
+                    {
+                        this.state.type === "Scotch Whisky" ?
+                        <label htmlFor="region">
+                            Region: 
+                            <input type="text" name="region" id="region" onChange= {this.handleFormFields} />
+                            <br/>
+                        </label>
+                        : this.reset
+                    }
                     <label htmlFor="details">
                         Other details: 
                         <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
@@ -108,7 +132,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="image">
                         Image: 
-                        <input type="url" name="image" id="image" onChange= {this.handleFormFields} />
+                        <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
                     </label>
                     <br/>
                     <button type="submit" id="Add">Add</button>
