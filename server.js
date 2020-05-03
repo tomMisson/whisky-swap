@@ -2,15 +2,23 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const { DefaultAzureCredential } = require("@azure/identity");
+const { BlobServiceClient } = require("@azure/storage-blob");
+var fileupload = require("express-fileupload");
 const mongo = require("mongodb")
 const MongoClient = mongo.MongoClient;
 
-const uri = process.env.DBURI
+const uri = process.env.TESTDB
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express()
 
+const account = "doorstepdramsassets";
+
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(fileupload());
 app.use(cors());
 
 app.get('/', (req,res) => {
@@ -90,19 +98,19 @@ app.get('/profiles/:id', function (req, res) {
 /// OFFERS
 
 app.post('/offers', function (req, res) {
-    const data = req.body;
+    var obj = req.body.data
+    try{var files = req.files.image}
+    catch{}
+    console.log(obj)
 
     client.connect(function(err, db) {
-        try{
-            if (err) throw err;
-            var dbo = db.db("whisky-swap");
+        //data.image = <URL from azure>
+        if (err) throw err;
+        var dbo = db.db("whisky-swap");
 
-            dbo.collection("offers").insertOne(data)
-                .then(res.sendStatus(200));            
-        }
-        catch(err){
-            res.sendStatus(500);
-        }
+        dbo.collection("offers").insertOne(JSON.parse(obj))
+            .then(res.sendStatus(200))
+            .catch(err => res.json({"debug":err}));      
     });
 })
 
@@ -126,8 +134,9 @@ app.get('/offers/:offerId', function (req, res) {
             if (err) throw err;
             const id = req.params.offerId;
             var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
 
-            dbo.collection("offers").find({_id: id}).toArray()
+            dbo.collection("offers").find({_id: o_id}).toArray()
                 .then(docs => res.json(docs))
                   
         }
@@ -182,7 +191,7 @@ app.put('/offers/:id', function (req, res) {
             var o_id = new mongo.ObjectID(id);
 -
             dbo.collection("offers").updateOne({_id:o_id}, 
-                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details} }
+                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details, type: document.type} }
                 )
                 .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
                   
