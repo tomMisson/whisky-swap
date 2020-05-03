@@ -5,12 +5,11 @@ export default class details extends Component {
 
     state ={
         editMode: false,
-        details:[],
         id: window.location.href.split('/')[4],
         name: "",
         type: "",
         abv: 0,
-        deets: "",
+        details: "",
         distillery: "",
     }
 
@@ -20,7 +19,7 @@ export default class details extends Component {
 
     async withdrawTrade(){
 
-        if (window.confirm("Are you sure you want to withdraw your trade?") == true) { 
+        if (window.confirm("Are you sure you want to withdraw your trade?") === true) { 
             const requestOptions = {
                 crossDomain:true,
                 method: 'DELETE',
@@ -68,50 +67,40 @@ export default class details extends Component {
         const api_URL= process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4])
         var details = await fetch(api_URL, requestOptions)
         details = await details.json()
-        this.setState({details: details[0]})
+        details = details[0]
+        this.setState({name: details.name})
+        this.setState({distillery: details.distillery})
+        this.setState({abv: details.abv})
+        this.setState({details: details.details})
+        this.setState({type: details.type})
+        this.setState({image: details.image})
+        this.setState({bottler: details.bottler})
+        this.setState({UID: details.UID})
         this.render()
-    }
-
-    agrigateData(){
-        if(this.state.name === "")
-            this.setState({name:this.state.details.name})
-        if(this.state.distillery === "")
-            this.setState({distillery:this.state.details.distillery})
-        if(this.state.abv === 0)
-            this.setState({abv:this.state.details.abv})
-        if(this.state.type === "")
-            this.setState({type:this.state.details.type})
-        if(this.state.deets === "")
-            this.setState({deets:this.state.details.details})
     }
 
     handleSubmit = async (event) =>{
         event.preventDefault();
-        this.agrigateData()
 
+        var objToSend = this.state
+        delete objToSend.editMode 
         const requestOptions = {
             crossDomain: true,
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin':true},
-            body: JSON.stringify({
-                name:this.state.name,
-                distillery:this.state.distillery,
-                type:this.state.type,
-                details:this.state.deets,
-                abv:this.state.abv
-            })
+            body: JSON.stringify(this.state)
         };
         try{
             var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
             if(response.status===200)
             {
                 alert("Updated listing")
-                this.setState({editMode:false})
+                this.toggleEdit()
                 window.location.reload()
             }
             else if(response.status===304){
                 alert("Did not update")
-                this.setState({editMode:false})
+                this.toggleEdit()
             }
         }
         catch(err){ 
@@ -138,8 +127,8 @@ export default class details extends Component {
             case "type":
                 this.setState({type: event.target.value});
                 break;
-            case "deets":
-                this.setState({deets: event.target.value});
+            case "details":
+                this.setState({details: event.target.value});
                 break;
             default:
         }
@@ -153,17 +142,17 @@ export default class details extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="name">
                             Name of bottle: 
-                            <input type="text" name="name" id="name" placeholder={this.state.details.name} value={this.state.name} onChange={this.handleFormFields}/>
+                            <input type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
                         <label htmlFor="distillery">
                             Distillery: 
-                            <input type="text" name="distillery" id="distillery" placeholder={this.state.details.distillery} value={this.state.distillery} onChange={this.handleFormFields}/>
+                            <input type="text" name="distillery" id="distillery" value={this.state.distillery} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
                         <label htmlFor="ABV">
                             ABV: 
-                            <input type="number" step="0.1" name="AVB" id="abv" placeholder={this.state.details.abv} value={this.state.abv} onChange={this.handleFormFields}/>
+                            <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
                             %
                         </label>
                         <br/>
@@ -189,7 +178,7 @@ export default class details extends Component {
                         <br/>
                         <label htmlFor="details">
                             Tasting notes / other details: 
-                            <textarea name="details" id="deets" placeholder={this.state.details.details} value={this.state.deets} onChange={this.handleFormFields}/>
+                            <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
                         <button type="submit" id="Add">Update</button>
@@ -201,21 +190,18 @@ export default class details extends Component {
                 :
                 <main>
                     {
-                        this.state.details.image === undefined ?  
+                        this.state.image === undefined ?  
                         null
-                        : <img width="200" src={this.state.details.image} alt="offered drink"/> 
+                        : <img width="200" src={this.state.image} alt="offered drink"/> 
                     }   
-                    <h1>{this.state.details.name} {this.state.details.abv !== undefined ? <> - {this.state.details.abv}%</> : null}</h1>
-                    <h2>{this.state.details.distillery}</h2>
-                    {
-                        this.state.details.bottler !== undefined ?  
-                        <h2>{this.state.details.bottler}</h2> 
-                        : null
-                    }   
-                    <p>{this.state.details.details !== null ? this.state.details.details: null }</p>
+                    <h1>{this.state.name} {this.state.abv !== null ? <> - {this.state.abv}%</> : null}</h1>
+                    <h2>{this.state.distillery !== undefined ? this.state.distillery: null}</h2>
+                    <h2>{this.state.bottler !== undefined ? this.state.bottler: null}</h2>
+                    <p>{this.state.details !== null ? this.state.details: null }</p>
+                    <p>{this.state.type !== null ? this.state.type: null }</p>
 
                     {
-                        this.state.details.UID === sessionStorage.getItem("UID") ?
+                        this.state.UID === sessionStorage.getItem("UID") ?
                         <>
                             <button onClick={this.withdrawTrade}>Withdraw trade</button>
                             <button onClick={this.toggleEdit}>Edit trade</button>
