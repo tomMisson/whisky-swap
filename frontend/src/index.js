@@ -66,16 +66,22 @@ ReactDOM.render(
             <Details />
           </div>
         )}/>
-        <Route path='/forgot' render={() => (
+        <Route exact={true} path='/forgot' render={() => (
           <div className="App">
             <h1>Forgot your password?</h1>
             <Reset/>
           </div>
         )}/>
-        <Route path='/update-password' render={() => (
+        <Route exact={true} path='/update-password' render={() => (
           <div className="App">
             <h1>Change your password</h1>
             <Reset/>
+          </div>
+        )}/>
+        <Route exact={true} path='/update-details' render={() => (
+          <div className="App">
+            <h1>Change your account details</h1>
+            <SignUp/>
           </div>
         )}/>
       </Switch>

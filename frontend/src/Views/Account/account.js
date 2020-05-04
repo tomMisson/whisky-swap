@@ -40,10 +40,11 @@ export default class account extends Component {
                 {this.state.user.image === undefined ? null:<img style={{borderRadius: "25px"}} alt="Profile" src=""/>}
                 <h2>Basic details</h2>
                 <ul>
+                    <li>Name:<p>{this.state.user.name}</p></li>
                     <li>Email address:<p>{this.state.user.email}</p></li>
                     <li>Phone number:<p>{this.state.user.phone}</p></li>
                     <li><Link to="update-password">Change your password</Link></li>
-                    <li><Link to="sign-up">Update details</Link></li>
+                    <li><Link to="update-details">Update details</Link></li>
                     <li><button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button></li>
                 </ul>
                 <h2>Delivery preferences</h2>
