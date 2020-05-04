@@ -8,7 +8,7 @@ var fileupload = require("express-fileupload");
 const mongo = require("mongodb")
 const MongoClient = mongo.MongoClient;
 
-const uri = process.env.TESTDB
+const uri = process.env.DBURI
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express()
