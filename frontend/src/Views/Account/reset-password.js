@@ -37,7 +37,7 @@ export default class resetPassword extends Component {
                     body: JSON.stringify({password:hash.sha256().update(this.state.newPassword).digest('hex')})
                 };
                 try{
-                    var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")), requestOptions);
+                    var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-password/"+sessionStorage.getItem("UID")), requestOptions);
                     if(response.status===200)
                     {
                         alert("Updated password")
