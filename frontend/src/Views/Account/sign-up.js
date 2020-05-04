@@ -8,6 +8,7 @@ export default class profile extends Component {
         super(props);
     
         this.state={
+            deliveryOption:""
         }
 
         this.handleForm = this.handleForm.bind(this);
@@ -121,6 +122,7 @@ export default class profile extends Component {
                         <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
                     </label>
                     <br/>
+                    <p><strong>We currently only operate in the UK... Sorry</strong></p>
                     <label htmlFor="preferedDelivery">
                         Prefered delivery option:
                         <select required name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
@@ -132,26 +134,26 @@ export default class profile extends Component {
                     </label>
                     <br/>
                     {
-                        this.state.deliveryOption !== "Collection"?
+                        this.state.deliveryOption !== "Collection" ?
                         <>
                             <label htmlFor="addrLn1">
                                 House name/number:
-                                <input type="text" name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
+                                <input type="text" required name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
                             </label>
                             <br/>
                             <label htmlFor="addrLn2">
                                 Street name:
-                                <input type="text" name="addrLn2" id="addrLn2" value={this.state.line2Address} onChange={this.handleForm}/>
+                                <input type="text" required name="addrLn2" id="addrLn2" value={this.state.line2Address} onChange={this.handleForm}/>
                             </label>
                             <br/>
                             <label htmlFor="addrLn3">
                                 Post town:
-                                <input type="text" name="addrLn3" id="addrLn3" value={this.state.line3Address} onChange={this.handleForm}/>
+                                <input type="text" required name="addrLn3" id="addrLn3" value={this.state.line3Address} onChange={this.handleForm}/>
                             </label>
                             <br/>
                             <label htmlFor="postcode">
                                 Postcode:
-                                <input type="text" name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
+                                <input type="text" required name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
                             </label>
                         <br/>
                         </>
