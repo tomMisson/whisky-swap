@@ -52,7 +52,7 @@ export default class account extends Component {
                 <h2>Delivery preferences</h2>
                 <ul>
                     {this.state.user.type!==undefined? <li>Prefered Delivery: this.state.user.type</li>: null}
-                    <li>Delivery address: <p>{this.state.user.address1}{this.state.user.address2!==undefined? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined? ", "+this.state.user.postcode :null}</p></li>
+                    <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==null? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!==null? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!==null? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
                     <li><Link to="update-delivery">Update preferences</Link></li>
                 </ul>
             </main>
