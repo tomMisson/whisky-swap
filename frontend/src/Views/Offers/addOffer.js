@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 export default class addOffer extends Component {
@@ -14,6 +13,15 @@ export default class addOffer extends Component {
         UID: sessionStorage.getItem("UID"),
         file: null,
         uploadProgress:0
+    }
+
+
+    handleBack(){
+        if(window.confirm("Are you sure you want to leave? Any unsaved offers will be lost."))
+        {
+            window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
+        }
+        else{}
     }
 
     async handleSubmit(event){
@@ -145,11 +153,12 @@ export default class addOffer extends Component {
                         Image: 
                         <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
                     </label> 
+                    <br/>
                     <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
                     <br/>
                     <button type="submit" id="Add">Add</button>
                 </form>
-                <Link to="/your-drams" >Back</Link>
+                <button onClick={this.handleBack}>Back</button>
             </main>
         )
     }

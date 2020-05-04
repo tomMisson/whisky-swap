@@ -108,6 +108,14 @@ export default class details extends Component {
 
     toggleEdit = ()=>{
         var currentval = this.state.editMode;
+        if(currentval)
+        {
+            if(window.confirm("Are you sure you want to go back? unsaved changes will be lost."))
+            {
+                this.setState({editMode:!currentval})
+            }
+            else{}
+        }
         this.setState({editMode:!currentval})
     }
 
