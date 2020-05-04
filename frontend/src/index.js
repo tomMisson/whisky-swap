@@ -12,6 +12,7 @@ import AvalibleTrades from './Views/Offers/avalibleTrades'
 import Details from "./Views/Offers/details"
 import Home from "./Views/home"
 import Reset from './Views/Account/reset-password'
+import Delivery from './Views/Account/delivery-update'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -82,6 +83,11 @@ ReactDOM.render(
           <div className="App">
             <h1>Change your account details</h1>
             <SignUp/>
+          </div>
+        )}/>
+        <Route exact={true} path='/update-delivery' render={() => (
+          <div className="App">
+            <Delivery/>
           </div>
         )}/>
       </Switch>

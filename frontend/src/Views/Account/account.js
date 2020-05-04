@@ -43,14 +43,17 @@ export default class account extends Component {
                     <li>Name:<p>{this.state.user.name}</p></li>
                     <li>Email address:<p>{this.state.user.email}</p></li>
                     <li>Phone number:<p>{this.state.user.phone}</p></li>
-                    <li><Link to="update-password">Change your password</Link></li>
+                </ul>
+                <ul>
                     <li><Link to="update-details">Update details</Link></li>
+                    <li><Link to="update-password">Change your password</Link></li>
                     <li><button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button></li>
                 </ul>
                 <h2>Delivery preferences</h2>
                 <ul>
                     {this.state.user.type!==undefined? <li>Prefered Delivery: this.state.user.type</li>: null}
                     <li>Delivery address: <p>{this.state.user.address1}{this.state.user.address2!==undefined? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined? ", "+this.state.user.postcode :null}</p></li>
+                    <li><Link to="update-delivery">Update preferences</Link></li>
                 </ul>
             </main>
             :
