@@ -100,7 +100,7 @@ app.get('/profiles/:id', function (req, res) {
     });
 })
 
-app.put('/profiles/:id', function (req, res) {
+app.put('/profiles-password/:id', function (req, res) {
     const id = req.params.id;
     const document = req.body
 
@@ -124,6 +124,53 @@ app.put('/profiles/:id', function (req, res) {
     });
 })
 
+app.put('/profiles-details/:id', function (req, res) {
+    const id = req.params.id;
+    const document = req.body
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+-
+            dbo.collection("users").updateOne({_id:o_id}, 
+                { $set: { name: document.name, email: document.email, phone:document.phone }}
+                )
+                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(500))
+                  
+        }
+        catch(err){
+            console.log(JSON.stringify(document))
+            console.log(err)
+            res.sendStatus(500);
+        }
+    });
+})
+
+app.put('/profiles-delivery/:id', function (req, res) {
+    const id = req.params.id;
+    const document = req.body
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+-
+            dbo.collection("users").updateOne({_id:o_id}, 
+                { $set: { delivery: document.delivery, address1: document.address1,address2: document.address2,address3: document.address3, postcode: document.postcode }}
+                )
+                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(500))
+                  
+        }
+        catch(err){
+            console.log(JSON.stringify(document))
+            console.log(err)
+            res.sendStatus(500);
+        }
+    });
+})
 /// OFFERS
 
 app.post('/offers', function (req, res) {
