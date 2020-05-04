@@ -96,7 +96,7 @@ export default class profile extends Component {
                         <br/>
                         <input type="submit" value="Submit"/>
                     </form>
-
+                    <div class="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div>
                     <Link to="/sign-up">Don't have an account?</Link><br/>
                     <Link to="/forgot">Forgotten something?</Link>
                 </main>
