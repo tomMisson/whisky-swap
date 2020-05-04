@@ -53,8 +53,10 @@ app.post('/login', (req,res) => {
 /// PROFILES
 
 app.post('/profiles', function (req, res) {
-    const data = req.body;
-
+    const data = JSON.parse(req.body.data);
+    try{var files = req.files.image}
+    catch{}
+    
     client.connect(function(err, db) {
         try{
             if (err) throw err;
