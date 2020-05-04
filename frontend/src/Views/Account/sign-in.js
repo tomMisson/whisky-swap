@@ -4,18 +4,11 @@ import hash from 'hash.js'
 
 export default class profile extends Component {
 
-    constructor(props){
-        super(props);
-    
-        this.state={
-            loggedIn: sessionStorage.getItem("loggedIn"),
-        }
-
-        this.handleForm = this.handleForm.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    state={
+        loggedIn: sessionStorage.getItem("loggedIn"),
     }
 
-    handleForm(event){
+    handleForm = (event) => {
         switch (event.target.id){
             case "email":
                 this.setState({email: event.target.value});
@@ -49,7 +42,7 @@ export default class profile extends Component {
         console.log(response);
     }
 
-    async handleSubmit(event) {
+    handleSubmit = async (event) => {
         event.preventDefault();
 
         const requestOptions = {
