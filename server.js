@@ -89,7 +89,10 @@ app.get('/profiles/:id', function (req, res) {
             var o_id = new mongo.ObjectID(id);
 
             dbo.collection("users").findOne({_id: o_id})
-                .then(result => res.json(result));          
+                .then(result => {
+                    delete result.pswd
+                    res.json(result)
+                })
         }
         catch(err){
             res.sendStatus(500);
