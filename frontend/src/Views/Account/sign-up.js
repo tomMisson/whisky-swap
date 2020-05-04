@@ -116,25 +116,30 @@ export default class profile extends Component {
                         <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
                     </label>
                     <br/>
-                    <label htmlFor="addrLn1">
-                        Address Line 1:
-                        <input type="text" name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="postcode">
-                        Postcode:
-                        <input type="text" name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
-                    </label>
-                    <br/>
                     <label htmlFor="preferedDelivery">
                         Prefered delivery option:
                         <select required name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
-                            <option defaultValue="Collection">Collection</option>
-                            <option value="Delivery">Delivery</option>
-                            <option value="Post">Post</option>
+                            <option defaultValue="Collection">In Person Collection</option>
+                            <option value="Delivery">In Person Delivery</option>
+                            <option value="Post">Post It!</option>
                         </select>
                     </label>
                     <br/>
+                    {
+                        this.state.deliveryOption === "Collection"?
+                        null:<>
+                        <label htmlFor="addrLn1">
+                            Address Line 1:
+                            <input type="text" name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="postcode">
+                            Postcode:
+                            <input type="text" name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
+                        </>
+                    }
                     <label htmlFor="url">
                         URL to profile pic:
                         <input type="url" name="url" id="url" value={this.state.url} onChange={this.handleForm}/>

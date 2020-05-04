@@ -35,6 +35,9 @@ export default class account extends Component {
         return (
             <main>
                 <h1> Hello, {this.state.fname}!</h1>
+                <h2>Basic details</h2>
+
+                <h2>Delivery preferences</h2>
                 <button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button>
             </main>
         )
