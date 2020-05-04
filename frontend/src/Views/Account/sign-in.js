@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import hash from 'hash.js'
-import FacebookLogin from 'react-facebook-login';
 
 export default class profile extends Component {
 
@@ -98,12 +97,6 @@ export default class profile extends Component {
                         <input type="submit" value="Submit"/>
                     </form>
 
-                    <FacebookLogin
-                        appId="233386887983298"
-                        autoLoad={true}
-                        fields="name,email,picture"
-                        render = {renderProps => (<div class="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="true" data-use-continue-as="true" data-width="" onClick={renderProps.onClick}></div>)}
-                        callback={this.responseFacebook} /><br/>
                     <Link to="/sign-up">Don't have an account?</Link><br/>
                     <Link to="/forgot">Forgotten something?</Link>
                 </main>
