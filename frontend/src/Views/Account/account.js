@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class account extends Component {
 
@@ -20,6 +21,7 @@ export default class account extends Component {
             var name = this.state.user.name
             name = name.split(" ")[0]
             this.setState({fname:name})
+            console.log(this.state)
         }
         catch(err){}
         
@@ -33,13 +35,19 @@ export default class account extends Component {
 
     render() {
         return (
+            sessionStorage.getItem("UID") !== undefined?
             <main>
                 <h1> Hello, {this.state.fname}!</h1>
+                {this.state.user.image === undefined ? null:<img style={{borderRadius: "25px"}} alt="Profile" src=""/>}
                 <h2>Basic details</h2>
-
+                <div>
+                    <Link to="update-password">Change your password</Link>
+                </div>
                 <h2>Delivery preferences</h2>
                 <button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button>
             </main>
+            :
+            window.location.replace("/sign-in")
         )
     }
 }

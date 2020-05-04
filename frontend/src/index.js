@@ -11,6 +11,7 @@ import * as serviceWorker from './serviceWorker'
 import AvalibleTrades from './Views/Offers/avalibleTrades'
 import Details from "./Views/Offers/details"
 import Home from "./Views/home"
+import Reset from './Views/Account/resetPassword'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -68,6 +69,13 @@ ReactDOM.render(
         <Route path='/forgot' render={() => (
           <div className="App">
             <h1>Forgot your password?</h1>
+            <Reset/>
+          </div>
+        )}/>
+        <Route path='/update-password' render={() => (
+          <div className="App">
+            <h1>Change your password</h1>
+            <Reset/>
           </div>
         )}/>
       </Switch>

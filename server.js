@@ -97,6 +97,30 @@ app.get('/profiles/:id', function (req, res) {
     });
 })
 
+app.put('/profiles/:id', function (req, res) {
+    const id = req.params.id;
+    const document = req.body
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+-
+            dbo.collection("users").updateOne({_id:o_id}, 
+                { $set: { pswd: document.password }}
+                )
+                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(500))
+                  
+        }
+        catch(err){
+            console.log(JSON.stringify(document))
+            console.log(err)
+            res.sendStatus(500);
+        }
+    });
+})
+
 /// OFFERS
 
 app.post('/offers', function (req, res) {
