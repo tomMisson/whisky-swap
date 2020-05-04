@@ -6,6 +6,7 @@ export default class avalibleTrades extends Component {
 
     state = {
         offers : [],
+        filter: ""
     }
 
     async fetchOffers(){
@@ -19,7 +20,6 @@ export default class avalibleTrades extends Component {
     {
         this.fetchOffers()
     }
-
 
     render() {
         return(
