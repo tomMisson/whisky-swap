@@ -9,6 +9,10 @@ export default class resetPassword extends Component {
         conf:"",
     }
 
+    back(){
+        window.location.replace(process.env.REACT_APP_APP_URL.concat("/account"))
+    }
+
     handleFormData = (e) => {
         switch (e.target.id){
             case "pswd":
@@ -62,8 +66,9 @@ export default class resetPassword extends Component {
                     <label htmlFor="pswd" >New password: <input id="pswd" name="pswd" type="password" value={this.state.newPassword} onChange={this.handleFormData}/></label><br/>
                     <label htmlFor="pswdConf" >Confirm password: <input id="pswdConf" name="pswdConf" type="password" value={this.state.conf} onChange={this.handleFormData}/></label>
                     <br/>
-                    <button type="submit">Update</button>
+                    <button type="submit">Update</button><br/>
                 </form>
+                <button onClick={this.back}>Back</button>
             </main>
             :
             <main>
