@@ -21,7 +21,6 @@ export default class account extends Component {
             var name = this.state.user.name
             name = name.split(" ")[0]
             this.setState({fname:name})
-            console.log(this.state)
         }
         catch(err){}
         
@@ -44,6 +43,7 @@ export default class account extends Component {
                     <li>Email address:<p>{this.state.user.email}</p></li>
                     <li>Phone number:<p>{this.state.user.phone}</p></li>
                     <li><Link to="update-password">Change your password</Link></li>
+                    <li><Link to="sign-up">Update details</Link></li>
                     <li><button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button></li>
                 </ul>
                 <h2>Delivery preferences</h2>

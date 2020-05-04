@@ -15,6 +15,48 @@ export default class profile extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount(){
+        if(sessionStorage.getItem("UID")!==undefined)
+            this.getUdetails()
+    }
+
+    async getUdetails(){
+        var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")))
+        res = await res.json()
+        this.setState({name:res.name})
+        this.setState({email:res.email})
+        this.setState({phone:res.phone})
+    }
+
+    handleUpdate = async (event) =>{
+        event.preventDefault()
+
+        const requestOptions = {
+            crossDomain: true,
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin':true},
+            body: JSON.stringify({
+                name:this.state.name,
+                email:this.state.email,
+                phone:this.state.phone,
+            })
+        };
+        try{
+            var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-details/"+sessionStorage.getItem("UID")), requestOptions);
+            if(response.status===200)
+            {
+                alert("Updated details")
+                window.location.replace(process.env.REACT_APP_APP_URL+"/account")
+            }
+            else if(response.status===304)
+                alert("No changes made")
+                window.location.replace(process.env.REACT_APP_APP_URL+"/account")
+        }
+        catch(err){ 
+            alert("Something went wrong: " + err)
+        }
+    }
+
     handleForm(event){
         switch (event.target.id){
             case "email":
@@ -99,6 +141,7 @@ export default class profile extends Component {
 
     render() {
         return (
+            !sessionStorage.getItem("loggedIn") ?
             <main>
                 <h2>Sign up</h2>
                 <form onSubmit={this.handleSubmit}>
@@ -118,7 +161,7 @@ export default class profile extends Component {
                     </label>
                     <br/>
                     <label htmlFor="phone">
-                        Telephone:
+                        Phone number:
                         <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
                     </label>
                     <br/>
@@ -168,6 +211,28 @@ export default class profile extends Component {
                     <input type="submit" value="Submit"/>
                 </form>
                 <a href="/sign-in">Back</a>
+            </main>
+            :
+            <main>
+                <form onSubmit={this.handleUpdate}>
+                    <label htmlFor="name">
+                        Full name:
+                        <input required type="text" name ="name" id="name" value={this.state.name} onChange={this.handleForm}/>
+                    </label>
+                    <br/>
+                    <label htmlFor="email">
+                        Email:
+                        <input required type="text" name ="email" id="email" value={this.state.email} onChange={this.handleForm}/>
+                    </label>
+                    <br/>
+                    <label htmlFor="phone">
+                        Phone number:
+                        <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
+                    </label>
+                    <br/>
+                    <input type="submit" value="Update"/>
+                </form>
+                <a href="/account">Back</a>
             </main>
         )
     }

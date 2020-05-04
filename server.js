@@ -137,7 +137,7 @@ app.put('/profiles-details/:id', function (req, res) {
             dbo.collection("users").updateOne({_id:o_id}, 
                 { $set: { name: document.name, email: document.email, phone:document.phone }}
                 )
-                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(500))
+                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
                   
         }
         catch(err){
