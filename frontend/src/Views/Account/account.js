@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default class account extends Component {
 
     state= {
-        user: {}
+        user: {},
     }
 
     componentDidMount(){
@@ -40,11 +40,17 @@ export default class account extends Component {
                 <h1> Hello, {this.state.fname}!</h1>
                 {this.state.user.image === undefined ? null:<img style={{borderRadius: "25px"}} alt="Profile" src=""/>}
                 <h2>Basic details</h2>
-                <div>
-                    <Link to="update-password">Change your password</Link>
-                </div>
+                <ul>
+                    <li>Email address:<p>{this.state.user.email}</p></li>
+                    <li>Phone number:<p>{this.state.user.phone}</p></li>
+                    <li><Link to="update-password">Change your password</Link></li>
+                    <li><button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button></li>
+                </ul>
                 <h2>Delivery preferences</h2>
-                <button onClick={this.handleSignOut}>Not {this.state.fname}? Log out</button>
+                <ul>
+                    {this.state.user.type!==undefined? <li>Prefered Delivery: this.state.user.type</li>: null}
+                    <li>Delivery address: <p>{this.state.user.address1}{this.state.user.address2!==undefined? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined? ", "+this.state.user.postcode :null}</p></li>
+                </ul>
             </main>
             :
             window.location.replace("/sign-in")
