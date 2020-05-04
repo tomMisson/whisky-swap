@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import hash from 'hash.js'
-import { json } from 'body-parser';
 
 export default class resetPassword extends Component {
 

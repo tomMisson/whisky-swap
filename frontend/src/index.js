@@ -11,7 +11,7 @@ import * as serviceWorker from './serviceWorker'
 import AvalibleTrades from './Views/Offers/avalibleTrades'
 import Details from "./Views/Offers/details"
 import Home from "./Views/home"
-import Reset from './Views/Account/resetPassword'
+import Reset from './Views/Account/reset-password'
 
 ReactDOM.render(
   <BrowserRouter>
