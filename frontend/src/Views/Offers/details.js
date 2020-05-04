@@ -6,11 +6,8 @@ export default class details extends Component {
     state ={
         editMode: false,
         id: window.location.href.split('/')[4],
-        name: "",
-        type: "",
         abv: 0,
-        details: "",
-        distillery: "",
+        uploadProgress:0
     }
 
     componentDidMount(){
@@ -76,6 +73,7 @@ export default class details extends Component {
         this.setState({image: details.image})
         this.setState({bottler: details.bottler})
         this.setState({UID: details.UID})
+        this.setState({region: details.region})
         this.render()
     }
 
@@ -130,6 +128,16 @@ export default class details extends Component {
             case "details":
                 this.setState({details: event.target.value});
                 break;
+            case "image":
+                this.setState({uploadProgress:0})
+                this.setState({file: event.target.files[0]});
+                break;
+            case "bottler":
+                this.setState({bottler: event.target.value});
+                break;
+            case "region":
+                this.setState({region: event.target.value});
+                break;
             default:
         }
     }
@@ -140,14 +148,19 @@ export default class details extends Component {
                 this.state.editMode ?
                 <main>
                     <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="name">
-                            Name of bottle: 
-                            <input type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
-                        </label>
-                        <br/>
                         <label htmlFor="distillery">
                             Distillery: 
-                            <input type="text" name="distillery" id="distillery" value={this.state.distillery} onChange={this.handleFormFields}/>
+                            <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="name">
+                            Name of bottle: 
+                            <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="bottler">
+                            Bottler: 
+                            <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
                         <label htmlFor="ABV">
@@ -176,12 +189,28 @@ export default class details extends Component {
                             </select>
                         </label>
                         <br/>
+                        {
+                            this.state.type === "Scotch Whisky" ?
+                            <label htmlFor="region">
+                                Region: 
+                                <input type="text" name="region" id="region" value={this.state.region} onChange= {this.handleFormFields} />
+                                <br/>
+                            </label>
+                            : null 
+                        }
                         <label htmlFor="details">
-                            Tasting notes / other details: 
+                            Other details: 
                             <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
-                        <button type="submit" id="Add">Update</button>
+                        <label htmlFor="image">
+                            Image: 
+                            <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
+                        </label> 
+                        <br/>
+                        <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
+                        <br/>
+                        <button type="submit">Update</button>
                     </form>
                     {this.state.editMode ?
                     <button onClick={this.toggleEdit}>Back</button>:null
@@ -198,7 +227,7 @@ export default class details extends Component {
                     <h2>{this.state.distillery !== undefined ? this.state.distillery: null}</h2>
                     <h2>{this.state.bottler !== undefined ? this.state.bottler: null}</h2>
                     <p>{this.state.details !== null ? this.state.details: null }</p>
-                    <p>{this.state.type !== null ? this.state.type: null }</p>
+                    <p>{this.state.type !== null ? this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
 
                     {
                         this.state.UID === sessionStorage.getItem("UID") ?

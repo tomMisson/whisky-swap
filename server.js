@@ -8,7 +8,7 @@ var fileupload = require("express-fileupload");
 const mongo = require("mongodb")
 const MongoClient = mongo.MongoClient;
 
-const uri = process.env.DBURI
+const uri = process.env.TESTDB
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express()
@@ -191,7 +191,7 @@ app.put('/offers/:id', function (req, res) {
             var o_id = new mongo.ObjectID(id);
 -
             dbo.collection("offers").updateOne({_id:o_id}, 
-                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details, type: document.type} }
+                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details, type: document.type, region: document.region} }
                 )
                 .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
                   
