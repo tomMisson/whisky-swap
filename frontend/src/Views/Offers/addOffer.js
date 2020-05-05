@@ -84,6 +84,9 @@ export default class addOffer extends Component {
             case "region":
                 this.setState({region: event.target.value});
                 break;
+            case "size":
+                this.setState({size: event.target.value});
+                break;
             default:
         }
     }
@@ -107,6 +110,15 @@ export default class addOffer extends Component {
                     <label htmlFor="bottler">
                         Bottler: 
                         <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
+                    </label>
+                    <br/>
+                    <label htmlFor="size">
+                        Size: 
+                        <select required name="size" id="size" value={this.state.type} onChange={this.handleFormFields}>
+                            <option defaultValue=""></option>
+                            <option value="25 ml">25ml</option>
+                            <option value="50 ml">50ml</option>
+                        </select>
                     </label>
                     <br/>
                     <label htmlFor="ABV">

@@ -36,7 +36,7 @@ export default class avalibleTrades extends Component {
                         :
                         this.state.offers.map((offer) => 
                             offer.UID === sessionStorage.getItem("UID") ?
-                            <Offer key={offer._id} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>
+                            <Offer key={offer._id} img={offer.image} size={offer.size} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>
                             :
                             null
                         )
@@ -46,7 +46,7 @@ export default class avalibleTrades extends Component {
                 <>
                 {
                 this.state.offers.map((offer) => {
-                        return (<Offer key={offer._id} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
+                        return (<Offer key={offer._id} size={offer.size} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
                     })
                 }
                 </>
