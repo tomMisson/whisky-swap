@@ -267,7 +267,7 @@ app.put('/offers/:id', function (req, res) {
             var o_id = new mongo.ObjectID(id);
 -
             dbo.collection("offers").updateOne({_id:o_id}, 
-                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details, type: document.type, region: document.region} }
+                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details, type: document.type, region: document.region, size: document.size} }
                 )
                 .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
                   

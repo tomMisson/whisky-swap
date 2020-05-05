@@ -114,7 +114,7 @@ export default class addOffer extends Component {
                     <br/>
                     <label htmlFor="size">
                         Size: 
-                        <select required name="size" id="size" value={this.state.type} onChange={this.handleFormFields}>
+                        <select required name="size" id="size" value={this.state.size} onChange={this.handleFormFields}>
                             <option defaultValue=""></option>
                             <option value="25 ml">25ml</option>
                             <option value="50 ml">50ml</option>

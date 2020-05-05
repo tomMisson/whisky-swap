@@ -74,6 +74,7 @@ export default class details extends Component {
         this.setState({bottler: details.bottler})
         this.setState({UID: details.UID})
         this.setState({region: details.region})
+        this.setState({size: details.size})
         this.render()
     }
 
@@ -146,6 +147,9 @@ export default class details extends Component {
             case "region":
                 this.setState({region: event.target.value});
                 break;
+            case "size":
+                this.setState({size: event.target.value});
+                break;
             default:
         }
     }
@@ -169,6 +173,16 @@ export default class details extends Component {
                         <label htmlFor="bottler">
                             Bottler: 
                             <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="size">
+                            Size: 
+                            <select required name="size" id="size" value={this.state.size} onChange={this.handleFormFields}>
+                                <option defaultValue={this.state.size}>{this.state.size}</option>
+                                {
+                                    this.state.size === "50ml" ? <option value="25ml">25ml</option> :<option value="50ml">50ml</option>    
+                                }
+                            </select>
                         </label>
                         <br/>
                         <label htmlFor="ABV">
@@ -231,12 +245,13 @@ export default class details extends Component {
                         null
                         : <img width="200" src={this.state.image} alt="offered drink"/> 
                     }   
-                    <h1>{this.state.name} {this.state.abv !== null ? <> - {this.state.abv}%</> : null}</h1>
+                    <h1>{this.state.name} {this.state.abv !== 0 ? <> - {this.state.abv}%</> : null}</h1> 
+                    <h2><small>{this.state.size !== undefined ? "Size: "+this.state.size: null}</small></h2>
                     <h2>{this.state.distillery !== undefined ? this.state.distillery: null}</h2>
                     <h2>{this.state.bottler !== undefined ? this.state.bottler: null}</h2>
                     <p>{this.state.details !== null ? this.state.details: null }</p>
                     <p>{this.state.type !== null ? this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
-
+                    
                     {
                         this.state.UID === sessionStorage.getItem("UID") ?
                         <>
