@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Loader from '../../Components/Loader';
 
 export default class addOffer extends Component {
 
@@ -24,7 +25,8 @@ export default class addOffer extends Component {
         else{}
     }
 
-    async handleSubmit(event){
+    handleSubmit = async (event) => {
+        this.setState({waiting: true})
         event.preventDefault();
 
         if(this.state.type !== "Scotch Whisky")
@@ -51,6 +53,7 @@ export default class addOffer extends Component {
                     {
                         alert("Added new offer")
                         window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
+                        this.setState({waiting: false})
                     }
 
                 })
@@ -95,82 +98,88 @@ export default class addOffer extends Component {
         return (
             <main>
                 <h2>What have you got to offer?</h2>
-
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="distillery">
-                        Distillery: 
-                        <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="name">
-                        Name of bottle: 
-                        <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="bottler">
-                        Bottler: 
-                        <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="size">
-                        Size: 
-                        <select required name="size" id="size" value={this.state.size} onChange={this.handleFormFields}>
-                            <option defaultValue=""></option>
-                            <option value="25 ml">25ml</option>
-                            <option value="50 ml">50ml</option>
-                        </select>
-                    </label>
-                    <br/>
-                    <label htmlFor="ABV">
-                        ABV: 
-                        <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
-                        %
-                    </label>
-                    <br/>
-                    <label htmlFor="type">
-                        Type: 
-                        <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
-                            <option defaultValue=""></option>
-                            <option value="Scotch Whisky">Scotch Whisky</option>
-                            <option value="Bourbon Whiskey">Bourbon Whiskey</option>
-                            <option value="Irish Whiskey">Irish Whiskey</option>
-                            <option value="Single Malt">Single Malt</option>
-                            <option value="Blended Whisey">Blended Whiskey</option>
-                            <option value="Japanese Whiskey">Japansese Whiskey</option>
-                            <option value="Rye Whiskey">Rye Whiskey</option>
-                            <option value="Malt Whiskey">Malt Whiskey</option>
-                            <option value="Canadian Whiskey">Canadian Whiskey</option>
-                            <option value="Tennessee Whiskey">Tennessee Whiskey</option>
-                            <option value="Grain Whiskey">Grain Whiskey</option>
-                            <option value="Blended malt Whiskey">Blended malt Whiskey</option>
-                            <option value="Single pot still Whiskey">Single pot still Whiskey</option>
-                        </select>
-                    </label>
-                    <br/>
-                    {
-                        this.state.type === "Scotch Whisky" ?
-                        <label htmlFor="region">
-                            Region: 
-                            <input type="text" name="region" id="region" onChange= {this.handleFormFields} />
-                            <br/>
+                {
+                    !this.state.waiting?
+                    <div>
+                        <form onSubmit={this.handleSubmit}>
+                        <label htmlFor="distillery">
+                            Distillery: 
+                            <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
                         </label>
-                        : null 
-                    }
-                    <label htmlFor="details">
-                        Other details: 
-                        <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="image">
-                        Image: 
-                        <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
-                    </label> 
-                    <br/>
-                    <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
-                    <br/>
-                    <button type="submit" id="Add">Add</button>
-                </form>
-                <button onClick={this.handleBack}>Back</button>
+                        <br/>
+                        <label htmlFor="name">
+                            Name of bottle: 
+                            <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="bottler">
+                            Bottler: 
+                            <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="size">
+                            Size: 
+                            <select required name="size" id="size" value={this.state.size} onChange={this.handleFormFields}>
+                                <option defaultValue=""></option>
+                                <option value="25 ml">25ml</option>
+                                <option value="50 ml">50ml</option>
+                            </select>
+                        </label>
+                        <br/>
+                        <label htmlFor="ABV">
+                            ABV: 
+                            <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
+                            %
+                        </label>
+                        <br/>
+                        <label htmlFor="type">
+                            Type: 
+                            <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
+                                <option defaultValue=""></option>
+                                <option value="Scotch Whisky">Scotch Whisky</option>
+                                <option value="Bourbon Whiskey">Bourbon Whiskey</option>
+                                <option value="Irish Whiskey">Irish Whiskey</option>
+                                <option value="Single Malt">Single Malt</option>
+                                <option value="Blended Whisey">Blended Whiskey</option>
+                                <option value="Japanese Whiskey">Japansese Whiskey</option>
+                                <option value="Rye Whiskey">Rye Whiskey</option>
+                                <option value="Malt Whiskey">Malt Whiskey</option>
+                                <option value="Canadian Whiskey">Canadian Whiskey</option>
+                                <option value="Tennessee Whiskey">Tennessee Whiskey</option>
+                                <option value="Grain Whiskey">Grain Whiskey</option>
+                                <option value="Blended malt Whiskey">Blended malt Whiskey</option>
+                                <option value="Single pot still Whiskey">Single pot still Whiskey</option>
+                            </select>
+                        </label>
+                        <br/>
+                        {
+                            this.state.type === "Scotch Whisky" ?
+                            <label htmlFor="region">
+                                Region: 
+                                <input type="text" name="region" id="region" onChange= {this.handleFormFields} />
+                                <br/>
+                            </label>
+                            : null 
+                        }
+                        <label htmlFor="details">
+                            Other details: 
+                            <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="image">
+                            Image: 
+                            <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
+                        </label> 
+                        <br/>
+                        <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
+                        <br/>
+                        <button type="submit" id="Add">Add</button>
+                    </form>
+                    <button onClick={this.handleBack}>Back</button>
+                    </div>
+                    :
+                    <Loader/>
+                }
             </main>
         )
     }
