@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import hash from 'hash.js'
-import Loader from '../../Components/loading-spinner'
+import Loader from '../../Components/Loader'
 
 export default class profile extends Component {
 

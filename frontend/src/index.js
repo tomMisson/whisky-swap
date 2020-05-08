@@ -13,7 +13,7 @@ import Details from "./Views/Offers/details"
 import Home from "./Views/home"
 import Reset from './Views/Account/reset-password'
 import Delivery from './Views/Account/delivery-update'
-import Loader from './Components/loading-spinner';
+import Loader from './Components/Loader';
 
 ReactDOM.render(
   <BrowserRouter>
