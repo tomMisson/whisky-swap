@@ -45,6 +45,7 @@ export default class profile extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
 
+        this.setState({toggleLoad: true})
         const requestOptions = {
             crossDomain:true,
             method: 'POST',
