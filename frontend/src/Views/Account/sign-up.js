@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import hash from 'hash.js'
 import axios from 'axios'
+import Loader from '../../Components/Loader';
 
 export default class profile extends Component {
 
@@ -16,6 +17,7 @@ export default class profile extends Component {
     }
 
     componentDidMount(){
+        this.setState({waiting:true})
         if(sessionStorage.getItem("UID")!==undefined)
             this.getUdetails()
     }
@@ -26,6 +28,7 @@ export default class profile extends Component {
         this.setState({name:res.name})
         this.setState({email:res.email})
         this.setState({phone:res.phone})
+        this.setState({waiting:false})
     }
 
     handleUpdate = async (event) =>{
@@ -212,6 +215,9 @@ export default class profile extends Component {
                 </form>
                 <a href="/sign-in">Back</a>
             </main>
+            :
+            this.state.waiting?
+            <Loader/>
             :
             <main>
                 <form onSubmit={this.handleUpdate}>

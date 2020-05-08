@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Offer from './offerTile'
 import {Link} from 'react-router-dom'
+import Loader from '../../Components/Loader';
 
 export default class avalibleTrades extends Component {
 
@@ -14,15 +15,20 @@ export default class avalibleTrades extends Component {
         res = this.props.filter === "" ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+sessionStorage.getItem("UID")))
         res = await res.json()
         this.setState({offers: res})
+        this.setState({waiting:false})
     } 
 
     componentWillMount()
     {
+        this.setState({waiting:true})
         this.fetchOffers()
     }
 
     render() {
         return(
+            this.state.waiting?
+            <Loader/>
+            :
             <>
                 {this.props.filter !== "" ? 
                 <>
