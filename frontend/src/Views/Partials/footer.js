@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CookieBanner from 'react-cookie-banner';
+//import CookieBanner from 'react-cookie-banner';
 import "./footer.css"
 
 export default class s extends Component {
