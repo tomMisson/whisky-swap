@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import Loader from '../../Components/Loader';
 
 export default class details extends Component {
 
@@ -11,12 +12,14 @@ export default class details extends Component {
     }
 
     componentDidMount(){
+        this.setState({waiting:true})
         this.getDetails();
     }
 
-    async withdrawTrade(){
+    withdrawTrade = async() =>{
 
         if (window.confirm("Are you sure you want to withdraw your trade?") === true) { 
+            this.setState({waiting:true})
             const requestOptions = {
                 crossDomain:true,
                 method: 'DELETE',
@@ -31,15 +34,18 @@ export default class details extends Component {
                 var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
                 if(response.status === 200)
                 {
+                    this.setState({waiting:false})
                     alert("Successfully withdrew offer")
                     window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
                 }
                 else{
+                    this.setState({waiting:false})
                     alert("Something went wrong, please try again")
                 }
             }
             catch(err)
             {
+                this.setState({waiting:false})
                 alert("Unable to withdraw trade" +err)
             }
         } 
@@ -75,10 +81,12 @@ export default class details extends Component {
         this.setState({UID: details.UID})
         this.setState({region: details.region})
         this.setState({size: details.size})
+        this.setState({waiting:false})
         this.render()
     }
 
     handleSubmit = async (event) =>{
+        this.setState({waiting:true})
         event.preventDefault();
 
         var objToSend = this.state
@@ -93,16 +101,19 @@ export default class details extends Component {
             var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
             if(response.status===200)
             {
+                this.setState({waiting:false})
                 alert("Updated listing")
                 this.toggleEdit()
                 window.location.reload()
             }
             else if(response.status===304){
+                this.setState({waiting:false})
                 alert("Did not update")
                 this.toggleEdit()
             }
         }
         catch(err){ 
+            this.setState({waiting:false})
             alert("Something went wrong: " + err)
         }
     }
@@ -156,6 +167,9 @@ export default class details extends Component {
 
     render() {
         return(
+            this.state.waiting?
+            <Loader/>
+            :
             sessionStorage.getItem("loggedIn") ?
                 this.state.editMode ?
                 <main>
@@ -245,7 +259,7 @@ export default class details extends Component {
                         null
                         : <img width="200" src={this.state.image} alt="offered drink"/> 
                     }   
-                    <h1>{this.state.name} {this.state.abv !== 0 ? <> - {this.state.abv}%</> : null}</h1> 
+                    <h1>{this.state.name} {this.state.abv !== undefined || this.state.abv !== 0 ? <> - {this.state.abv}%</> : null}</h1> 
                     <h2><small>{this.state.size !== undefined ? "Size: "+this.state.size: null}</small></h2>
                     <h2>{this.state.distillery !== undefined ? this.state.distillery: null}</h2>
                     <h2>{this.state.bottler !== undefined ? this.state.bottler: null}</h2>
