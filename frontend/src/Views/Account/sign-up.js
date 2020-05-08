@@ -9,7 +9,8 @@ export default class profile extends Component {
         super(props);
     
         this.state={
-            deliveryOption:""
+            deliveryOption:"",
+            waiting:false
         }
 
         this.handleForm = this.handleForm.bind(this);
@@ -17,12 +18,12 @@ export default class profile extends Component {
     }
 
     componentDidMount(){
-        this.setState({waiting:true})
-        if(sessionStorage.getItem("UID")!==undefined)
+        if(sessionStorage.getItem("loggedIn"))
             this.getUdetails()
     }
 
     async getUdetails(){
+        this.setState({waiting:true})
         var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")))
         res = await res.json()
         this.setState({name:res.name})
@@ -32,6 +33,7 @@ export default class profile extends Component {
     }
 
     handleUpdate = async (event) =>{
+        this.setState({waiting:true})
         event.preventDefault()
 
         const requestOptions = {
@@ -49,13 +51,16 @@ export default class profile extends Component {
             if(response.status===200)
             {
                 alert("Updated details")
+                this.setState({waiting:false})
                 window.location.replace(process.env.REACT_APP_APP_URL+"/account")
             }
             else if(response.status===304)
                 alert("No changes made")
+                this.setState({waiting:false})
                 window.location.replace(process.env.REACT_APP_APP_URL+"/account")
         }
         catch(err){ 
+            this.setState({waiting:false})
             alert("Something went wrong: " + err)
         }
     }
@@ -97,7 +102,8 @@ export default class profile extends Component {
         }
     }
 
-    async handleSubmit(event) {
+    handleSubmit = async (event) => {
+        this.setState({waiting:true})
         event.preventDefault();
 
         var fd = new FormData();
@@ -123,10 +129,13 @@ export default class profile extends Component {
         })
             .then(res => {
                 if(res.data ===409)
+                {
+                    this.setState({waiting:false})
                     alert("A user with this email already exisits, if you belive this is an error, please contact support.")
+                }
                 else if(res.data !==409)
                 {
-                    console.log(res)
+                    this.setState({waiting:false})
                     sessionStorage.setItem("UID", res.data.UID)
                     sessionStorage.setItem("loggedIn", true)
                     alert("Signed up!")
@@ -136,14 +145,11 @@ export default class profile extends Component {
             .catch(err => alert("Unexpercted error: "+err))
     }
 
-    toggleSignUp(event){
-        var currentVal = this.state.signingUp
-        this.setState({signingUp:!currentVal});
-        this.forceUpdate();
-    }
-
     render() {
         return (
+            this.state.waiting?
+            <Loader/>
+            :
             !sessionStorage.getItem("loggedIn") ?
             <main>
                 <h2>Sign up</h2>
@@ -217,29 +223,29 @@ export default class profile extends Component {
             </main>
             :
             this.state.waiting?
-            <Loader/>
-            :
-            <main>
-                <form onSubmit={this.handleUpdate}>
-                    <label htmlFor="name">
-                        Full name:
-                        <input required type="text" name ="name" id="name" value={this.state.name} onChange={this.handleForm}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="email">
-                        Email:
-                        <input required type="text" name ="email" id="email" value={this.state.email} onChange={this.handleForm}/>
-                    </label>
-                    <br/>
-                    <label htmlFor="phone">
-                        Phone number:
-                        <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
-                    </label>
-                    <br/>
-                    <input type="submit" value="Update"/>
-                </form>
-                <a href="/account">Back</a>
-            </main>
+                <Loader/>
+                :
+                <main>
+                    <form onSubmit={this.handleUpdate}>
+                        <label htmlFor="name">
+                            Full name:
+                            <input required type="text" name ="name" id="name" value={this.state.name} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="email">
+                            Email:
+                            <input required type="text" name ="email" id="email" value={this.state.email} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="phone">
+                            Phone number:
+                            <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
+                        <input type="submit" value="Update"/>
+                    </form>
+                    <a href="/account">Back</a>
+                </main>
         )
     }
 }
