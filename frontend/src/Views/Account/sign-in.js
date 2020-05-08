@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import hash from 'hash.js'
+import Loader from '../../Components/loading-spinner'
 
 export default class profile extends Component {
 
@@ -72,32 +73,33 @@ export default class profile extends Component {
     }
 
     render() {
-        if(!this.state.loggedIn)
-        {
-            return (
-                <main>
-                    <h2>Login</h2>
-                    <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="email">
-                            Email:
-                            <input required type="text" id="email" value={this.state.email} onChange={this.handleForm}/>
-                        </label>
-                        <br/>
-                        <label htmlFor="pswd">
-                            Password:
-                            <input required type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
-                        </label>
-                        <br/>
-                        <input type="submit" value="Submit"/>
-                    </form>
-                    <div className="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div><br/>
-                    <Link to="/sign-up">Don't have an account?</Link><br/>
-                    <Link to="/forgot">Forgotten something?</Link>
-                </main>
-            )
-        }
-        else{
+        return(
+        this.state.toggleLoad?
+        <Loader/>
+        :
+        !this.state.loggedIn ?
+    
+            <main>
+                <h2>Login</h2>
+                <form onSubmit={this.handleSubmit}>
+                    <label htmlFor="email">
+                        Email:
+                        <input required type="text" id="email" value={this.state.email} onChange={this.handleForm}/>
+                    </label>
+                    <br/>
+                    <label htmlFor="pswd">
+                        Password:
+                        <input required type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
+                    </label>
+                    <br/>
+                    <input type="submit" value="Submit"/>
+                </form>
+                <div className="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div><br/>
+                <Link to="/sign-up">Don't have an account?</Link><br/>
+                <Link to="/forgot">Forgotten something?</Link>
+            </main>
+        :
             window.location.replace(process.env.REACT_APP_APP_URL+"/your-drams")
-        }
+        )
     }
 }
