@@ -13,6 +13,7 @@ import Details from "./Views/Offers/details"
 import Home from "./Views/home"
 import Reset from './Views/Account/reset-password'
 import Delivery from './Views/Account/delivery-update'
+import Loader from './Components/loading-spinner';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -88,6 +89,11 @@ ReactDOM.render(
         <Route exact={true} path='/update-delivery' render={() => (
           <div className="App">
             <Delivery/>
+          </div>
+        )}/>
+        <Route exact={true} path='/loading' render={() => (
+          <div className="App">
+            <Loader/>
           </div>
         )}/>
       </Switch>
