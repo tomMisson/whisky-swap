@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Loader from '../../Components/Loader'
 
 export default class deliveryUpdate extends Component {
 
@@ -11,6 +12,7 @@ export default class deliveryUpdate extends Component {
 
     componentDidMount()
     {
+        this.setState({waiting:true})
         this.getUdetails()
     }
 
@@ -22,6 +24,7 @@ export default class deliveryUpdate extends Component {
         this.setState({address2: res.address2})
         this.setState({address3: res.address3})
         this.setState({postcode: res.postcode})
+        this.setState({waiting:false})
     }
 
     handleForm = (event) => {
@@ -79,6 +82,9 @@ export default class deliveryUpdate extends Component {
 
     render() {
         return (
+            this.state.waiting?
+            <Loader/>
+            :
             <main>
                 <h2>Update delivery details</h2>
                 <form onSubmit={this.handleSubmit}>
