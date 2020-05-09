@@ -63,11 +63,11 @@ export default class profile extends Component {
             response = await response.json();
             sessionStorage.setItem("UID", response.UID);
             sessionStorage.setItem("loggedIn", true);
-
             window.location.reload()
         }
         catch(err)
         {
+            this.setState({toggleLoad: false})
             alert("Incorrect email or password")
         }
     }
@@ -94,7 +94,7 @@ export default class profile extends Component {
                     <br/>
                     <input type="submit" value="Submit"/>
                 </form>
-                <div className="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div><br/>
+                <div className="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div><br/>
                 <Link to="/sign-up">Don't have an account?</Link><br/>
                 <Link to="/forgot">Forgotten something?</Link>
             </main>
