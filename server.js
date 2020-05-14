@@ -202,7 +202,7 @@ app.get('/confirm-verify/:email', (req,res)=>{
                     
         }
         catch(err){
-            res.sendStatus(500);
+            res.json({debug:err});
         }
     })
 })
