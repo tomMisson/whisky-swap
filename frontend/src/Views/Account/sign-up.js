@@ -123,8 +123,8 @@ export default class profile extends Component {
             }))
         fd.append("profPic", this.state.file)
 
-        
-        await fetch(process.env.REACT_APP_API_URL.concat("/send-email-verify/"+this.state.user.email))
+        console.log(this.state.email)
+        await fetch(process.env.REACT_APP_API_URL.concat("/send-email-verify/"+this.state.email))
             .catch(err => alert("Error sending email vericication"))
         
 
@@ -142,6 +142,7 @@ export default class profile extends Component {
                 }
                 else if(res.data !==409)
                 {
+                    console.log(res)
                     this.setState({waiting:false})
                     cookie.save("UID", res.data.UID)
                     cookie.save("loggedIn", true)

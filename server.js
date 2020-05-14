@@ -1,9 +1,10 @@
 require('dotenv').config()
+var hash = require('hash.js')
 const express = require('express')
 const bodyParser = require('body-parser')
+const getStream = require('into-stream');
 const cors = require('cors')
-const { DefaultAzureCredential } = require("@azure/identity");
-const { BlobServiceClient } = require("@azure/storage-blob");
+const { Aborter,BlobURL,BlockBlobURL,ContainerURL,BlobServiceClient,StorageSharedKeyCredential,uploadStreamToBlockBlob, newPipeline } = require('@azure/storage-blob');
 var fileupload = require("express-fileupload");
 const mongo = require("mongodb")
 const sgMail = require('@sendgrid/mail');
@@ -11,11 +12,22 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const MongoClient = mongo.MongoClient;
 
 const uri = process.env.DBURI
-
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 const app = express()
 
-const account = "doorstepdramsassets";
+const sharedKeyCredential = new StorageSharedKeyCredential(
+    process.env.AZURE_STORAGE_ACCOUNT_NAME,
+    process.env.AZURE_STORAGE_ACCOUNT_ACCESS_KEY);
+
+const pipeline = newPipeline(sharedKeyCredential);
+const blobServiceClient = new BlobServiceClient(
+    `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
+    pipeline
+);
+
+const ONE_MEGABYTE = 1024 * 1024;
+const uploadOptions = { bufferSize: 4 * ONE_MEGABYTE, maxBuffers: 20 };
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -53,31 +65,43 @@ app.post('/login', (req,res) => {
 
 /// PROFILES
 
-app.post('/profiles', function (req, res) {
+app.post('/profiles', async (req, res) => {
     const data = JSON.parse(req.body.data);
-    try{var files = req.files.image}
-    catch{}
-    
-    client.connect(function(err, db) {
-        try{
-            if (err) throw err;
-            var dbo = db.db("whisky-swap");
+    try{
+        var files = req.files.profPic
+        const blobName = hash.sha256().update(data.name).digest('hex')+files.name;
+        const stream = getStream(files.data);
+        const containerClient = blobServiceClient.getContainerClient('profileimages');;
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-            dbo.collection("users").findOne({email: data.email})
-            .then(result => {
-                if(result!=null)
-                    res.json(409);
-                else
-                {
-                    dbo.collection("users").insertOne(data)
-                    .then(result => res.json({UID: result.insertedId}));
-                }
-            });    
-        } 
-        catch(err){
-            res.sendStatus(500);
-        }
-    });
+        await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+            .catch(err => console.log(err))
+
+        client.connect(function(err, db) {
+            try{
+                if (err) throw err;
+                var dbo = db.db("whisky-swap");
+    
+                dbo.collection("users").findOne({email: data.email})
+                .then(result => {
+                    if(result!=null)
+                        res.json(409);
+                    else
+                    {
+                        data.img = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/${blobName}` 
+                        dbo.collection("users").insertOne(data)
+                        .then(result => res.json({UID: result.insertedId}));
+                    }
+                });    
+            } 
+            catch(err){
+                res.sendStatus(500);
+            }
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
 })
 
 app.get('/profiles/:id', function (req, res) {
