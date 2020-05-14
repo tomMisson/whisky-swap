@@ -6,8 +6,7 @@ import Loader from '../../Components/Loader';
 export default class avalibleTrades extends Component {
 
     state = {
-        offers : [],
-        filter: ""
+        offers : []
     }
 
     async fetchOffers(){
