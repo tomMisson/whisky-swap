@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import hash from 'hash.js'
 import Loader from '../../Components/Loader'
+import cookie from 'react-cookies'
 
 export default class profile extends Component {
 
@@ -61,12 +62,13 @@ export default class profile extends Component {
         try{
             var response = await fetch(process.env.REACT_APP_API_URL.concat("/login"), requestOptions)
             response = await response.json();
-            sessionStorage.setItem("UID", response.UID);
-            sessionStorage.setItem("loggedIn", true);
-            window.location.reload()
+            cookie.save("UID", response.UID)
+            cookie.save("loggedIn", true)
+            window.location.replace(process.env.REACT_APP_APP_URL+"/account")
         }
         catch(err)
         {
+            console.log(err)
             this.setState({toggleLoad: false})
             alert("Incorrect email or password")
         }

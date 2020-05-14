@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Loader from '../../Components/Loader'
+import cookie from 'react-cookies'
 
 export default class account extends Component {
 
@@ -15,7 +16,7 @@ export default class account extends Component {
 
     async getUdetails(){
         this.setState({waiting:true})
-        await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")))
+        await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+cookie.load("UID")))
             .then(res => res.json())
             .then(res => this.setState({user:res}))
             .catch(err => alert("Encountered an unexpected error "+err))
@@ -42,7 +43,7 @@ export default class account extends Component {
 
     render() {
         return (
-            sessionStorage.getItem("loggedIn")?
+            cookie.load("loggedIn")?
             this.state.waiting? 
                 <Loader/>
                 :

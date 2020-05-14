@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import hash from 'hash.js'
 import axios from 'axios'
 import Loader from '../../Components/Loader';
+import cookie from 'react-cookies'
 
 export default class profile extends Component {
 
@@ -141,8 +142,8 @@ export default class profile extends Component {
                 else if(res.data !==409)
                 {
                     this.setState({waiting:false})
-                    sessionStorage.setItem("UID", res.data.UID)
-                    sessionStorage.setItem("loggedIn", true)
+                    cookie.save("UID", res.data.UID)
+                    cookie.save("loggedIn", true)
                     alert("Signed up!")
                     window.location.replace(process.env.REACT_APP_APP_URL+"/account")
                 }
