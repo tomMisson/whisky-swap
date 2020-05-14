@@ -198,7 +198,7 @@ app.get('/confirm-verify/:email', (req,res)=>{
             dbo.collection("users").updateOne({email:emailAddr}, 
                 { $set: { verifiedEmail:true}}
                 ,{upsert:true})
-                .then(cb => cb.modifiedCount >= 1 ? res.redirect('https://doorstepdrams.com/account') : res.sendStatus(500))
+                .then(res.redirect('https://doorstepdrams.com/account'))
                     
         }
         catch(err){
