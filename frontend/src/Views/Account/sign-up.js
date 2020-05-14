@@ -19,7 +19,8 @@ export default class profile extends Component {
     }
 
     componentDidMount(){
-        if(cookie.load("loggedIn"))
+        
+        if(cookie.load("loggedIn")==="true")
             this.getUdetails()
     }
 
@@ -156,7 +157,7 @@ export default class profile extends Component {
             this.state.waiting?
             <Loader/>
             :
-            !cookie.load("loggedIn") ?
+            cookie.load("loggedIn") === "false" ?
             <main>
                 <h2>Sign up</h2>
                 <form onSubmit={this.handleSubmit}>

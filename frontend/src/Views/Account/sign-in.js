@@ -80,7 +80,7 @@ export default class profile extends Component {
             this.state.toggleLoad?
             <Loader/>
             :
-            !this.state.loggedIn ?
+            
         
                 <main>
                     <h2>Login</h2>
@@ -101,8 +101,7 @@ export default class profile extends Component {
                     <Link to="/sign-up">Don't have an account?</Link><br/>
                     <Link to="/forgot">Forgotten something?</Link>
                 </main>
-            :
-            window.location.replace(process.env.REACT_APP_APP_URL+"/your-drams")
+
             :
             window.location.replace(process.env.REACT_APP_APP_URL+"/your-drams")
         )
