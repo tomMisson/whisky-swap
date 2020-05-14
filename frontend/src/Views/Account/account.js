@@ -39,7 +39,7 @@ export default class account extends Component {
     {
         cookie.remove("UID")
         cookie.save("loggedIn", false)
-        //window.location.replace(process.env.REACT_APP_APP_URL+"/")
+        window.location.replace(process.env.REACT_APP_APP_URL+"/")
     }
 
     render() {
@@ -66,7 +66,12 @@ export default class account extends Component {
                     <h2>Delivery preferences</h2>
                     <ul>
                         {this.state.user.type!==undefined? <li>Prefered Delivery: this.state.user.type</li>: null}
-                        <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==null? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!==null? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!==null? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
+                        {
+                            this.state.user.type === "Collection" ?
+                            <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==null? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!==null? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!==null? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
+                            :
+                            <p>You have said you will collect</p>
+                        }
                         <li><Link to="update-delivery">Update preferences</Link></li>
                     </ul>
                 </main>
