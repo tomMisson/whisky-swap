@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import hash from 'hash.js'
+import cookie from 'react-cookies'
 
 export default class resetPassword extends Component {
 
     state={
-        loggedIn:sessionStorage.getItem("loggedIn"),
+        loggedIn:cookie.load("loggedIn"),
         newPassword: "",
         conf:"",
     }
@@ -37,7 +38,7 @@ export default class resetPassword extends Component {
                     body: JSON.stringify({password:hash.sha256().update(this.state.newPassword).digest('hex')})
                 };
                 try{
-                    var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-password/"+sessionStorage.getItem("UID")), requestOptions);
+                    var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-password/"+cookie.load("UID")), requestOptions);
                     if(response.status===200)
                     {
                         alert("Updated password")

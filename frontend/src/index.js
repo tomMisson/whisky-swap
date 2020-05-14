@@ -14,6 +14,7 @@ import Home from "./Views/home"
 import Reset from './Views/Account/reset-password'
 import Delivery from './Views/Account/delivery-update'
 import Loader from './Components/Loader';
+import cookie from 'react-cookies'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -35,7 +36,7 @@ ReactDOM.render(
         <Route exact={true} path='/your-drams' render={() => (
               <div className="App">
                 <h2>Your drams</h2>
-                <AvalibleTrades filter={sessionStorage.getItem("UID")}/>
+                <AvalibleTrades filter={cookie.load("UID")}/>
               </div>
             )}/>
         <Route exact={true} path='/account' render={() => (

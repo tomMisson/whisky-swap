@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Loader from '../../Components/Loader';
+import cookie from 'react-cookies'
 
 export default class addOffer extends Component {
 
@@ -11,7 +12,7 @@ export default class addOffer extends Component {
     }
 
     state = {
-        UID: sessionStorage.getItem("UID"),
+        UID: cookie.load("UID"),
         file: null,
         uploadProgress:0
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import Loader from '../../Components/Loader';
+import cookie from 'react-cookies'
 
 export default class details extends Component {
 
@@ -53,7 +54,7 @@ export default class details extends Component {
     }
 
     async proposeTrade(){
-        var res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+sessionStorage.getItem("UID")))
+        var res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+cookie.load("UID")))
         res = await res.json();
         if(res.length === 0)
         {
@@ -170,7 +171,7 @@ export default class details extends Component {
             this.state.waiting?
             <Loader/>
             :
-            sessionStorage.getItem("loggedIn") ?
+            cookie.load("loggedIn") ?
                 this.state.editMode ?
                 <main>
                     <form onSubmit={this.handleSubmit}>
@@ -267,7 +268,7 @@ export default class details extends Component {
                     <p>{this.state.type !== null ? this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
                     
                     {
-                        this.state.UID === sessionStorage.getItem("UID") ?
+                        this.state.UID === cookie.load("UID") ?
                         <>
                             <button onClick={this.withdrawTrade}>Withdraw trade</button>
                             <button onClick={this.toggleEdit}>Edit trade</button>

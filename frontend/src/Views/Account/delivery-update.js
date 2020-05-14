@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Loader from '../../Components/Loader'
+import cookie from 'react-cookies'
 
 export default class deliveryUpdate extends Component {
 
@@ -17,7 +18,7 @@ export default class deliveryUpdate extends Component {
     }
 
     async getUdetails(){
-        var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")))
+        var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+cookie.load("UID")))
         res = await res.json()
         this.setState({deliveryOption: res.delivery})
         this.setState({address1: res.address1})
@@ -64,7 +65,7 @@ export default class deliveryUpdate extends Component {
             })    
         };
         try{
-            var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-delivery/"+sessionStorage.getItem("UID")), requestOptions);
+            var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-delivery/"+cookie.load("UID")), requestOptions);
             console.log(response)
             if(response.status===200)
             {

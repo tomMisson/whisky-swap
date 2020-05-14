@@ -37,8 +37,9 @@ export default class account extends Component {
 
     handleSignOut()
     {
-        sessionStorage.clear()
-        window.location.replace(process.env.REACT_APP_APP_URL+"/")
+        cookie.remove("UID")
+        cookie.save("loggedIn", false)
+        //window.location.replace(process.env.REACT_APP_APP_URL+"/")
     }
 
     render() {
@@ -47,7 +48,7 @@ export default class account extends Component {
             this.state.waiting? 
                 <Loader/>
                 :
-                sessionStorage.getItem("UID") !== undefined?
+                cookie.load("UID") !== undefined?
                 <main>
                     <h1> Hello, {this.state.fname}!</h1>
                     {this.state.user.image === undefined ? null:<img style={{borderRadius: "25px"}} alt="Profile" src=""/>}

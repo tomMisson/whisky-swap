@@ -7,7 +7,7 @@ import cookie from 'react-cookies'
 export default class profile extends Component {
 
     state={
-        loggedIn: sessionStorage.getItem("loggedIn"),
+        loggedIn: cookie.load("loggedIn"),
     }
 
     handleForm = (event) => {

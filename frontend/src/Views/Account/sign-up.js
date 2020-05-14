@@ -19,13 +19,13 @@ export default class profile extends Component {
     }
 
     componentDidMount(){
-        if(sessionStorage.getItem("loggedIn"))
+        if(cookie.load("loggedIn"))
             this.getUdetails()
     }
 
     async getUdetails(){
         this.setState({waiting:true})
-        var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+sessionStorage.getItem("UID")))
+        var res = await fetch(process.env.REACT_APP_API_URL.concat("/profiles/"+cookie.load("UID")))
         res = await res.json()
         this.setState({name:res.name})
         this.setState({email:res.email})
@@ -48,7 +48,7 @@ export default class profile extends Component {
             })
         };
         try{
-            var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-details/"+sessionStorage.getItem("UID")), requestOptions);
+            var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-details/"+cookie.load("UID")), requestOptions);
             if(response.status===200)
             {
                 alert("Updated details")
@@ -156,7 +156,7 @@ export default class profile extends Component {
             this.state.waiting?
             <Loader/>
             :
-            !sessionStorage.getItem("loggedIn") ?
+            !cookie.load("loggedIn") ?
             <main>
                 <h2>Sign up</h2>
                 <form onSubmit={this.handleSubmit}>
