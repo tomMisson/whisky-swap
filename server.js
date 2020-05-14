@@ -187,16 +187,15 @@ app.get('/send-email-verify/:email', (req,res)=>{
         .then(res.sendStatus(200))
 })
 
-app.get('/confirm-verify/:id', (req,res)=>{
-    const id = req.params.id;
+app.get('/confirm-verify/:email', (req,res)=>{
+    const emailAddr = req.params.email;
 
     client.connect(function(err, db) {
         try{
             if (err) throw err;
             var dbo = db.db("whisky-swap");
-            var o_id = new mongo.ObjectID(id);
 
-            dbo.collection("users").updateOne({_id:o_id}, 
+            dbo.collection("users").updateOne({email:emailAddr}, 
                 { $set: { verifiedEmail:true}}
                 ,{upsert:true})
                 .then(cb => cb.modifiedCount >= 1 ? res.redirect('https://doorstepdrams.com/account') : res.sendStatus(500))
