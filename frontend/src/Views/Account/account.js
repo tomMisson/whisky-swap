@@ -51,7 +51,7 @@ export default class account extends Component {
                 :
                 cookie.load("UID") !== undefined?
                 <main>
-                    {this.state.user.img !== undefined ?<img style={{borderRadius:"25px"}} alt="profilePic" width="300" src={this.state.user.img}/>:null}
+                    {this.state.user.img !== undefined ?<img style={{borderRadius:"25px"}} alt="profilePic" width="100" src={this.state.user.img}/>:null}
                     <h1> Hello, {this.state.fname}!</h1>
                     {this.state.user.image === undefined ? null:<img style={{borderRadius: "25px"}} alt="Profile" src=""/>}
                     <h2>Basic details</h2>
