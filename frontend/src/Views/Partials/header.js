@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 export default class header extends Component {
     render() {
         return (
             <header>
                 {
-                    sessionStorage.getItem("loggedIn") ? 
+                    cookie.load("loggedIn") ? 
                     <Link to="/browse"><h1>Doorstep drams</h1> </Link>
                     :
                     <Link to="/"><h1>Doorstep drams</h1> </Link>
@@ -14,7 +15,7 @@ export default class header extends Component {
                 <nav>
                     <ul>
                         {
-                            sessionStorage.getItem("loggedIn") ? 
+                            cookie.load("loggedIn") ? 
                             this.props.links.map((link) => 
                                 link.signInNeeded ? 
                                 <li key={link.id}><Link to={link.uri}>{link.text}</Link></li>
