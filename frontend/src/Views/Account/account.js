@@ -70,7 +70,7 @@ export default class account extends Component {
                             this.state.user.type === "Collection" ?
                             <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==null? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!==null? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!==null? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
                             :
-                            <p>You have said you will collect</p>
+                            <li><p>You have said you will collect</p></li>
                         }
                         <li><Link to="update-delivery">Update preferences</Link></li>
                     </ul>
