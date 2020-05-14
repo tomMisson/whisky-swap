@@ -38,33 +38,25 @@ export default class profile extends Component {
         this.setState({waiting:true})
         event.preventDefault()
 
-        const requestOptions = {
-            crossDomain: true,
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin':true},
-            body: JSON.stringify({
-                name:this.state.name,
-                email:this.state.email,
-                phone:this.state.phone,
-            })
-        };
-        try{
-            var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-details/"+cookie.load("UID")), requestOptions);
-            if(response.status===200)
+        var fd = new FormData();
+        fd.append("data", JSON.stringify(
             {
-                alert("Updated details")
-                this.setState({waiting:false})
-                window.location.replace(process.env.REACT_APP_APP_URL+"/account")
-            }
-            else if(response.status===304)
-                alert("No changes made")
-                this.setState({waiting:false})
-                window.location.replace(process.env.REACT_APP_APP_URL+"/account")
-        }
-        catch(err){ 
-            this.setState({waiting:false})
-            alert("Something went wrong: " + err)
-        }
+                "name":this.state.name,
+                "email": this.state.email,
+                "phone": this.state.phone,
+            }))
+        fd.append("profPic", this.state.file)
+        axios.put(process.env.REACT_APP_API_URL.concat("/profiles-details/"+cookie.load("UID")), fd)
+        .then(res => {
+            console.log(res)
+                if(res.status ===200)
+                {
+                    this.setState({waiting:false})
+                    alert("Updated details")
+                    window.location.replace(process.env.REACT_APP_APP_URL+"/account")
+                }
+            })
+            .catch(err => alert("Unexpercted error: "+err))
     }
 
     handleForm(event){
@@ -248,6 +240,11 @@ export default class profile extends Component {
                         <label htmlFor="phone">
                             Phone number:
                             <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="pic">
+                            Profile picture:
+                            <input type="file" accept="image/*" name="pic" id="profPic" onChange= {this.handleForm} />
                         </label>
                         <br/>
                         <input type="submit" value="Update"/>

@@ -28,6 +28,7 @@ export default class account extends Component {
         }
         catch(err){}
         this.setState({waiting:false})
+        console.log(this.state)
     }
 
     sendEmail = async () => {
@@ -50,7 +51,7 @@ export default class account extends Component {
                 :
                 cookie.load("UID") !== undefined?
                 <main>
-                    <img/>
+                    {this.state.user.img !== undefined ?<img style={{borderRadius:"25px"}} alt="profilePic" width="300" src={this.state.user.img}/>:null}
                     <h1> Hello, {this.state.fname}!</h1>
                     {this.state.user.image === undefined ? null:<img style={{borderRadius: "25px"}} alt="Profile" src=""/>}
                     <h2>Basic details</h2>

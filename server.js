@@ -88,7 +88,7 @@ app.post('/profiles', async (req, res) => {
                         res.json(409);
                     else
                     {
-                        data.img = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/${blobName}` 
+                        data.img = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/profileimages/${blobName}` 
                         dbo.collection("users").insertOne(data)
                         .then(result => res.json({UID: result.insertedId}));
                     }
@@ -149,28 +149,44 @@ app.put('/profiles-password/:id', function (req, res) {
     });
 })
 
-app.put('/profiles-details/:id', function (req, res) {
+app.put('/profiles-details/:id', async (req, res) => {
+
     const id = req.params.id;
-    const document = req.body
+    const document = JSON.parse(req.body.data);
+    try{
+        var files = req.files.profPic
+        const blobName = hash.sha256().update(files.name).digest('hex')+files.name;
+        const stream = getStream(files.data);
+        const containerClient = blobServiceClient.getContainerClient('profileimages');;
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-    client.connect(function(err, db) {
-        try{
-            if (err) throw err;
-            var dbo = db.db("whisky-swap");
-            var o_id = new mongo.ObjectID(id);
+        await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+            .catch(err => console.log(err))
 
-            dbo.collection("users").updateOne({_id:o_id}, 
-                { $set: { name: document.name, email: document.email, phone:document.phone }}
-                )
-                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
-                  
-        }
-        catch(err){
-            console.log(JSON.stringify(document))
-            console.log(err)
-            res.sendStatus(500);
-        }
-    });
+        document.img=`https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/profileimages/${blobName}`
+
+        client.connect(function(err, db) {
+            try{
+                if (err) throw err;
+                var dbo = db.db("whisky-swap");
+                var o_id = new mongo.ObjectID(id);
+    
+                dbo.collection("users").updateOne({_id:o_id}, 
+                    { $set: { name: document.name, email: document.email, phone:document.phone, img: document.img}}
+                    ,{upsert:true})
+                    .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
+                      
+            }
+            catch(err){
+                console.log(JSON.stringify(document))
+                console.log(err)
+                res.sendStatus(500);
+            }
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
 })
 
 app.put('/profiles-delivery/:id', function (req, res) {
