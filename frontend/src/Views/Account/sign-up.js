@@ -121,6 +121,11 @@ export default class profile extends Component {
             }))
         fd.append("profPic", this.state.file)
 
+        
+        await fetch(process.env.REACT_APP_API_URL.concat("/send-email-verify/"+this.state.user.email))
+            .catch(err => error)
+        
+
         axios.post(process.env.REACT_APP_API_URL.concat("/profiles"), fd,
         {
             onUploadProgress: progressEvent => {

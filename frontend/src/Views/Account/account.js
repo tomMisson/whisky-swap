@@ -29,6 +29,11 @@ export default class account extends Component {
         this.setState({waiting:false})
     }
 
+    sendEmail = async () => {
+        await fetch(process.env.REACT_APP_API_URL.concat("/send-email-verify/"+this.state.user.email))
+            .then(alert("Resent email verification"))
+    }
+
     handleSignOut()
     {
         sessionStorage.clear()
@@ -37,6 +42,7 @@ export default class account extends Component {
 
     render() {
         return (
+            sessionStorage.getItem("loggedIn")?
             this.state.waiting? 
                 <Loader/>
                 :
@@ -47,7 +53,7 @@ export default class account extends Component {
                     <h2>Basic details</h2>
                     <ul>
                         <li>Name:<p>{this.state.user.name}</p></li>
-                        <li>Email address:<p>{this.state.user.email}</p></li>
+                        <li>Email address:<p>{this.state.user.email}</p>{this.state.user.verifiedEmail? null : <span><p className="warning">You need to verify your email before you can request a trade</p><button onClick={this.sendEmail}>Resend verification email</button></span>}</li>
                         <li>Phone number:<p>{this.state.user.phone}</p></li>
                     </ul>
                     <ul>
@@ -64,6 +70,8 @@ export default class account extends Component {
                 </main>
                 :
                 window.location.replace("/sign-in")
+            :
+            window.location.replace(process.env.REACT_APP_APP_URL+"/sign-in")
         )
     }
 }
