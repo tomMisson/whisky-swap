@@ -123,7 +123,7 @@ export default class profile extends Component {
 
         
         await fetch(process.env.REACT_APP_API_URL.concat("/send-email-verify/"+this.state.user.email))
-            .catch(err => error)
+            .catch(err => alert("Error sending email vericication"))
         
 
         axios.post(process.env.REACT_APP_API_URL.concat("/profiles"), fd,
