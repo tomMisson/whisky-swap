@@ -5,14 +5,14 @@ import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
 
 export default class avalibleTrades extends Component {
-
     state = {
         offers : []
     }
 
     async fetchOffers(){
+        this.setState({waiting:true})
         var res;
-        res = this.props.filter === "" ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+cookie.load("UID")))
+        res = this.props.filter === undefined ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+cookie.load("UID")))
         res = await res.json()
         this.setState({offers: res})
         this.setState({waiting:false})
@@ -20,9 +20,14 @@ export default class avalibleTrades extends Component {
 
     componentDidMount()
     {
-        this.setState({waiting:true})
-        this.fetchOffers()
+        this.fetchOffers()  
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.filter !== prevProps.filter) {
+            this.fetchOffers() 
+        }
+      }
 
     render() {
         return(
@@ -30,7 +35,7 @@ export default class avalibleTrades extends Component {
             <Loader/>
             :
             <>
-                {this.props.filter !== "" ? 
+                {this.props.filter !== undefined ? 
                 <>
                     <Link to="add-offer">
                         Add a dram!
