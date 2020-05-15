@@ -96,7 +96,7 @@ export default class resetPassword extends Component {
     render() {
         return (
             this.props.uid === undefined ?
-                this.state.loggedIn ?
+                !this.state.loggedIn ?
                 <main>
                     <p>Enter the password you would like to use:</p>
                     <form onSubmit={this.handleSubmit}>
