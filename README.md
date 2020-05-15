@@ -3,8 +3,8 @@ A web app designed for whisky enthusiats to come together to share a dram (or tw
 
 ## Architecture 
 
-API / Backend - Express JS / Node JS  
-Database - MongoDB Atlas  
-Frontend UI - React (JavaScript)  
+Backend - Express JS / Node JS  - Hosted on Azure Web app  
+Database - Cosmos DB 
+Frontend UI - React (JavaScript)  - Hosted on Netlify  
 CI/CD - Azure devops pipelines  
 
