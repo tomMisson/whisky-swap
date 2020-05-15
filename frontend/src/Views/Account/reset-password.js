@@ -57,7 +57,7 @@ export default class resetPassword extends Component {
             }       
         }
 
-        else if(this.state.loggedIn){
+        else if(!this.state.loggedIn){
             if(this.state.conf === this.state.newPassword){
                 const requestOptions = {
                     crossDomain: true,
