@@ -284,21 +284,38 @@ app.get('/send-email-pswd/:email', async (req,res)=>{
 
 /// OFFERS
 
-app.post('/offers', function (req, res) {
-    var obj = req.body.data
-    try{var files = req.files.image}
-    catch{}
-    console.log(obj)
+app.post('/offers', async (req, res) => {
 
-    client.connect(function(err, db) {
-        //data.image = <URL from azure>
-        if (err) throw err;
-        var dbo = db.db("whisky-swap");
+    const data = JSON.parse(req.body.data);
+    try{
+        var files = req.files.profPic
+        const blobName = hash.sha256().update(data.name).digest('hex')+files.name;
+        const stream = getStream(files.data);
+        const containerClient = blobServiceClient.getContainerClient('profileimages');;
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-        dbo.collection("offers").insertOne(JSON.parse(obj))
-            .then(res.sendStatus(200))
-            .catch(err => res.json({"debug":err}));      
-    });
+        await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+            .catch(err => console.log(err))
+
+
+        data.image = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/offerimages/${blobName}`
+        client.connect(function(err, db) {
+            try{
+                if (err) throw err;
+                var dbo = db.db("whisky-swap");
+    
+                dbo.collection("offers").insertOne(obj)
+                .then(res.sendStatus(200))
+                .catch(err => res.json({"debug":err}));  
+            } 
+            catch(err){
+                res.sendStatus(500);
+            }
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
 })
 
 app.get('/offers', function (req, res) {

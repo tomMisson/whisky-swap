@@ -7,7 +7,7 @@ export default class header extends Component {
         return (
             <header>
                 {
-                    cookie.load("loggedIn") !== "false"? 
+                    cookie.load("loggedIn") !== "false" && cookie.load("loggedIn") !== undefined? 
                     <Link to="/browse"><h1>Doorstep drams</h1> </Link>
                     :
                     <Link to="/"><h1>Doorstep drams</h1> </Link>
@@ -15,7 +15,8 @@ export default class header extends Component {
                 <nav>
                     <ul>
                         {
-                            cookie.load("loggedIn") !== "false" ? 
+                            cookie.load("loggedIn") !== undefined && cookie.load("loggedIn") !== "false" ? 
+                            //Signed in
                             this.props.links.map((link) => 
                                 link.signInNeeded ? 
                                 <li key={link.id}><Link to={link.uri}>{link.text}</Link></li>
@@ -23,6 +24,7 @@ export default class header extends Component {
                                 null
                             )
                             :
+                            //Not signed in
                             this.props.links.map((link) => 
                                 link.signInNeeded ? 
                                 null
