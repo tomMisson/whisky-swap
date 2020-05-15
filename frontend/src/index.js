@@ -75,6 +75,12 @@ ReactDOM.render(
             <Reset/>
           </div>
         )}/>
+        <Route exact={true} path='/forgot/:uid' render={(props) => (
+          <div className="App">
+            <h1>Reset your password?</h1>
+            <Reset uid={props.match.params.uid}/>
+          </div>
+        )}/>
         <Route exact={true} path='/update-password' render={() => (
           <div className="App">
             <h1>Change your password</h1>
