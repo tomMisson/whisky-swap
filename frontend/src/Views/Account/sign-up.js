@@ -133,7 +133,6 @@ export default class profile extends Component {
                 }
                 else if(res.data !==409)
                 {
-                    console.log(res)
                     this.setState({waiting:false})
                     cookie.save("UID", res.data.UID)
                     cookie.save("loggedIn", true)
