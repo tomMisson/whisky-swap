@@ -76,7 +76,7 @@ export default class profile extends Component {
 
     render() {
         return(
-            cookie.load("UID") === undefined ?
+            cookie.load("UID") === undefined || cookie.load("loggedIn") === undefined ?
             this.state.toggleLoad?
             <Loader/>
             :
