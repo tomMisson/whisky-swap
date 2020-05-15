@@ -115,7 +115,6 @@ export default class profile extends Component {
             }))
         fd.append("profPic", this.state.file)
 
-        console.log(this.state.email)
         await fetch(process.env.REACT_APP_API_URL.concat("/send-email-verify/"+this.state.email))
             .catch(err => alert("Error sending email vericication"))
         

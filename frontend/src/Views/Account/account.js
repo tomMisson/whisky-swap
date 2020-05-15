@@ -67,9 +67,9 @@ export default class account extends Component {
                     </ul>
                     <h2>Delivery preferences</h2>
                     <ul>
-                        {this.state.user.type!==undefined? <li>Prefered Delivery: this.state.user.type</li>: null}
+                        <li>Prefered Delivery: {this.state.user.delivery}</li>
                         {
-                            this.state.user.type === "Collection" ?
+                            this.state.user.delivery !== "Collection" ?
                             <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==null? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!==null? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!==null? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
                             :
                             <li><p>You have said you will collect</p></li>

@@ -18,7 +18,7 @@ export default class avalibleTrades extends Component {
         this.setState({waiting:false})
     } 
 
-    componentWillMount()
+    componentDidMount()
     {
         this.setState({waiting:true})
         this.fetchOffers()
