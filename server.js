@@ -261,7 +261,6 @@ app.get('/send-email-pswd/:email', async (req,res)=>{
                 .then(result => {
                     if(result!==null)
                     {
-                        console.log(result)
                         const confirmEmail = {
                             to: email,
                             from: 'hi@doorstepdrams.com',
