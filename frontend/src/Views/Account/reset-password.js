@@ -25,6 +25,7 @@ export default class resetPassword extends Component {
                 break;
             case "email":
                 this.setState({email: e.target.value});
+                break;
             default:
         }
     }
