@@ -173,7 +173,6 @@ export default class profile extends Component {
                         <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
                     </label>
                     <br/>
-                    <p><strong>We currently only operate in the UK... Sorry</strong></p>
                     <label htmlFor="preferedDelivery">
                         Prefered delivery option:
                         <select required name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
@@ -187,6 +186,7 @@ export default class profile extends Component {
                     {
                         this.state.deliveryOption !== "Collection" ?
                         <>
+                            <p><strong>We currently only operate in the UK... Sorry</strong></p>
                             <label htmlFor="addrLn1">
                                 House name/number:
                                 <input type="text" required name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
