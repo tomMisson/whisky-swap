@@ -92,12 +92,14 @@ export default class resetPassword extends Component {
         else{
             await fetch(process.env.REACT_APP_API_URL+"/send-email-pswd/"+this.state.email)
                 .then(res => {
-                    
                     if(res.status === 200){
                         this.setState({waiting:false})
                         alert("We have sent you an email!")
                         window.location.replace(process.env.REACT_APP_APP_URL+"/")
                     }
+                    else
+                        this.setState({waiting:false})
+                        alert("Email address not found")
                 })
                 .catch(err => console.log(err))
         }
