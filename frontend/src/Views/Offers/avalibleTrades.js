@@ -55,10 +55,18 @@ export default class avalibleTrades extends Component {
                 </>
                 :
                 <>
-                {
-                this.state.offers.map((offer) => {
-                        return (<Offer key={offer._id} size={offer.size} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
-                    })
+                {cookie.load("loggedIn") === "true" ? 
+                
+                    this.state.offers.map((offer) => (
+                        offer.UID === cookie.load("UID") ? 
+                        null
+                        :
+                        <Offer key={offer._id} size={offer.size} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
+                    )
+                    :
+                    this.state.offers.map((offer) => (
+                        <Offer key={offer._id} size={offer.size} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
+                    )
                 }
                 </>
                 }
