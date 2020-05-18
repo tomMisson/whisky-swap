@@ -1,0 +1,42 @@
+header{
+    background-color: #3d424a;
+    z-index: 10000000;
+}
+
+h1{
+    color: white;
+    padding-left: 3vh;
+    padding-top: 3vh;
+}
+
+a{
+    text-decoration: none;
+    color: aliceblue;
+}
+a:hover{
+    color: #fc9403;
+}
+
+.titleBar{
+    display: inline-flex;
+    flex-flow: left;
+}
+
+.container{
+    margin-left: 15vw;
+}
+
+.visible{
+    visibility: visible;
+    height: 100%;
+}
+
+nav{
+    visibility: hidden;
+    height: 0vh;
+    text-align: center;
+}
+
+li{
+    padding: 10px;
+}

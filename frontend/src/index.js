@@ -15,6 +15,7 @@ import Reset from './Views/Account/reset-password'
 import Delivery from './Views/Account/delivery-update'
 import Loader from './Components/Loader';
 import cookie from 'react-cookies'
+import './global.css'
 
 ReactDOM.render(
   <BrowserRouter>
