@@ -21,9 +21,11 @@ export default class header extends Component {
                     <Link to="/browse"><h1>Doorstep drams</h1> </Link>
                     :
                     <Link to="/"><h1>Doorstep drams</h1> </Link>
-                }   
+                }
+                <div id="spacer"/>
                 <Hamburger/>
                 </div>
+                
                 <nav>
                     <ul>
                         {

@@ -23,7 +23,12 @@ a:hover{
 }
 
 .container{
-    margin-left: 15vw;
+    visibility: visible;
+    float: right;
+}
+
+#spacer{
+    margin: 2rem;
 }
 
 .visible{
@@ -39,4 +44,39 @@ nav{
 
 li{
     padding: 10px;
+}
+
+@media screen and (min-width: 769px) {
+    .container{
+        visibility: hidden;
+    }
+
+    nav{
+        visibility: visible;
+        display: inline-block;
+        float: right;
+        margin-right: 8vw;
+        margin-top: 3.5vh;
+    }
+
+    li{
+        display: inline;
+    }
+
+    .titleBar{
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    .container, #spacer{
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #spacer{
+        margin-left: 25rem;
+    }
 }
