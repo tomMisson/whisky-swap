@@ -68,15 +68,19 @@ app.post('/login', (req,res) => {
 app.post('/profiles', async (req, res) => {
     const data = JSON.parse(req.body.data);
     try{
-        var files = req.files.profPic
-        const blobName = hash.sha256().update(data.name).digest('hex')+files.name;
-        const stream = getStream(files.data);
-        const containerClient = blobServiceClient.getContainerClient('profileimages');;
-        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        try{
+            var files = req.files.profPic
+            const blobName = hash.sha256().update(data.name).digest('hex')+files.name;
+            const stream = getStream(files.data);
+            const containerClient = blobServiceClient.getContainerClient('profileimages');;
+            const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-        await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
-            .catch(err => console.log(err))
+            await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+                .catch(err => console.log(err))
 
+            data.img = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/profileimages/${blobName}` 
+        }
+        catch{}
         client.connect(function(err, db) {
             try{
                 if (err) throw err;
@@ -88,7 +92,6 @@ app.post('/profiles', async (req, res) => {
                         res.json(409);
                     else
                     {
-                        data.img = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/profileimages/${blobName}` 
                         dbo.collection("users").insertOne(data)
                         .then(result => res.json({UID: result.insertedId}));
                     }
@@ -155,17 +158,20 @@ app.put('/profiles-details/:id', async (req, res) => {
     const id = req.params.id;
     const document = JSON.parse(req.body.data);
     try{
-        var files = req.files.profPic
-        const blobName = hash.sha256().update(files.name).digest('hex')+files.name;
-        const stream = getStream(files.data);
-        const containerClient = blobServiceClient.getContainerClient('profileimages');;
-        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        try{
+            var files = req.files.profPic
+            const blobName = hash.sha256().update(files.name).digest('hex')+files.name;
+            const stream = getStream(files.data);
+            const containerClient = blobServiceClient.getContainerClient('profileimages');;
+            const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-        await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
-            .catch(err => console.log(err))
+            await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+                .catch(err => console.log(err))
 
-        document.img=`https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/profileimages/${blobName}`
+            document.img=`https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/profileimages/${blobName}`
 
+        }
+        catch{}
         client.connect(function(err, db) {
             try{
                 if (err) throw err;
@@ -285,30 +291,37 @@ app.get('/send-email-pswd/:email', async (req,res)=>{
 /// OFFERS
 
 app.post('/offers', async (req, res) => {
-
     const data = JSON.parse(req.body.data);
+
     try{
-        var files = req.files.profPic
-        const blobName = hash.sha256().update(data.name).digest('hex')+files.name;
-        const stream = getStream(files.data);
-        const containerClient = blobServiceClient.getContainerClient('profileimages');;
-        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        try{
+            var files = req.files.image
+            const blobName = hash.sha256().update(data.UID+files.name).digest('hex')+files.name;
+            const stream = getStream(files.data);
+            const containerClient = blobServiceClient.getContainerClient('offerimages');;
+            const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-        await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
-            .catch(err => console.log(err))
+            await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+                .catch(err => console.log(err))
 
 
-        data.image = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/offerimages/${blobName}`
+            data.image = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/offerimages/${blobName}`
+        }
+        catch(err){
+            //No image
+            console.log(err)
+        }
         client.connect(function(err, db) {
             try{
                 if (err) throw err;
                 var dbo = db.db("whisky-swap");
     
-                dbo.collection("offers").insertOne(obj)
+                dbo.collection("offers").insertOne(data)
                 .then(res.sendStatus(200))
                 .catch(err => res.json({"debug":err}));  
             } 
             catch(err){
+                console.log(err)
                 res.sendStatus(500);
             }
         });
@@ -385,27 +398,45 @@ app.delete('/offers/:id', function (req, res) {
     });
 })
 
-app.put('/offers/:id', function (req, res) {
-    const id = req.params.id;
-    const document = req.body
-    client.connect(function(err, db) {
+app.put('/offers/:id', async (req, res) => {
+    const id = req.params.id
+    console.log(id)
+    const document = JSON.parse(req.body.data);
+    try{
         try{
-            if (err) throw err;
-            var dbo = db.db("whisky-swap");
-            var o_id = new mongo.ObjectID(id);
+            var files = req.files.image
+            const blobName = hash.sha256().update(document.UID+files.name).digest('hex')+files.name;
+            const stream = getStream(files.data);
+            const containerClient = blobServiceClient.getContainerClient('offerimages');;
+            const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-            dbo.collection("offers").updateOne({_id:o_id}, 
-                { $set: { name: document.name, distillery: document.distillery, abv: document.abv, details: document.details, type: document.type, region: document.region, size: document.size} }
-                )
-                .then(cb => cb.modifiedCount >= 1 ? res.sendStatus(200) : res.sendStatus(304))
-                  
+            await blockBlobClient.uploadStream(stream,uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: "image/*" } })
+                .catch(err => console.log(err))
+
+            document.image=`https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/offerimages/${blobName}`
         }
-        catch(err){
-            console.log(JSON.stringify(document))
-            console.log(err)
-            res.sendStatus(500);
-        }
-    });
+        catch(err){console.log("No image")}
+        client.connect(function(err, db) {
+            try{
+                if (err) throw err;
+                var dbo = db.db("whisky-swap");
+                var o_id = new mongo.ObjectID(id);
+    
+                dbo.collection("offers").updateOne({_id:o_id}, 
+                    { $set: { name: document.name, UID: document.UID, type: document.type, size:document.size, bottler: document.bottler, region: document.region, image: document.image}}
+                    )
+                    .then(res.sendStatus(200))
+                    .catch(err => console.log(err));               
+            }
+            catch(err){
+                console.log(err)
+                res.sendStatus(500);
+            }
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
 })
   
 app.listen(process.env.PORT)

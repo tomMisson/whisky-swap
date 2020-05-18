@@ -13,7 +13,6 @@ export default class addOffer extends Component {
 
     state = {
         UID: cookie.load("UID"),
-        file: null,
         uploadProgress:0
     }
 
@@ -36,29 +35,31 @@ export default class addOffer extends Component {
         let fd = new FormData();
         var data = this.state
         let file = this.state.file
+        fd.append('image', file)
+        
         delete data.file
         delete data.uploadProgress
         data = JSON.stringify(data)
         fd.append('data', data)
-        fd.append('image', file)
+        
 
   
-            axios.post(process.env.REACT_APP_API_URL.concat("/offers"), fd,
-            {
-                onUploadProgress: progressEvent => {
-                    this.setState({uploadProgress: Math.round((progressEvent.loaded/progressEvent.total) *100)})
+        axios.post(process.env.REACT_APP_API_URL.concat("/offers"), fd,
+        {
+            onUploadProgress: progressEvent => {
+                this.setState({uploadProgress: Math.round((progressEvent.loaded/progressEvent.total) *100)})
+            }
+        })
+            .then(res => {
+                if(res.status ===200)
+                {
+                    alert("Added new offer")
+                    window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
+                    this.setState({waiting: false})
                 }
-            })
-                .then(res => {
-                    if(res.status ===200)
-                    {
-                        alert("Added new offer")
-                        window.location.replace(process.env.REACT_APP_APP_URL.concat("/your-drams"))
-                        this.setState({waiting: false})
-                    }
 
-                })
-                .catch(err => alert("Unexpercted error: "+err))
+            })
+            .catch(err => alert("Unexpercted error: "+err))
     }
 
     handleFormFields(event){
@@ -79,8 +80,8 @@ export default class addOffer extends Component {
                 this.setState({details: event.target.value});
                 break;
             case "image":
-                this.setState({uploadProgress:0})
                 this.setState({file: event.target.files[0]});
+                this.setState({uploadProgress:0})
                 break;
             case "bottler":
                 this.setState({bottler: event.target.value});
@@ -90,6 +91,9 @@ export default class addOffer extends Component {
                 break;
             case "size":
                 this.setState({size: event.target.value});
+                break;
+            case "MoMdetails":
+                this.setState({momdetails: event.target.value});
                 break;
             default:
         }
@@ -167,10 +171,20 @@ export default class addOffer extends Component {
                             <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
+                        <label htmlFor="details">
+                            Other details: 
+                            <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
+                        </label>
+                        <br/>
+                        <label htmlFor="momDetails">
+                            Masters of Malt link:
+                            <input type="url" name="momDetails" id="MoMdetails" onChange= {this.handleFormFields} />
+                        </label> 
+                        <br/>
                         <label htmlFor="image">
                             Image: 
                             <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
-                        </label> 
+                        </label>
                         <br/>
                         <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
                         <br/>

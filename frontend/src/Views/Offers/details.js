@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
+import axios from 'axios'
 
 export default class details extends Component {
 
     state ={
         editMode: false,
-        id: window.location.href.split('/')[4],
-        abv: 0,
         uploadProgress:0
     }
 
@@ -72,6 +71,7 @@ export default class details extends Component {
         var details = await fetch(api_URL, requestOptions)
         details = await details.json()
         details = details[0]
+        this.setState({id: details.id})
         this.setState({name: details.name})
         this.setState({distillery: details.distillery})
         this.setState({abv: details.abv})
@@ -82,6 +82,7 @@ export default class details extends Component {
         this.setState({UID: details.UID})
         this.setState({region: details.region})
         this.setState({size: details.size})
+        this.setState({momdetails: details.momdetails})
         this.setState({waiting:false})
         this.render()
     }
@@ -90,33 +91,40 @@ export default class details extends Component {
         this.setState({waiting:true})
         event.preventDefault();
 
-        var objToSend = this.state
-        delete objToSend.editMode 
-        const requestOptions = {
-            crossDomain: true,
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin':true},
-            body: JSON.stringify(this.state)
-        };
-        try{
-            var response = await fetch(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), requestOptions);
-            if(response.status===200)
-            {
-                this.setState({waiting:false})
-                alert("Updated listing")
-                this.toggleEdit()
-                window.location.reload()
+        if(this.state.type !== "Scotch Whisky")
+        delete this.state.region
+
+        let fd = new FormData();
+        var data = this.state
+        let file = this.state.file
+        delete data.file
+        delete data.uploadProgress
+        delete data.waiting
+        delete data.editMode
+        data = JSON.stringify(data)
+        fd.append('data', data)
+        fd.append('image', file)
+
+        axios.put(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), fd,
+        {
+            onUploadProgress: progressEvent => {
+                this.setState({uploadProgress: Math.round((progressEvent.loaded/progressEvent.total) *100)})
             }
-            else if(response.status===304){
-                this.setState({waiting:false})
-                alert("Did not update")
-                this.toggleEdit()
-            }
-        }
-        catch(err){ 
-            this.setState({waiting:false})
-            alert("Something went wrong: " + err)
-        }
+        })
+            .then(res => {
+                if(res.status ===200)
+                {
+                    alert("Updated offer")
+                    this.setState({editMode:false})
+                    this.setState({waiting: false})
+                    window.location.reload()
+                }
+
+            })
+            .catch(err => {
+                this.setState({waiting: false}) 
+                alert("Unexpercted error: "+err)
+            })
     }
 
     toggleEdit = ()=>{
@@ -161,6 +169,9 @@ export default class details extends Component {
                 break;
             case "size":
                 this.setState({size: event.target.value});
+                break;
+            case "MoMdetails":
+                this.setState({momdetails: event.target.value});
                 break;
             default:
         }
@@ -240,6 +251,11 @@ export default class details extends Component {
                             <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
+                        <label htmlFor="momDetails">
+                            Masters of Malt link:
+                            <input type="url" name="momDetails" id="MoMdetails" onChange= {this.handleFormFields} />
+                        </label> 
+                        <br/>
                         <label htmlFor="image">
                             Image: 
                             <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
@@ -266,7 +282,7 @@ export default class details extends Component {
                     <h2>{this.state.bottler !== undefined ? this.state.bottler: null}</h2>
                     <p>{this.state.details !== null ? this.state.details: null }</p>
                     <p>{this.state.type !== null ? this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
-                    
+                    {this.s}
                     {
                         this.state.UID === cookie.load("UID") ?
                         <>
