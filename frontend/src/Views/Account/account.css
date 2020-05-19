@@ -1,0 +1,42 @@
+button{
+    background-color: #eb8a03;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0px;
+    transition-duration: 0.7s;
+    font-weight: 600;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+button:hover{
+    background-color: #fdb146;
+    transition-duration: 0.7s;
+}
+
+.account{
+    text-align: center;
+}
+
+#personal{
+    margin:30px;
+}
+
+#personal h1{
+    margin-top:10px;
+    margin-bottom:30px;
+}
+
+#delivery{
+    margin:30px;
+}
+
+p{
+    display: inline;
+    padding: 15px;
+}
+
+li{
+    list-style-type: none;
+    padding: 5px 0px
+}
