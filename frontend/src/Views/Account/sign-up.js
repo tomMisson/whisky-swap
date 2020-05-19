@@ -89,7 +89,6 @@ export default class profile extends Component {
                 this.setState({deliveryOption: event.target.value});
                 break;
             case "profPic":
-                this.setState({uploadProgress:0})
                 this.setState({file: event.target.files[0]});
                 break;
             default:
@@ -119,12 +118,7 @@ export default class profile extends Component {
             .catch(err => alert("Error sending email vericication"))
         
 
-        axios.post(process.env.REACT_APP_API_URL.concat("/profiles"), fd,
-        {
-            onUploadProgress: progressEvent => {
-                this.setState({uploadProgress: Math.round((progressEvent.loaded/progressEvent.total) *100)})
-            }
-        })
+        axios.post(process.env.REACT_APP_API_URL.concat("/profiles"), fd)
             .then(res => {
                 if(res.data ===409)
                 {

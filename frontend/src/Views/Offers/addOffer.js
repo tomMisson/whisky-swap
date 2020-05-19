@@ -13,7 +13,6 @@ export default class addOffer extends Component {
 
     state = {
         UID: cookie.load("UID"),
-        uploadProgress:0
     }
 
 
@@ -38,18 +37,12 @@ export default class addOffer extends Component {
         fd.append('image', file)
         
         delete data.file
-        delete data.uploadProgress
         data = JSON.stringify(data)
         fd.append('data', data)
         
 
   
-        axios.post(process.env.REACT_APP_API_URL.concat("/offers"), fd,
-        {
-            onUploadProgress: progressEvent => {
-                this.setState({uploadProgress: Math.round((progressEvent.loaded/progressEvent.total) *100)})
-            }
-        })
+        axios.post(process.env.REACT_APP_API_URL.concat("/offers"), fd)
             .then(res => {
                 if(res.status ===200)
                 {
@@ -81,7 +74,6 @@ export default class addOffer extends Component {
                 break;
             case "image":
                 this.setState({file: event.target.files[0]});
-                this.setState({uploadProgress:0})
                 break;
             case "bottler":
                 this.setState({bottler: event.target.value});
@@ -185,8 +177,6 @@ export default class addOffer extends Component {
                             Image: 
                             <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
                         </label>
-                        <br/>
-                        <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
                         <br/>
                         <button type="submit" id="Add">Add</button>
                     </form>

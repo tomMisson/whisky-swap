@@ -8,7 +8,6 @@ export default class details extends Component {
 
     state ={
         editMode: false,
-        uploadProgress:0
     }
 
     componentDidMount(){
@@ -98,19 +97,13 @@ export default class details extends Component {
         var data = this.state
         let file = this.state.file
         delete data.file
-        delete data.uploadProgress
         delete data.waiting
         delete data.editMode
         data = JSON.stringify(data)
         fd.append('data', data)
         fd.append('image', file)
 
-        axios.put(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), fd,
-        {
-            onUploadProgress: progressEvent => {
-                this.setState({uploadProgress: Math.round((progressEvent.loaded/progressEvent.total) *100)})
-            }
-        })
+        axios.put(process.env.REACT_APP_API_URL.concat("/offers/"+window.location.href.split('/')[4]), fd)
             .then(res => {
                 if(res.status ===200)
                 {
@@ -158,7 +151,6 @@ export default class details extends Component {
                 this.setState({details: event.target.value});
                 break;
             case "image":
-                this.setState({uploadProgress:0})
                 this.setState({file: event.target.files[0]});
                 break;
             case "bottler":
@@ -261,8 +253,7 @@ export default class details extends Component {
                             <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
                         </label> 
                         <br/>
-                        <progress id="uploadProgress" min="0" max="100" value={this.state.uploadProgress}>{this.state.uploadProgress}%</progress>
-                        <br/>
+
                         <button type="submit">Update</button>
                     </form>
                     {this.state.editMode ?

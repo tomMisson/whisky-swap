@@ -29,8 +29,18 @@ ReactDOM.render(
     <Switch>
         <Route exact={true} path='/your-drams' render={() => (
               <div className="App">
-                <h2>Your drams</h2>
-                <AvalibleTrades filter={cookie.load("UID")}/>
+                <main>
+                  <h2>Your drams</h2>
+                  <AvalibleTrades filter={cookie.load("UID")}/>
+                </main>
+              </div>
+            )}/>
+        <Route exact={true} path='/browse' render={() => (
+              <div className="App">
+                <main>
+                  <h2>Avalible for trading:</h2>
+                  <AvalibleTrades/>
+                </main>
               </div>
             )}/>
         <Route exact={true} path='/account' render={() => (
