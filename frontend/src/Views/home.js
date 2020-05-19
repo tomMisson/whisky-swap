@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AvalibleTrades from './Offers/avalibleTrades'
+import AvalibleTrades from './Offers/avalibleOffers'
 import './home.css'
 
 export default class home extends Component {

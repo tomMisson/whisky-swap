@@ -8,12 +8,13 @@ import SignUp from "./Views/Account/sign-up"
 import Account from "./Views/Account/account"
 import AddOffer from "./Views/Offers/addOffer"
 import * as serviceWorker from './serviceWorker'
-import AvalibleTrades from './Views/Offers/avalibleTrades'
+import AvalibleTrades from './Views/Offers/avalibleOffers'
 import Details from "./Views/Offers/details"
 import Home from "./Views/home"
 import Reset from './Views/Account/reset-password'
 import Delivery from './Views/Account/delivery-update'
 import Loader from './Components/Loader';
+import Trades from './Views/Offers/trades'
 import cookie from 'react-cookies'
 import './global.css'
 
@@ -22,9 +23,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Header links={[
       {id:0,text:"Your drams", uri:'/your-drams', signInNeeded:true},
-      {id:1,text:"Sign in", uri:'/sign-in', signInNeeded:false},
-      {id:2,text:"Avalible drams", uri:'/browse', signInNeeded:true},
-      {id:3,text:"Account", uri:'/account', signInNeeded:true},
+      {id:1,text:"Trades", uri:'/trades', signInNeeded:true},
+      {id:2,text:"Sign in", uri:'/sign-in', signInNeeded:false},
+      {id:3,text:"Avalible drams", uri:'/browse', signInNeeded:true},
+      {id:4,text:"Account", uri:'/account', signInNeeded:true},
     ]}/>
     <Switch>
         <Route exact={true} path='/your-drams' render={() => (
@@ -105,6 +107,11 @@ ReactDOM.render(
         <Route exact={true} path='/loading' render={() => (
           <div className="App">
             <Loader/>
+          </div>
+        )}/>
+        <Route exact={true} path='/trades' render={() => (
+          <div className="App">
+            <Trades/>
           </div>
         )}/>
       </Switch>
