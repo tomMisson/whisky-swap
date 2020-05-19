@@ -15,6 +15,10 @@ export default class addOffer extends Component {
         UID: cookie.load("UID"),
     }
 
+    clickFileUpload(e){
+        e.preventDefault()
+        document.getElementById('image').click();
+    }
 
     handleBack(){
         if(window.confirm("Are you sure you want to leave? Any unsaved offers will be lost."))
@@ -175,7 +179,8 @@ export default class addOffer extends Component {
                         <br/>
                         <label htmlFor="image">
                             Image: 
-                            <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
+                            <button className="upload" onClick={this.clickFileUpload}> <span className="material-icons">cloud_upload</span>  Upload a file</button>
+                            <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} style={{display:"none"}}/>
                         </label>
                         <br/>
                         <button type="submit" id="Add">Add</button>

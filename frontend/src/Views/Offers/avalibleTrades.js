@@ -18,6 +18,10 @@ export default class avalibleTrades extends Component {
         this.setState({waiting:false})
     } 
 
+    btnClick(){
+        window.location.replace(process.env.REACT_APP_APP_URL+"/add-offer")
+    }
+
     componentDidMount()
     {
         this.fetchOffers()  
@@ -37,9 +41,7 @@ export default class avalibleTrades extends Component {
             <>
                 {this.props.filter !== undefined ? 
                 <>
-                    <Link to="add-offer">
-                        Add a dram!
-                    </Link>
+                    <button onClick={this.btnClick}>Add an offer</button>
                     <br/>
                     {
                         this.state.offers.length === 0 ? 
