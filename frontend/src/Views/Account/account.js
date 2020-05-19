@@ -29,7 +29,7 @@ export default class account extends Component {
         }
         catch(err){}
         this.setState({waiting:false})
-        console.log(this.state)
+
     }
 
     sendEmail = async () => {
