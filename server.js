@@ -363,6 +363,24 @@ app.get('/offers/:offerId', function (req, res) {
     });
 })
 
+app.get('/offer-name/:offerId', function (req, res) {
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            const id = req.params.offerId;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+
+            dbo.collection("offers").find({_id: o_id}).toArray()
+                .then(docs => res.json(docs[0].name))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
 app.get('/user-offers/:uid', function (req, res) {
     const id = req.params.uid;
     client.connect(function(err, db) {
