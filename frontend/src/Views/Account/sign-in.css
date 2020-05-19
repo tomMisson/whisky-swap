@@ -24,7 +24,7 @@ i{
     display: inline;
 }
 
-input[type="text"], input[type="password"]{
+input{
     border-top: none;
     border-left: none;
     border-right: none;

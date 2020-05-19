@@ -3,6 +3,7 @@ import hash from 'hash.js'
 import axios from 'axios'
 import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
+import './sign-up.css'
 
 export default class profile extends Component {
 
@@ -10,7 +11,6 @@ export default class profile extends Component {
         super(props);
     
         this.state={
-            deliveryOption:"",
             waiting:false
         }
 
@@ -19,9 +19,18 @@ export default class profile extends Component {
     }
 
     componentDidMount(){
-        
         if(cookie.load("loggedIn")==="true")
             this.getUdetails()
+    }
+
+    clickFileUpload(e){
+        e.preventDefault()
+        document.getElementById('profPic').click();
+    }
+
+    clickFileUploadUpdate(e){
+        e.preventDefault()
+        document.getElementById('profPicUpdate').click();
     }
 
     async getUdetails(){
@@ -35,8 +44,8 @@ export default class profile extends Component {
     }
 
     handleUpdate = async (event) =>{
-        this.setState({waiting:true})
         event.preventDefault()
+        this.setState({waiting:true})
 
         var fd = new FormData();
         fd.append("data", JSON.stringify(
@@ -46,9 +55,8 @@ export default class profile extends Component {
                 "phone": this.state.phone,
             }))
         fd.append("profPic", this.state.file)
-        axios.put(process.env.REACT_APP_API_URL.concat("/profiles-details/"+cookie.load("UID")), fd)
-        .then(res => {
-            console.log(res)
+        await axios.put(process.env.REACT_APP_API_URL.concat("/profiles-details/"+cookie.load("UID")), fd)
+            .then(res => {
                 if(res.status ===200)
                 {
                     this.setState({waiting:false})
@@ -56,7 +64,10 @@ export default class profile extends Component {
                     window.location.replace(process.env.REACT_APP_APP_URL+"/account")
                 }
             })
-            .catch(err => alert("Unexpercted error: "+err))
+            .catch(err =>{ 
+                alert("No changes have been made")
+                this.setState({waiting:false})
+            })
     }
 
     handleForm(event){
@@ -89,6 +100,9 @@ export default class profile extends Component {
                 this.setState({deliveryOption: event.target.value});
                 break;
             case "profPic":
+                this.setState({file: event.target.files[0]});
+                break;
+            case "profPicUpdate":
                 this.setState({file: event.target.files[0]});
                 break;
             default:
@@ -134,7 +148,10 @@ export default class profile extends Component {
                     window.location.replace(process.env.REACT_APP_APP_URL+"/account")
                 }
             })
-            .catch(err => alert("Unexpercted error: "+err))
+            .catch(err => {
+                alert("Unexpercted error: "+err) 
+                this.setState({waiting:false})}
+            )
     }
 
     render() {
@@ -142,30 +159,30 @@ export default class profile extends Component {
             this.state.waiting?
             <Loader/>
             :
-            cookie.load("loggedIn") === "false" || cookie.load("loggedIn") === undefined || cookie.load("UID") !== undefined ?
-            <main>
+            cookie.load("loggedIn") === "false" || cookie.load("loggedIn") === undefined ?
+            <main className="signUp">
                 <h2>Sign up</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="name">
                         Full name:
                         <input required type="text" name ="name" id="name" value={this.state.name} onChange={this.handleForm}/>
                     </label>
-                    <br/>
+                    
                     <label htmlFor="email">
                         Email:
                         <input required type="text" name ="email" id="email" value={this.state.email} onChange={this.handleForm}/>
                     </label>
-                    <br/>
+                    
                     <label htmlFor="pswd">
                         Password:
                         <input required type="password" name ="pswd" id="pswd" value={this.state.pswd} onChange={this.handleForm}/>
                     </label>
-                    <br/>
+                    
                     <label htmlFor="phone">
                         Phone number:
                         <input type="tel" name="phone" id="phone" value={this.state.phone} onChange={this.handleForm}/>
                     </label>
-                    <br/>
+                    
                     <label htmlFor="preferedDelivery">
                         Prefered delivery option:
                         <select required name="preferedDelivery" id="deliveryOption" value={this.state.deliveryOption} onChange={this.handleForm}>
@@ -184,32 +201,31 @@ export default class profile extends Component {
                                 House name/number:
                                 <input type="text" required name="addrLn1" id="addrLn1" value={this.state.line1Address} onChange={this.handleForm}/>
                             </label>
-                            <br/>
+                            
                             <label htmlFor="addrLn2">
                                 Street name:
                                 <input type="text" required name="addrLn2" id="addrLn2" value={this.state.line2Address} onChange={this.handleForm}/>
                             </label>
-                            <br/>
+                            
                             <label htmlFor="addrLn3">
                                 Post town:
                                 <input type="text" required name="addrLn3" id="addrLn3" value={this.state.line3Address} onChange={this.handleForm}/>
                             </label>
-                            <br/>
+                            
                             <label htmlFor="postcode">
                                 Postcode:
                                 <input type="text" required name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
                             </label>
-                        <br/>
                         </>
                         :null
                         
                     }
                     <label htmlFor="pic">
                         Profile picture:
-                        <input type="file" accept="image/*" name="pic" id="profPic" onChange= {this.handleForm} />
+                        <button className="upload" onClick={this.clickFileUpload}> <span className="material-icons">cloud_upload</span>  Upload a file</button>
+                        <input type="file" accept="image/*" name="pic" id="profPic" onChange= {this.handleForm} style={{display:"none"}}/>
                     </label>
-                    <br/>
-                    <input type="submit" value="Submit"/>
+                    <button type="submit" id="Sign up" value="signUp">Sign up</button>
                 </form>
                 <a href="/sign-in">Back</a>
             </main>
@@ -217,7 +233,7 @@ export default class profile extends Component {
             this.state.waiting?
                 <Loader/>
                 :
-                <main>
+                <main className="signUp">
                     <form onSubmit={this.handleUpdate}>
                         <label htmlFor="name">
                             Full name:
@@ -236,10 +252,11 @@ export default class profile extends Component {
                         <br/>
                         <label htmlFor="pic">
                             Profile picture:
-                            <input type="file" accept="image/*" name="pic" id="profPic" onChange= {this.handleForm} />
+                            <button className="upload" onClick={this.clickFileUploadUpdate}> <span className="material-icons">cloud_upload</span>  Upload a file</button>
+                            <input type="file" accept="image/*" name="pic" id="profPicUpdate" onChange={this.handleForm} style={{display:"none"}}/>
                         </label>
                         <br/>
-                        <input type="submit" value="Update"/>
+                        <button type="submit" id="update" value="update">Update</button>
                     </form>
                     <a href="/account">Back</a>
                 </main>

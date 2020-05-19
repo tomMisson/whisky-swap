@@ -31,7 +31,7 @@ button:hover{
     margin:30px;
 }
 
-p{
+.account p{
     display: inline;
     padding: 15px;
 }

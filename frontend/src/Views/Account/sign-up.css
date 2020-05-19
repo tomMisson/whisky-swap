@@ -1,0 +1,17 @@
+.signUp input{
+    width: 200px;
+    text-align: center;
+}
+
+.signUp form{
+    text-align: center;
+    display: grid;
+}
+
+h1{
+    text-align: center;
+}
+
+#update{
+    font-size: 1.5rem;
+}

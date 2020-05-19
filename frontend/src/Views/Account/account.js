@@ -29,6 +29,7 @@ export default class account extends Component {
         }
         catch(err){}
         this.setState({waiting:false})
+        console.log(this.state)
     }
 
     sendEmail = async () => {
@@ -53,13 +54,13 @@ export default class account extends Component {
                 cookie.load("UID") !== undefined?
                 <main className="account">
                     <div id="personal">
-                        {this.state.user.img !== undefined ?<img style={{borderRadius:"25px"}} alt="profile" width="100" src={this.state.user.img}/>:null}
+                        {this.state.user.img !== undefined && this.state.user.img !== null ? <img style={{borderRadius:"25px"}} alt="profile" width="100" src={this.state.user.img}/> : null}
                         <h1> Hello, {this.state.fname}!</h1>
                         <h2>Basic details</h2>
                         <ul>
                             <li>Name:<p>{this.state.user.name}</p></li>
-                            <li>Email address:<p>{this.state.user.email}</p>{this.state.user.verifiedEmail? null : <span><p className="warning">You need to verify your email before you can request a trade</p><button onClick={this.sendEmail}>Resend verification email</button></span>}</li>
-                            <li>Phone number:<p>{this.state.user.phone}</p></li>
+                            <li>Email address:<p>{this.state.user.email}</p>{this.state.user.verifiedEmail? null : <span><br/><p className="warning">You need to verify your email before you can request a trade</p><br/><button onClick={this.sendEmail}>Resend verification email</button></span>}</li>
+                            {this.state.user.phone !== undefined ? <li>Phone number:<p>{this.state.user.phone}</p></li> : null}
                         </ul>
                         <ul>
                             <li><Link to="update-details">Update details</Link></li>
