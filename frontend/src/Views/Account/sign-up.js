@@ -148,7 +148,7 @@ export default class profile extends Component {
             this.state.waiting?
             <Loader/>
             :
-            cookie.load("loggedIn") === "false" && cookie.load("loggedIn") === undefined && cookie.load("UID") !== undefined ?
+            cookie.load("loggedIn") === "false" || cookie.load("loggedIn") === undefined || cookie.load("UID") !== undefined ?
             <main>
                 <h2>Sign up</h2>
                 <form onSubmit={this.handleSubmit}>

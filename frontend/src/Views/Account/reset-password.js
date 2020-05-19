@@ -6,7 +6,6 @@ import Loader from '../../Components/Loader'
 export default class resetPassword extends Component {
 
     state={
-        loggedIn:cookie.load("loggedIn"),
         newPassword: "",
         conf:"",
         email:""
@@ -112,7 +111,15 @@ export default class resetPassword extends Component {
         <Loader/>
         :
         this.props.uid === undefined ?
-            !this.state.loggedIn ?
+            cookie.load("loggedIn") === "false" || cookie.load("loggedIn") === undefined ?
+            <main>
+                <p>Please enter your email address and we will send you an email to update your password:</p>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="email" id="email" onChange={this.handleFormData}/><br/>
+                    <button type="submit">Send me an email</button>
+                </form>
+            </main>
+            :
             <main>
                 <p>Enter the password you would like to use:</p>
                 <form onSubmit={this.handleSubmit}>
@@ -122,14 +129,6 @@ export default class resetPassword extends Component {
                     <button type="submit">Update</button><br/>
                 </form>
                 <button onClick={this.back}>Back</button>
-            </main>
-            :
-            <main>
-                <p>Please enter your email address and we will send you an email to update your password:</p>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="email" id="email" onChange={this.handleFormData}/><br/>
-                    <button type="submit">Send me an email</button>
-                </form>
             </main>
         :
         <main>
