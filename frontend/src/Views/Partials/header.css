@@ -3,16 +3,17 @@ header{
     z-index: 10000000;
 }
 
-h1{
+header h1{
     color: white;
     padding-left: 3vh;
     padding-top: 3vh;
 }
 
-a{
+nav a{
     text-decoration: none;
     color: aliceblue;
     transition-duration: 0.7s;
+    font-weight: 500;
 }
 a:hover{
     color: #fc9403;
@@ -57,7 +58,7 @@ li{
         visibility: visible;
         display: inline-block;
         float: right;
-        margin-right: 8vw;
+        margin-right: 3vw;
         margin-top: 3.5vh;
     }
 
@@ -79,6 +80,6 @@ li{
 
 @media screen and (min-width: 768px) {
     #spacer{
-        margin-left: 25rem;
+        margin-left: 20rem;
     }
 }
