@@ -182,7 +182,7 @@ export default class details extends Component {
             this.state.waiting?
             <Loader/>
             :
-            cookie.load("loggedIn") == "true" && cookie.load("loggedIn") == undefined ?
+            cookie.load("loggedIn") === "true" && cookie.load("loggedIn") === undefined ?
                 this.state.editMode ?
                 <main>
                     <form onSubmit={this.handleSubmit}>
