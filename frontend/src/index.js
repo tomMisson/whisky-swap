@@ -22,18 +22,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Header links={[
       {id:0,text:"Your drams", uri:'/your-drams', signInNeeded:true},
-      {id:1,text:"Avalible drams", uri:'/browse', signInNeeded:false},
-      {id:2,text:"Sign in", uri:'/sign-in', signInNeeded:false},
-      {id:3,text:"Avalible drams", uri:'/browse', signInNeeded:true},
-      {id:4,text:"Account", uri:'/account', signInNeeded:true},
+      {id:1,text:"Sign in", uri:'/sign-in', signInNeeded:false},
+      {id:2,text:"Avalible drams", uri:'/browse', signInNeeded:true},
+      {id:3,text:"Account", uri:'/account', signInNeeded:true},
     ]}/>
     <Switch>
-        <Route exact={true} path='/browse' render={() => (
-              <div className="App">
-                <h2>Avalible for trading</h2>
-                <AvalibleTrades/>
-              </div>
-            )}/>
         <Route exact={true} path='/your-drams' render={() => (
               <div className="App">
                 <h2>Your drams</h2>
@@ -63,6 +56,9 @@ ReactDOM.render(
         <Route exact={true} path='/' render={() => (
           <div className="App">
             <Home />
+            <p>A site by whisky lovers for whisky lovers! We wanted a way to connect people (and drams!) together and share what people have in their cupboards, cabinets (if you are posh), shelves and sides to experience something different. Whisky is for drinking and for sharing, so why not give it a go and find your next favourite tipple. </p>
+            <h2>Avalible for trading</h2>
+            <AvalibleTrades/>
           </div>
         )}/>
         <Route path='/offer/' render={() => (
