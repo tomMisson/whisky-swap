@@ -45,8 +45,9 @@ input{
     margin:10px
 }
 
-input[type="submit"]{
-    padding: 12px 86px;
+.signIn input[type="submit"]{
+    padding: 12px;
+    width: 225px;
     background-color: #fc9403;
     border: none;
     border-radius: 5px;

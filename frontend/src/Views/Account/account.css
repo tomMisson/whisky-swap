@@ -1,4 +1,4 @@
-button{
+.account button{
     background-color: #eb8a03;
     border: none;
     border-radius: 5px;
@@ -9,7 +9,7 @@ button{
     color: #fff;
 }
 
-button:hover{
+.account button:hover{
     background-color: #fdb146;
     transition-duration: 0.7s;
 }
