@@ -1,3 +1,7 @@
 footer{
-    clear: both
+    clear: both;
+    background-color: #3d424a;
+    color: aliceblue;
+    text-align: center;
+    padding: 30px 0;
 }
