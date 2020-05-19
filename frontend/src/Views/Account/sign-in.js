@@ -3,11 +3,29 @@ import {Link} from 'react-router-dom'
 import hash from 'hash.js'
 import Loader from '../../Components/Loader'
 import cookie from 'react-cookies'
+import $ from 'jquery'
+import './sign-in.css'
 
 export default class profile extends Component {
 
     state={
         loggedIn: cookie.load("loggedIn"),
+        pswdVisible:false,
+        icon: "visibility"
+    }
+
+    tooglePswdVisibility = () =>{
+        if(this.state.pswdVisible){
+            $("#pswd").prop('type', 'password')
+            this.setState({icon:"visibility"})
+        }
+        else
+        {
+            $("#pswd").prop('type', 'text') 
+            this.setState({icon:"visibility_off"})
+        }
+        
+        this.setState({pswdVisible:!this.state.pswdVisible})
     }
 
     handleForm = (event) => {
@@ -79,27 +97,27 @@ export default class profile extends Component {
             cookie.load("UID") === undefined || cookie.load("loggedIn") === undefined ?
             this.state.toggleLoad?
             <Loader/>
-            :
-            
-        
-                <main>
+            :        
+                <main className="signIn">
                     <h2>Login</h2>
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="email">
-                            Email:
+                            Email
                             <input required type="text" id="email" value={this.state.email} onChange={this.handleForm}/>
                         </label>
                         <br/>
                         <label htmlFor="pswd">
-                            Password:
-                            <input required type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
+                            Password
+                            <span><input required type="password" id="pswd" value={this.state.password} onChange={this.handleForm}/>
+                            <i className="material-icons" onClick={this.tooglePswdVisibility}>{this.state.icon}</i></span>
                         </label>
                         <br/>
-                        <input type="submit" value="Submit"/>
+                        <Link id="forgot" to="/forgot">Forgotten something?</Link>
+                        <br/>
+                        <input type="submit" value="Log in"/>
                     </form>
-                    <div className="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div><br/>
-                    <Link to="/sign-up">Don't have an account?</Link><br/>
-                    <Link to="/forgot">Forgotten something?</Link>
+                    <div className="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div><br/>
+                    <p id="signUp">No account?<Link to="/sign-up">Sign up</Link><br/></p>
                 </main>
 
             :

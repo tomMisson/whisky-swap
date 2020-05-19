@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 *{
     padding: 0;
@@ -7,7 +6,7 @@
 }
 
 body{
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;;
 }
 
 .App{
@@ -17,7 +16,7 @@ body{
 a{
     color: #000;
     text-decoration: none;
-    font-weight: bold;
+    font-style: italic;
 }
 a:hover{
     color: #fc9403;
@@ -26,4 +25,9 @@ a:hover{
 
 main{
     min-height: 82.2vh;
+    text-align: left;
+}
+
+button{
+    padding: 20px 50px
 }

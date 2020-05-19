@@ -7,6 +7,7 @@ header h1{
     color: white;
     padding-left: 3vh;
     padding-top: 3vh;
+    font-style: none;
 }
 
 nav a{
@@ -14,6 +15,7 @@ nav a{
     color: aliceblue;
     transition-duration: 0.7s;
     font-weight: 500;
+    font-style: unset;
 }
 
 .titleBar{
