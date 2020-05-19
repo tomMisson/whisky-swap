@@ -15,10 +15,6 @@ nav a{
     transition-duration: 0.7s;
     font-weight: 500;
 }
-a:hover{
-    color: #fc9403;
-    transition-duration: 0.7s;
-}
 
 .titleBar{
     display: inline-flex;
@@ -45,7 +41,7 @@ nav{
     text-align: center;
 }
 
-li{
+header li{
     padding: 10px;
 }
 
@@ -62,7 +58,7 @@ li{
         margin-top: 3.5vh;
     }
 
-    li{
+    header li{
         display: inline;
     }
 
