@@ -45,6 +45,24 @@ main{
     color: rgb(207, 22, 22);
 }
 
+button{
+    padding: 12px;
+    width: 150px;
+    background-color: #fc9403;
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition-duration: 0.7s;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+button:hover{
+    background-color: #fdb146;
+    transition-duration: 0.7s;
+}
+
 @media screen and (min-width: 768px) {
     .loader{
         margin-left: 45%;
