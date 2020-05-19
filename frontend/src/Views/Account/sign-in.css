@@ -38,8 +38,7 @@ input[type="text"], input[type="password"]{
 }
 
 #forgot{
-    float: right;
-    margin-right: 15vw;
+    text-align: right;
 }
 
 #signUp{

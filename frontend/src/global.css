@@ -16,15 +16,15 @@ body{
 a{
     color: #000;
     text-decoration: none;
-    font-style: italic;
+    color: #fc9403;
 }
 a:hover{
-    color: #fc9403;
+    color: #fdb146;
     transition-duration: 0.7s;
 }
 
 main{
-    min-height: 82.2vh;
+    min-height: 79vh;
     text-align: left;
 }
 
