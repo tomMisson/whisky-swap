@@ -24,10 +24,16 @@ a:hover{
 }
 
 main{
-    min-height: 79vh;
+    min-height: 82.1vh;
     text-align: left;
 }
 
 button{
     padding: 20px 50px
+}
+
+.loader{
+    margin-left: 45%;
+    margin-top: 25%;
+    margin-bottom: -20%;
 }
