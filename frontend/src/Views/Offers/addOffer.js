@@ -167,11 +167,6 @@ export default class addOffer extends Component {
                             <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
                         <br/>
-                        <label htmlFor="details">
-                            Other details: 
-                            <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
-                        </label>
-                        <br/>
                         <label htmlFor="momDetails">
                             Masters of Malt link:
                             <input type="url" name="momDetails" id="MoMdetails" onChange= {this.handleFormFields} />

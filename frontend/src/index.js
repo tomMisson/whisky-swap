@@ -30,7 +30,7 @@ ReactDOM.render(
         <Route exact={true} path='/your-drams' render={() => (
               <div className="App">
                 <main>
-                  <h2>Your drams</h2>
+                  <h1>Your drams</h1>
                   <AvalibleTrades filter={cookie.load("UID")}/>
                 </main>
               </div>
@@ -38,7 +38,7 @@ ReactDOM.render(
         <Route exact={true} path='/browse' render={() => (
               <div className="App">
                 <main>
-                  <h2>Avalible for trading:</h2>
+                  <h1>Avalible for trading:</h1>
                   <AvalibleTrades/>
                 </main>
               </div>

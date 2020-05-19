@@ -58,6 +58,9 @@ export default class details extends Component {
         {
             alert("You aren't currently sharing any drams so you can't propose a trade. Add a dram to start trading with others")
         }
+        else{
+            alert("Placeholder for trade trigger")
+        }
     }
 
     async getDetails(){
