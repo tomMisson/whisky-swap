@@ -456,5 +456,48 @@ app.put('/offers/:id', async (req, res) => {
         console.log(err)
     }
 })
+
+
+/// Trades
+
+app.get('/trades-proposed/:UID', (req,res) => {
+    //get proposed trades (Another user has offered)
+})
+
+app.get('/your-trades-proposed/:UID', (req,res) => {
+    //get proposed trades (What you have offered to other users)
+})
+
+app.get('/trade/:ID', (req,res) => {
+    //Get details of one trade
+})
+
+app.post('/trade', (req,res) => {
+    const data = req.body;
+    console.log(data)
+    try{
+        client.connect(function(err, db) {
+            
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("trades").insertOne(data)
+                .then(result => res.json(result.insertedId))
+                .catch(err => console.log(err))
+                                        
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
+app.put('trade-accept/:trade-id', (req,res)=>{
+    //Accept
+})
+
+app.put('trade-decline/:trade-id', (req,res)=>{
+    //Decline
+})
   
 app.listen(process.env.PORT)
