@@ -576,8 +576,24 @@ app.put('/trade-accept/:tradeId', (req,res)=>{
     });
 })
 
-app.delete('trade-decline/:trade-id', (req,res)=>{
-    //Decline
+app.delete('/trade-decline/:tradeId', (req,res)=>{
+
+    let tradeID = req.params.tradeId;
+    
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(tradeID);
+
+            dbo.collection("trades").deleteOne({_id:o_id})
+                .then(cb => cb.deletedCount === 1 ? res.sendStatus(200) : res.sendStatus(404))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
 })
   
 app.listen(process.env.PORT)
