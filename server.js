@@ -469,7 +469,22 @@ app.get('/your-trades-proposed/:UID', (req,res) => {
 })
 
 app.get('/trade/:ID', (req,res) => {
-    //Get details of one trade
+    var id = req.params.ID
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(id);
+
+            dbo.collection("trades").findOne({_id: o_id})
+                .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
 })
 
 app.post('/trade', (req,res) => {
