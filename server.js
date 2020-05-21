@@ -497,6 +497,24 @@ app.get('/trades-recived/:UID', (req,res) => {
     });
 })
 
+app.get('/trades-history/:UID', (req,res) => {
+    var id = req.params.UID
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("trades").find({$and:[{"owner": id},{status:"accepted"}]}).toArray()
+                .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
+})
+
 app.get('/trade/:ID', (req,res) => {
     var id = req.params.ID
 
