@@ -535,11 +535,30 @@ app.post('/trade', (req,res) => {
     }
 })
 
-app.put('trade-accept/:trade-id', (req,res)=>{
-    //Accept
+app.put('/trade-accept/:tradeId', (req,res)=>{
+
+    let tradeID = req.params.tradeId;
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+            var o_id = new mongo.ObjectID(tradeID);
+
+            dbo.collection("trades").updateOne({_id:o_id}, 
+                { $set: {status: "accepted"}}
+                )
+                .then(res.sendStatus(200))
+                .catch(err => console.log(err));               
+        }
+        catch(err){
+            console.log(err)
+            res.sendStatus(500);
+        }
+    });
 })
 
-app.put('trade-decline/:trade-id', (req,res)=>{
+app.delete('trade-decline/:trade-id', (req,res)=>{
     //Decline
 })
   
