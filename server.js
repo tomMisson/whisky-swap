@@ -534,6 +534,7 @@ app.get('/trade/:ID', (req,res) => {
     });
 })
 
+// Email owner to let them know they have intrest in their dram
 app.post('/trade', (req,res) => {
     const data = req.body;
     try{
@@ -553,6 +554,7 @@ app.post('/trade', (req,res) => {
     }
 })
 
+//To do: implement emails sending for accepted and declining 
 app.put('/trade-accept/:tradeId', (req,res)=>{
 
     let tradeID = req.params.tradeId;
@@ -576,21 +578,24 @@ app.put('/trade-accept/:tradeId', (req,res)=>{
     });
 })
 
-app.delete('/trade-decline/:tradeId', (req,res)=>{
+app.put('/trade-decline/:tradeId', (req,res)=>{
 
     let tradeID = req.params.tradeId;
-    
+
     client.connect(function(err, db) {
         try{
             if (err) throw err;
             var dbo = db.db("whisky-swap");
             var o_id = new mongo.ObjectID(tradeID);
 
-            dbo.collection("trades").deleteOne({_id:o_id})
-                .then(cb => cb.deletedCount === 1 ? res.sendStatus(200) : res.sendStatus(404))
-                  
+            dbo.collection("trades").updateOne({_id:o_id}, 
+                { $set: {status: "declined"}}
+                )
+                .then(res.sendStatus(200))
+                .catch(err => console.log(err));               
         }
         catch(err){
+            console.log(err)
             res.sendStatus(500);
         }
     });
