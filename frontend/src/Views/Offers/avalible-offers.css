@@ -1,0 +1,10 @@
+.text{
+    padding-top: 3px;
+    padding-left: 5px;
+}
+
+#addBtn{
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+}

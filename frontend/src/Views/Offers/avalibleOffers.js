@@ -3,6 +3,7 @@ import Offer from './offerTile'
 import {Link} from 'react-router-dom'
 import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
+import './avalible-offers.css'
 
 export default class avalibleTrades extends Component {
     state = {
@@ -41,7 +42,7 @@ export default class avalibleTrades extends Component {
             <>
                 {this.props.filter !== undefined ? 
                 <>
-                    <button onClick={this.btnClick}>Add an offer</button>
+                    <button id="addBtn" onClick={this.btnClick}><span className="material-icons">add</span><span className="text">Add an offer</span></button>
                     <br/>
                     {
                         this.state.offers.length === 0 ? 
