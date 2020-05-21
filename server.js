@@ -461,11 +461,40 @@ app.put('/offers/:id', async (req, res) => {
 /// Trades
 
 app.get('/trades-proposed/:UID', (req,res) => {
-    //get proposed trades (Another user has offered)
+    var id = req.params.UID
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("trades").find({"trader": id}).toArray()
+                .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+            console.log(err)
+        }
+    });
 })
 
-app.get('/your-trades-proposed/:UID', (req,res) => {
-    //get proposed trades (What you have offered to other users)
+app.get('/trades-recived/:UID', (req,res) => {
+    var id = req.params.UID
+
+    client.connect(function(err, db) {
+        try{
+            if (err) throw err;
+            var dbo = db.db("whisky-swap");
+
+            dbo.collection("trades").find({"owner": id}).toArray()
+                .then(docs => res.json(docs))
+                  
+        }
+        catch(err){
+            res.sendStatus(500);
+        }
+    });
 })
 
 app.get('/trade/:ID', (req,res) => {
@@ -489,7 +518,6 @@ app.get('/trade/:ID', (req,res) => {
 
 app.post('/trade', (req,res) => {
     const data = req.body;
-    console.log(data)
     try{
         client.connect(function(err, db) {
             
