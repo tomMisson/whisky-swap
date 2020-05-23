@@ -441,7 +441,7 @@ app.put('/offers/:id', async (req, res) => {
                 var o_id = new mongo.ObjectID(id);
     
                 dbo.collection("offers").updateOne({_id:o_id}, 
-                    { $set: { name: document.name, UID: document.UID, type: document.type, size:document.size, bottler: document.bottler, region: document.region, image: document.image, details:document.details}}
+                    { $set: { name: document.name, UID: document.UID, type: document.type, size:document.size, bottler: document.bottler, region: document.region, image: document.image, details:document.details, momdetails:document.momdetails}}
                     )
                     .then(res.sendStatus(200))
                     .catch(err => console.log(err));               

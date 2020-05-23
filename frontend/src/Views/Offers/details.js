@@ -74,7 +74,7 @@ export default class details extends Component {
         var details = await fetch(api_URL, requestOptions)
         details = await details.json()
         details = details[0]
-        this.setState({id: details.id})
+        this.setState({id: window.location.href.split('/')[4]})
         this.setState({name: details.name})
         this.setState({distillery: details.distillery})
         this.setState({abv: details.abv})
@@ -88,6 +88,7 @@ export default class details extends Component {
         this.setState({momdetails: details.momdetails})
         this.setState({waiting:false})
         this.render()
+        console.log(this.state)
     }
 
     handleSubmit = async (event) =>{
@@ -192,17 +193,17 @@ export default class details extends Component {
                             Distillery: 
                             <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="name">
                             Name of bottle: 
                             <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="bottler">
                             Bottler: 
                             <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="size">
                             Size: 
                             <select required name="size" id="size" value={this.state.size} onChange={this.handleFormFields}>
@@ -212,13 +213,13 @@ export default class details extends Component {
                                 }
                             </select>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="ABV">
                             ABV: 
                             <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
                             %
                         </label>
-                        <br/>
+                        
                         <label htmlFor="type">
                             Type: 
                             <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
@@ -238,13 +239,13 @@ export default class details extends Component {
                                 <option value="Single pot still Whiskey">Single pot still Whiskey</option>
                             </select>
                         </label>
-                        <br/>
+                        
                         {
                             this.state.type === "Scotch Whisky" ?
                             <label htmlFor="region">
                                 Region: 
                                 <input type="text" name="region" id="region" value={this.state.region} onChange= {this.handleFormFields} />
-                                <br/>
+                                
                             </label>
                             : null 
                         }
@@ -252,24 +253,19 @@ export default class details extends Component {
                             Other details: 
                             <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="momDetails">
                             Masters of Malt link:
                             <input type="url" name="momDetails" id="MoMdetails" onChange= {this.handleFormFields} />
                         </label> 
-                        <br/>
+                        
                         <label htmlFor="image">
                             Image: 
                             <button className="upload" onClick={this.clickFile}> <span className="material-icons">cloud_upload</span>  Upload a file</button>
                             <input type="file" accept="image/*" name="image" id="image" onChange={this.handleForm} style={{display:"none"}}/>
                         </label> 
-                        <br/>
-
-                        <button type="submit">Update</button>
+                        <button type="submit" className="spanningBtn">Update</button>
                     </form>
-                    {this.state.editMode ?
-                    <button onClick={this.toggleEdit}>Back</button>:null
-                    }
                 </main>
                 :
                 <main id='signedIn'>
@@ -282,7 +278,7 @@ export default class details extends Component {
                     <h3><small>{this.state.size !== undefined ? "Size: "+this.state.size: null}</small></h3>
                     <h4>{this.state.distillery !== undefined ? "Distilled by "+this.state.distillery: null} {this.state.bottler !== undefined && this.state.bottler !== null? ", bottled by "+this.state.bottler: null}</h4>
                     <p>{this.state.details !== null ? this.state.details: null }</p>
-                    <p>{this.state.type !== null ? "Type: "+this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
+                    <p>{this.state.type !== null && this.state.type !== undefined ? "Type: "+this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
                     {
                         this.state.UID === cookie.load("UID") ?
                         <>
@@ -290,10 +286,10 @@ export default class details extends Component {
                             <button onClick={this.toggleEdit}>Edit trade</button>
                         </>
                         :
-                        <>
-                            <button>View on Masters of Malt</button>
+                        <div id="btnCollection">
+                            {this.state.momdetails !== undefined ? <a href={this.state.momdetails}><button id="mom"><img alt="Masters of Malt logo" width="24" height="24" src="https://cdn2.masterofmalt.com/images/favicon.ico"/><span>Masters of Malt</span></button></a> : null}
                             <button onClick={this.proposeTrade}>Propose trade</button>
-                        </>
+                        </div>
                     }
                 </main>
             :
