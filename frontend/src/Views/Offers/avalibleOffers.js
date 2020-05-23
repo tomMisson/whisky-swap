@@ -52,7 +52,9 @@ export default class avalibleTrades extends Component {
                         :
                         this.state.offers.map((offer) => 
                             offer.UID === cookie.load("UID") ?
-                            <Offer key={offer._id} img={offer.image} size={offer.size} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>
+                            <Link to={"/offer/"+offer._id}>
+                                <Offer key={offer._id} img={offer.image} size={offer.size} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>
+                            </Link>
                             :
                             null
                         )
@@ -66,11 +68,15 @@ export default class avalibleTrades extends Component {
                         offer.UID === cookie.load("UID") ? 
                         null
                         :
-                        <Offer key={offer._id} size={offer.size} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
+                        <Link to={"/offer/"+offer._id}>
+                            <Offer key={offer._id} img={offer.image} size={offer.size} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>
+                        </Link>)
                     )
                     :
                     this.state.offers.map((offer) => (
-                        <Offer key={offer._id} size={offer.size} img={offer.image} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>)
+                        <Link to={"/offer/"+offer._id}>
+                            <Offer key={offer._id} img={offer.image} size={offer.size} name={offer.name} dist={offer.distillery} desc={offer.details} abv={offer.abv} id={offer._id}/>
+                        </Link>)
                     )
                 }
                 </>
