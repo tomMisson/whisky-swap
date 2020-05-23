@@ -42,8 +42,10 @@ export default class avalibleTrades extends Component {
             <>
                 {this.props.filter !== undefined ? 
                 <>
-                    <button id="addBtn" onClick={this.btnClick}><span className="material-icons">add</span><span className="text">Add an offer</span></button>
                     <br/>
+                    <div className ="center">
+                        <button id="addBtn" onClick={this.btnClick}><span className="material-icons">add</span><span className="text">Add an offer</span></button>
+                    </div>
                     {
                         this.state.offers.length === 0 ? 
                         <p>It looks like you have <strong>no offers!</strong> <Link to="add-offer">Share a dram</Link> to be able to trade!</p>

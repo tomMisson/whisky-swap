@@ -4,9 +4,14 @@
 }
 
 #addBtn{
-    padding: 4px;
+    justify-content: center;
     display: flex;
     flex-direction: row;
-    margin: 10px 0 0 10px;
+    text-align: center; 
+    padding: 5px 10px;
+}
+
+.center{
+    display: inline-block;
     text-align: center;
 }
