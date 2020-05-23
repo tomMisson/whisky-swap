@@ -186,7 +186,7 @@ export default class details extends Component {
             :
             cookie.load("loggedIn") === "true" ?
                 this.state.editMode ?
-                <main>
+                <main id='edit'>
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="distillery">
                             Distillery: 
@@ -278,13 +278,11 @@ export default class details extends Component {
                         null
                         : <img width="200" src={this.state.image} alt="offered drink"/> 
                     }   
-                    <h1>{this.state.name} {this.state.abv !== undefined || this.state.abv !== 0 ? <> - {this.state.abv}%</> : null}</h1> 
-                    <h2><small>{this.state.size !== undefined ? "Size: "+this.state.size: null}</small></h2>
-                    <h2>{this.state.distillery !== undefined ? this.state.distillery: null}</h2>
-                    <h2>{this.state.bottler !== undefined ? this.state.bottler: null}</h2>
+                    <h2>{this.state.name} {this.state.abv !== undefined && this.state.abv !== 0 ? <> - {this.state.abv}%</> : null}</h2> 
+                    <h3><small>{this.state.size !== undefined ? "Size: "+this.state.size: null}</small></h3>
+                    <h4>{this.state.distillery !== undefined ? "Distilled by "+this.state.distillery: null} {this.state.bottler !== undefined && this.state.bottler !== null? ", bottled by "+this.state.bottler: null}</h4>
                     <p>{this.state.details !== null ? this.state.details: null }</p>
-                    <p>{this.state.type !== null ? this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
-                    {this.s}
+                    <p>{this.state.type !== null ? "Type: "+this.state.type: null } {this.state.type === "Scotch Whisky" ? " - " +this.state.region: null }</p>
                     {
                         this.state.UID === cookie.load("UID") ?
                         <>

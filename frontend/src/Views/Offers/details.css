@@ -2,3 +2,14 @@
     margin-top: 20vh;
 }
 
+#signedIn button{
+    margin:10px;
+}
+
+#signedIn{
+    padding-top: 20px;
+}
+
+#signedIn h2,#signedIn p {
+    margin:30px 0px
+}
