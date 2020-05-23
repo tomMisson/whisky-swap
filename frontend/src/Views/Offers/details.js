@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
 import axios from 'axios'
+import './details.css'
 
 export default class details extends Component {
 
@@ -172,6 +173,12 @@ export default class details extends Component {
         }
     }
 
+    clickFile(e)
+    {
+        e.preventDefault()
+        document.getElementById('image').click();
+    }
+
     render() {
         return(
             this.state.waiting?
@@ -253,7 +260,8 @@ export default class details extends Component {
                         <br/>
                         <label htmlFor="image">
                             Image: 
-                            <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} />
+                            <button className="upload" onClick={this.clickFile}> <span className="material-icons">cloud_upload</span>  Upload a file</button>
+                            <input type="file" accept="image/*" name="image" id="image" onChange={this.handleForm} style={{display:"none"}}/>
                         </label> 
                         <br/>
 
@@ -264,7 +272,7 @@ export default class details extends Component {
                     }
                 </main>
                 :
-                <main>
+                <main id='signedIn'>
                     {
                         this.state.image === undefined ?  
                         null
@@ -290,8 +298,9 @@ export default class details extends Component {
                     }
                 </main>
             :
-            <main>
+            <main id='nonSignedIn'>
                 <h1> Oh no! you don't have an account!</h1>
+                <br/>
                 <p>To see the full details of what people have to offer and to place a trade, you have to have an account... </p>
                 <br/>
                 <p>You can <Link to="/sign-up">sign up here</Link> to see details and find out more! Alternativly, if you have an account, <Link to="/sign-in">sign in</Link> here or sign up with Facebook</p>
