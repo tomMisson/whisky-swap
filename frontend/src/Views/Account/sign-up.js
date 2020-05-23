@@ -256,7 +256,7 @@ export default class profile extends Component {
                             <input type="file" accept="image/*" name="pic" id="profPicUpdate" onChange={this.handleForm} style={{display:"none"}}/>
                         </label>
                         <br/>
-                        <button type="submit" id="update" value="update">Update</button>
+                        <button type="submit" value="update">Update</button>
                     </form>
                     <a href="/account">Back</a>
                 </main>
