@@ -17,7 +17,7 @@ export default class details extends Component {
     }
 
     withdrawTrade = async() =>{
-
+        
         if (window.confirm("Are you sure you want to withdraw your trade?") === true) { 
             this.setState({waiting:true})
             const requestOptions = {
@@ -291,6 +291,7 @@ export default class details extends Component {
                         </>
                         :
                         <>
+                            <button>View on Masters of Malt</button>
                             <button onClick={this.proposeTrade}>Propose trade</button>
                         </>
                     }
@@ -301,7 +302,7 @@ export default class details extends Component {
                 <br/>
                 <p>To see the full details of what people have to offer and to place a trade, you have to have an account... </p>
                 <br/>
-                <p>You can <Link to="/sign-up">sign up here</Link> to see details and find out more! Alternativly, if you have an account, <Link to="/sign-in">sign in</Link> here or sign up with Facebook</p>
+                <p>You can <strong><Link to="/sign-up">sign up here</Link></strong> to see details and find out more! Alternativly, if you have an account, <strong><Link to="/sign-in">sign in</Link></strong> here or sign up with Facebook</p>
             </main>
         )
     }
