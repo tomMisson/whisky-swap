@@ -87,4 +87,8 @@ p{
         margin-left: 45%;
         margin-top: 10vh;
     }
+
+    #address1{
+        width:200px;
+    }
 }
