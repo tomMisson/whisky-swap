@@ -4,11 +4,14 @@ import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
 import axios from 'axios'
 import './details.css'
+import OfferTile from './offerTile'
 
 export default class details extends Component {
 
     state ={
         editMode: false,
+        picking:false,
+        yourDrams: []
     }
 
     componentDidMount(){
@@ -52,15 +55,18 @@ export default class details extends Component {
         else { } 
     }
 
-    async proposeTrade(){
+    proposeTrade = async () => {
+        this.setState({waiting:true})
         var res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+cookie.load("UID")))
         res = await res.json();
+        this.setState({waiting:false})
         if(res.length === 0)
         {
             alert("You aren't currently sharing any drams so you can't propose a trade. Add a dram to start trading with others")
         }
         else{
-            alert("Placeholder for trade trigger")
+            this.setState({picking: true})
+            this.setState({yourDrams: res})
         }
     }
 
@@ -88,7 +94,6 @@ export default class details extends Component {
         this.setState({momdetails: details.momdetails})
         this.setState({waiting:false})
         this.render()
-        console.log(this.state)
     }
 
     handleSubmit = async (event) =>{
@@ -179,13 +184,28 @@ export default class details extends Component {
         e.preventDefault()
         document.getElementById('image').click();
     }
-
     render() {
         return(
             this.state.waiting?
             <Loader/>
             :
             cookie.load("loggedIn") === "true" ?
+                this.state.picking ? 
+                <main>
+                    <h2>What would you like to trade</h2>
+                    <h4>for {this.state.name}</h4>
+
+                    <div>
+                        {
+                            this.state.yourDrams.map((dram) =>
+                                <Link to={"/trades/"+dram._id}>
+                                    <OfferTile key={dram.name} img={dram.image} name={dram.name} size={dram.size}/>
+                                </Link>
+                            )
+                        }
+                    </div>
+                </main>
+                :
                 this.state.editMode ?
                 <main id='edit'>
                     <form onSubmit={this.handleSubmit}>

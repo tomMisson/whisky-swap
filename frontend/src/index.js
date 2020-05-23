@@ -14,7 +14,7 @@ import Home from "./Views/home"
 import Reset from './Views/Account/reset-password'
 import Delivery from './Views/Account/delivery-update'
 import Loader from './Components/Loader';
-import Trades from './Views/Offers/trades'
+import Trades from './Views/Trades/trades'
 import cookie from 'react-cookies'
 import './global.css'
 
