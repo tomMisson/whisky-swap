@@ -70,6 +70,9 @@ ReactDOM.render(
             <Home/>
           </div>
         )}/>
+        <Route exact={true} path='/offer/' render={() => {
+            window.location.replace(process.env.REACT_APP_APP_URL + "/browse")
+        }}/>
         <Route path='/offer/' render={() => (
           <div className="App">
             <Details />
