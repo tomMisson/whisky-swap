@@ -29,7 +29,7 @@ export default class account extends Component {
         }
         catch(err){}
         this.setState({waiting:false})
-
+        console.log(this.state)
     }
 
     sendEmail = async () => {
@@ -74,7 +74,7 @@ export default class account extends Component {
                             <li>Prefered Delivery: <p>{this.state.user.delivery}</p></li>
                             {
                                 this.state.user.delivery !== "Collection" ?
-                                <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==null? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!==null? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!==null? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
+                                <li>Delivery address: <p>{this.state.user.address1!==undefined || this.state.user.address1!==""? this.state.user.address1 :null}{this.state.user.address2!==undefined|| this.state.user.address2!=="" ? ", "+this.state.user.address2 :null}{this.state.user.address3!==undefined|| this.state.user.address3!=="" ? ", "+this.state.user.address3 :null} {this.state.user.postcode!==undefined || this.state.user.postcode!==null? ", "+this.state.user.postcode :null}</p></li>
                                 :
                                 <li><p>You have said you will collect</p></li>
                             }
