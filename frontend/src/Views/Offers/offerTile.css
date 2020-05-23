@@ -2,9 +2,19 @@
     border: 1px #000 solid;
     border-radius: 25px;
     padding: 30px;
-    width: 200px;
-    margin: 10px;
+    width: 80%;
+    margin: 10px 5px;
     float: left;
     text-decoration: none;
     color: #000;
+}
+
+@media screen and (min-width: 768px) {
+    .offer{
+        padding: 30px;
+        width: 20%;
+        margin: 10px;  
+        float: none;
+        display: inline-block;
+    }
 }
