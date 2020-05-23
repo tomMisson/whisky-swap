@@ -25,12 +25,16 @@ a:hover{
 
 main{
     min-height: 82.1vh;
-    text-align: left;
+    text-align: center;
 }
 
 .loader{
     margin-left: 30%;
     margin-top: 10vh;
+}
+
+#address1{
+    width: 40vw;
 }
 
 .upload{
@@ -45,6 +49,14 @@ main{
     color: rgb(207, 22, 22);
 }
 
+select{
+    background-color: #fc9403;
+    border: 1px solid #fff; 
+    color: #fff;
+    padding: 10px;
+    margin: 5px;
+}
+
 button{
     padding: 12px;
     width: 150px;
@@ -57,10 +69,17 @@ button{
     font-weight: 600;
     color: #fff;
 }
-
 button:hover{
     background-color: #fdb146;
     transition-duration: 0.7s;
+}
+
+input{
+    padding-left: 5px;
+}
+
+p{
+    margin: 10px 5px;
 }
 
 @media screen and (min-width: 768px) {
