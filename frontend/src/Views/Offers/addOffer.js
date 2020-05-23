@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Loader from '../../Components/Loader';
 import cookie from 'react-cookies'
+import './addOffer.css'
 
 export default class addOffer extends Component {
 
@@ -102,22 +103,22 @@ export default class addOffer extends Component {
                 {
                     !this.state.waiting?
                     <div>
-                        <form onSubmit={this.handleSubmit}>
+                        <form onSubmit={this.handleSubmit} id="addOffer">
                         <label htmlFor="distillery">
                             Distillery: 
                             <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="name">
                             Name of bottle: 
                             <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="bottler">
                             Bottler: 
                             <input type="text" name="bottler" id="bottler"  value={this.state.bottler} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="size">
                             Size: 
                             <select required name="size" id="size" value={this.state.size} onChange={this.handleFormFields}>
@@ -126,13 +127,13 @@ export default class addOffer extends Component {
                                 <option value="50 ml">50ml</option>
                             </select>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="ABV">
                             ABV: 
                             <input type="number" step="0.1" name="AVB" id="abv" value={this.state.abv} onChange={this.handleFormFields}/>
                             %
                         </label>
-                        <br/>
+                        
                         <label htmlFor="type">
                             Type: 
                             <select name="type" id="type" value={this.state.type} onChange={this.handleFormFields}>
@@ -152,13 +153,13 @@ export default class addOffer extends Component {
                                 <option value="Single pot still Whiskey">Single pot still Whiskey</option>
                             </select>
                         </label>
-                        <br/>
+                        
                         {
                             this.state.type === "Scotch Whisky" ?
                             <label htmlFor="region">
                                 Region: 
                                 <input type="text" name="region" id="region" onChange= {this.handleFormFields} />
-                                <br/>
+                                
                             </label>
                             : null 
                         }
@@ -166,21 +167,20 @@ export default class addOffer extends Component {
                             Other details: 
                             <textarea name="details" id="details" value={this.state.details} onChange={this.handleFormFields}/>
                         </label>
-                        <br/>
+                        
                         <label htmlFor="momDetails">
                             Masters of Malt link:
                             <input type="url" name="momDetails" id="MoMdetails" onChange= {this.handleFormFields} />
                         </label> 
-                        <br/>
+                        
                         <label htmlFor="image">
                             Image: 
                             <button className="upload" onClick={this.clickFileUpload}> <span className="material-icons">cloud_upload</span>  Upload a file</button>
                             <input type="file" accept="image/*" name="image" id="image" onChange= {this.handleFormFields} style={{display:"none"}}/>
                         </label>
-                        <br/>
-                        <button type="submit" id="Add">Add</button>
+                        
+                        <button type="submit" className="spanningBtn" id="Add">Add</button>
                     </form>
-                    <button onClick={this.handleBack}>Back</button>
                     </div>
                     :
                     <Loader/>
