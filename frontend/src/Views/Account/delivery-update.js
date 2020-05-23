@@ -51,6 +51,7 @@ export default class deliveryUpdate extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
+        this.setState({waiting:true})
 
         const requestOptions = {
             crossDomain: true,
@@ -66,17 +67,20 @@ export default class deliveryUpdate extends Component {
         };
         try{
             var response = await fetch(process.env.REACT_APP_API_URL.concat("/profiles-delivery/"+cookie.load("UID")), requestOptions);
-            console.log(response)
+            this.setState({waiting:false})
             if(response.status===200)
             {
                 alert("Updated details")
                 window.location.replace(process.env.REACT_APP_APP_URL+"/account")
             }
             else if(response.status===304)
+            {   
                 alert("No changes made")
                 window.location.replace(process.env.REACT_APP_APP_URL+"/account")
+            }
         }
         catch(err){ 
+            this.setState({waiting:false})
             alert("Something went wrong: " + err)
         }    
     }
