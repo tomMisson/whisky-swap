@@ -51,7 +51,7 @@
             if (response.status === 'connected') {   // Logged into your webpage and Facebook.
                 FB.api('/me', function(response) {
                     console.log(response);
-                    //http://graph.facebook.com/10222721064834303/picture?type=large&width=720&height=720
+                    axios.post('https://api.doorstepdrams.com/profiles', {"FBid":response.id,"name": response.name, "img":`http://graph.facebook.com/${response.id}/picture?type=large&width=720&height=720`})
                 })
             } 
             else {// Not logged into your webpage or we are unable to tell.
