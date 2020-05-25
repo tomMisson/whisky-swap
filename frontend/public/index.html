@@ -52,6 +52,7 @@
                 FB.api('/me', function(response) {
                     console.log(response);
                     axios.post('https://api.doorstepdrams.com/profiles', {"FBid":response.id,"name": response.name, "img":`http://graph.facebook.com/${response.id}/picture?type=large&width=720&height=720`})
+                      .then(console.log("added"))
                 })
             } 
             else {// Not logged into your webpage or we are unable to tell.
