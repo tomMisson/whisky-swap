@@ -14,6 +14,22 @@ export default class profile extends Component {
         icon: "visibility"
     }
 
+    componentDidMount(){
+        FB.getLoginStatus(function(response) {   // See the onlogin handler
+            console.log(response);                   // The current login status of the person.
+            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+                FB.api('/me', function(response) {
+                    console.log(response);
+                    //http://graph.facebook.com/10222721064834303/picture?type=large&width=720&height=720
+                })
+            } 
+            else {// Not logged into your webpage or we are unable to tell.
+
+            }
+        });
+        
+    }
+
     tooglePswdVisibility = () =>{
         if(this.state.pswdVisible){
             $("#pswd").prop('type', 'password')
@@ -56,10 +72,6 @@ export default class profile extends Component {
                 break;
             default:
         }
-    }
-
-    responseFacebook = (response) => {
-        console.log(response);
     }
 
     handleSubmit = async (event) => {
