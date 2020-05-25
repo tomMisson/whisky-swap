@@ -5,6 +5,7 @@ import Loader from '../../Components/Loader'
 import cookie from 'react-cookies'
 import $ from 'jquery'
 import './sign-in.css'
+import axios from 'axios'
 
 export default class profile extends Component {
 
@@ -12,22 +13,6 @@ export default class profile extends Component {
         loggedIn: cookie.load("loggedIn"),
         pswdVisible:false,
         icon: "visibility"
-    }
-
-    componentDidMount(){
-        FB.getLoginStatus(function(response) {   // See the onlogin handler
-            console.log(response);                   // The current login status of the person.
-            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-                FB.api('/me', function(response) {
-                    console.log(response);
-                    //http://graph.facebook.com/10222721064834303/picture?type=large&width=720&height=720
-                })
-            } 
-            else {// Not logged into your webpage or we are unable to tell.
-
-            }
-        });
-        
     }
 
     tooglePswdVisibility = () =>{
@@ -128,7 +113,7 @@ export default class profile extends Component {
                         <br/>
                         <input type="submit" value="Log in"/>
                     </form>
-                    <div className="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div><br/>
+                    <div className="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
                     <p id="signUp">No account? <Link to="/sign-up">Sign up</Link><br/></p>
                 </main>
 

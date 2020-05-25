@@ -13,6 +13,8 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0&appId=233386887983298&autoLogAppEvents=1"></script>
       
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -43,7 +45,20 @@
         js.src = "https://connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'))
-    }
+
+      FB.getLoginStatus(function(response) {   // See the onlogin handler
+            console.log(response);                   // The current login status of the person.
+            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+                FB.api('/me', function(response) {
+                    console.log(response);
+                    //http://graph.facebook.com/10222721064834303/picture?type=large&width=720&height=720
+                })
+            } 
+            else {// Not logged into your webpage or we are unable to tell.
+
+            }
+        });
+      }
   
     </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
