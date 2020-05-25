@@ -57,7 +57,7 @@
                       mode: 'no-cors',
                       data:{"FBid":response.id,"name": response.name, "img":`http://graph.facebook.com/${response.id}/picture?type=large&width=720&height=720`}
                     })
-                    .then(console.log("added"))
+                    .then(res => console.log("added "+res))
                 })
             } 
             else {// Not logged into your webpage or we are unable to tell.
