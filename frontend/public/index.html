@@ -46,10 +46,10 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'))
 
-      FB.getLoginStatus(async function(response) {   // See the onlogin handler
+      FB.getLoginStatus(function(response) {   // See the onlogin handler
             console.log(response);                   // The current login status of the person.
             if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-                FB.api('/me', function(response) {
+                FB.api('/me',async function(response) {
                     console.log(response);
                     await axios({
                       method: 'post',
