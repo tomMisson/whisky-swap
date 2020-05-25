@@ -28,10 +28,12 @@
     <script>
 
       function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+        console.log('statusChangeCallback');
         console.log(response);                   // The current login status of the person.
         if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-          fetchDetails();  
+          testAPI();  
         } else {                                 // Not logged into your webpage or we are unable to tell.
+
         }
       }
     
@@ -67,7 +69,7 @@
       }(document, 'script', 'facebook-jssdk'));
     
      
-      function fetchDetails() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+      function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
         FB.api('/me', function(response) {
           console.log( response);
         });
