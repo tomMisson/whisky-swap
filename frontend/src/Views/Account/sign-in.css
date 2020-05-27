@@ -15,6 +15,10 @@
     display: inline-grid;
 }
 
+.signIn form input[type="submit"]{
+    justify-self: center;
+}
+
 label{
     text-align: left;
     margin:10px;
