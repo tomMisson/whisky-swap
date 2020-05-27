@@ -103,15 +103,15 @@ export default class addOffer extends Component {
                 {
                     !this.state.waiting?
                     <div>
+                        <label htmlFor="name">
+                            Name of bottle: 
+                            <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
+                        </label>
+                        
                         <form onSubmit={this.handleSubmit} id="addOffer">
                         <label htmlFor="distillery">
                             Distillery: 
                             <input type="text" name="distillery" id="distillery"  value={this.state.distillery} onChange={this.handleFormFields}/>
-                        </label>
-                        
-                        <label htmlFor="name">
-                            Name of bottle: 
-                            <input required type="text" name="name" id="name" value={this.state.name} onChange={this.handleFormFields}/>
                         </label>
                         
                         <label htmlFor="bottler">
