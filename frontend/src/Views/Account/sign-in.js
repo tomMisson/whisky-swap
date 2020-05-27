@@ -5,7 +5,6 @@ import Loader from '../../Components/Loader'
 import cookie from 'react-cookies'
 import $ from 'jquery'
 import './sign-in.css'
-import axios from 'axios'
 
 export default class profile extends Component {
 
