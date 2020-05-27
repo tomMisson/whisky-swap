@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import hash from 'hash.js'
 import cookie from 'react-cookies'
 import Loader from '../../Components/Loader'
+import './reset.css'
 
 export default class resetPassword extends Component {
 
@@ -123,12 +124,11 @@ export default class resetPassword extends Component {
             <main>
                 <p>Enter the password you would like to use:</p>
                 <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="pswd" >New password: <input id="pswd" name="pswd" type="password" value={this.state.newPassword} onChange={this.handleFormData}/></label><br/>
+                    <label htmlFor="pswd" >New password: <input id="pswd" name="pswd" type="password" value={this.state.newPassword} onChange={this.handleFormData}/></label>
                     <label htmlFor="pswdConf" >Confirm password: <input id="pswdConf" name="pswdConf" type="password" value={this.state.conf} onChange={this.handleFormData}/></label>
-                    <br/>
-                    <button type="submit">Update</button><br/>
+                    <button type="submit" className="spanningBtn">Update</button>
                 </form>
-                <button onClick={this.back}>Back</button>
+                <button onClick={this.back} className="spanningBtn">Back</button>
             </main>
         :
         <main>
