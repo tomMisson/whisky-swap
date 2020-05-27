@@ -23,7 +23,7 @@ export default class trades extends Component {
             <main>
                 {
                     this.state.currentOffers.map((trade)=>
-                        <Tile offeredDramID="5ec415906b7c8f0046ff3128"  yourDramID="5eab48657f9b47004c1f8593"/>
+                        <Tile offeredDramID="5ec415906b7c8f0046ff3128"  tradeDramID="5eab48657f9b47004c1f8593"/>
                     )
                 }
             </main>
