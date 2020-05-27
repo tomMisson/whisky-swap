@@ -184,6 +184,39 @@ export default class details extends Component {
         e.preventDefault()
         document.getElementById('image').click();
     }
+
+    pickTradeItem = async (id) => {
+        var selectedItem = this.state.yourDrams.find(dram => dram._id === id);
+        if(window.confirm(`You have selected to trade your ${selectedItem.name} for ${this.state.name}. Do you agree to this trade?`))
+        {
+            this.setState({waiting:true})
+            let emailAdd = await fetch(process.env.REACT_APP_API_URL+'/profiles-email/'+this.state.UID)
+            emailAdd = await emailAdd.json()
+            
+            const requestOptions = {
+                crossDomain: true,
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin':true},
+                body: JSON.stringify({
+                    email: emailAdd,
+                    offeredDramID: selectedItem._id,
+                    offerDramImg: selectedItem.image,
+                    offerDramName: selectedItem.name,
+                    tradeDramName: this.state.name,
+                    tradeDramID: this.state.id,
+                })
+            };
+            
+            await fetch(process.env.REACT_APP_API_URL.concat("/trade"), requestOptions)
+                .then(res =>res.json())
+                .then(res => console.log(res))
+                .then(this.setState({waiting:false}))
+                .then(window.alert("Placed offer"))
+                .then(window.location.replace(process.env.REACT_APP_APP_URL+"/browse"))
+                .catch(err => console.log(err))
+        }
+    }
+
     render() {
         return(
             this.state.waiting?
@@ -198,9 +231,7 @@ export default class details extends Component {
                     <div>
                         {
                             this.state.yourDrams.map((dram) =>
-                                <Link to={"/trades/"+dram._id}>
-                                    <OfferTile key={dram.name} img={dram.image} name={dram.name} size={dram.size}/>
-                                </Link>
+                                <OfferTile className="offerTrade" key={dram.name} img={dram.image} name={dram.name} size={dram.size} id={dram._id} onHandleClick={()=>this.pickTradeItem(dram._id)}/>
                             )
                         }
                     </div>

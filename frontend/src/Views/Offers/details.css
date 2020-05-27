@@ -35,6 +35,18 @@
     width: 95vw;
 }
 
+.offerTrade:hover{
+    background-color: #fc9403;
+    transition: ease-out;
+    transition-duration: 0.7s;
+    padding: 20px;
+}
+
+.offerTrade{
+    background-color: inherit;
+    transition-duration: 0.7s;
+}
+
 #edit input[type='number']{
     width: 80px;
 }
