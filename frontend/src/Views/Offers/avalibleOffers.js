@@ -13,7 +13,7 @@ export default class avalibleTrades extends Component {
     async fetchOffers(){
         this.setState({waiting:true})
         var res;
-        res = this.props.filter === undefined ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+cookie.load("UID")))
+        this.props.filter === undefined ? res = await fetch(process.env.REACT_APP_API_URL.concat("/offers")) : res = await fetch(process.env.REACT_APP_API_URL.concat("/user-offers/"+cookie.load("UID")))
         res = await res.json()
         this.setState({offers: res})
         this.setState({waiting:false})
