@@ -22,10 +22,10 @@ ReactDOM.render(
   <BrowserRouter>
   <React.StrictMode>
     <Header links={[
-      {id:0,text:"Your drams", uri:'/your-drams', signInNeeded:true},
+      {id:0,text:"Avalible drams", uri:'/browse', signInNeeded:true},
       {id:1,text:"Trades", uri:'/trades', signInNeeded:true},
       {id:2,text:"Sign in", uri:'/sign-in', signInNeeded:false},
-      {id:3,text:"Avalible drams", uri:'/browse', signInNeeded:true},
+      {id:3,text:"Your drams", uri:'/your-drams', signInNeeded:true},
       {id:4,text:"Account", uri:'/account', signInNeeded:true},
     ]}/>
     <Switch>
