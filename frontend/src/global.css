@@ -5,6 +5,10 @@
     margin: 0;
 }
 
+h1{
+    margin: 30px 0px;
+}
+
 body{
     font-family: 'Roboto', sans-serif;;
 }

@@ -8,6 +8,7 @@ header h1{
     padding-left: 3vh;
     padding-top: 3vh;
     font-style: none;
+    margin:0;
 }
 
 nav a{
