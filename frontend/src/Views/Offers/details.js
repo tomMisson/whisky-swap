@@ -204,6 +204,7 @@ export default class details extends Component {
                     offerDramName: selectedItem.name,
                     tradeDramName: this.state.name,
                     tradeDramID: this.state.id,
+                    status:"offered"
                 })
             };
             
