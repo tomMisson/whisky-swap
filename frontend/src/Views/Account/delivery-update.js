@@ -125,7 +125,7 @@ export default class deliveryUpdate extends Component {
                         <input type="text" name="postcode" id="postcode" value={this.state.postcode} onChange={this.handleForm}/>
                     </label>
                     <br/>
-                    <button type="submit">Update</button>
+                    <button type="submit" className="spanningBtn">Update</button>
                 </form>
                 <a href="/account">Back</a>
             </main>
