@@ -507,7 +507,7 @@ app.get('/trades-recived/:UID', (req,res) => {
             if (err) throw err;
             var dbo = db.db("whisky-swap");
 
-            dbo.collection("trades").find({"owner": id}).toArray()
+            dbo.collection("trades").find({$and:[{"owner": id},{"status":"offered"}]}).toArray()
                 .then(docs => res.json(docs))
                   
         }
@@ -525,7 +525,7 @@ app.get('/trades-history/:UID', (req,res) => {
             if (err) throw err;
             var dbo = db.db("whisky-swap");
 
-            dbo.collection("trades").find({$and:[{"owner": id},{status:"accepted"}]}).toArray()
+            dbo.collection("trades").find({$or:[{$and:[{"owner": id},{"status":"accepted"}],$and:[{"owner": id},{"status":"accepted"}]}]}).toArray()
                 .then(docs => res.json(docs))
                   
         }
