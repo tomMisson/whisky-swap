@@ -80,13 +80,11 @@ ReactDOM.render(
         )}/>
         <Route exact={true} path='/forgot' render={() => (
           <div className="App">
-            <h1>Forgot your password?</h1>
             <Reset/>
           </div>
         )}/>
         <Route exact={true} path='/forgot/:uid' render={(props) => (
           <div className="App">
-            <h1>Reset your password?</h1>
             <Reset uid={props.match.params.uid}/>
           </div>
         )}/>

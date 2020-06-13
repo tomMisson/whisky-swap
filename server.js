@@ -265,7 +265,7 @@ app.get('/confirm-verify/:email', (req,res)=>{
             dbo.collection("users").updateOne({email:emailAddr}, 
                 { $set: { verifiedEmail:true}}
                 ,{upsert:true})
-                .then(res.redirect('https://doorstepdrams.com/account'))
+                .then(res.redirect('https://doorstepdrams.com/forgot/success'))
                     
         }
         catch(err){

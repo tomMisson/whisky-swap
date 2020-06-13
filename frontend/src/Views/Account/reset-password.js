@@ -3,6 +3,7 @@ import hash from 'hash.js'
 import cookie from 'react-cookies'
 import Loader from '../../Components/Loader'
 import './reset.css'
+import { Link } from 'react-router-dom'
 
 export default class resetPassword extends Component {
 
@@ -108,12 +109,14 @@ export default class resetPassword extends Component {
     render() {
         return(
         
+        window.location.href.split('/')[4] !== "success" ?
         this.state.waiting ?
         <Loader/>
         :
         this.props.uid === undefined ?
             cookie.load("loggedIn") === "false" || cookie.load("loggedIn") === undefined ?
             <main>
+                <h1>Forgot your password?</h1>
                 <p>Please enter your email address and we will send you an email to update your password:</p>
                 <form onSubmit={this.handleSubmit}>
                     <input type="email" id="email" onChange={this.handleFormData}/><br/>
@@ -122,6 +125,7 @@ export default class resetPassword extends Component {
             </main>
             :
             <main>
+                <h1>Update your password</h1>
                 <p>Enter the password you would like to use:</p>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="pswd" >New password: <input id="pswd" name="pswd" type="password" value={this.state.newPassword} onChange={this.handleFormData}/></label>
@@ -132,11 +136,18 @@ export default class resetPassword extends Component {
             </main>
         :
         <main>
+            <h1>Update your password</h1>
             <p>Enter your new password:</p>
             <form onSubmit={this.handleSubmit}>
                 <input type="password" id="pswd" onChange={this.handleFormData}/><br/>
                 <button type="submit">Update password</button>
             </form>
+        </main>
+        :
+        <main className='sucess'>
+            <h1>Sucessfully confirmed password</h1>
+            <svg fill="#fc9b14" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"  viewBox="0 0 510 510"><g><g id="check-circle-outline"><path d="M150.45,206.55l-35.7,35.7L229.5,357l255-255l-35.7-35.7L229.5,285.6L150.45,206.55z M459,255c0,112.2-91.8,204-204,204    S51,367.2,51,255S142.8,51,255,51c20.4,0,38.25,2.55,56.1,7.65l40.801-40.8C321.3,7.65,288.15,0,255,0C114.75,0,0,114.75,0,255    s114.75,255,255,255s255-114.75,255-255H459z"/></g></g></svg>
+            <p>You're good to go! <Link title="Go to browsing" to="/browse">Click here to continue</Link> and see the latest offers!</p>
         </main>
         )
     }

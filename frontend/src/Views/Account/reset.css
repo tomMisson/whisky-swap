@@ -6,3 +6,17 @@ form{
 input[type="password"]{
     width: 220px;
 }
+
+.sucess{
+    margin: 30px;
+}
+
+.sucess h1{
+    margin: 40px;
+}
+
+.sucess svg{
+    width:20vw; 
+    height:30vh;
+    padding: 40px;
+}
